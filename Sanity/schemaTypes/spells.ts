@@ -9,10 +9,10 @@ export const spells = defineType({
       name: 'title',
       title: 'Title',
       type: 'string',
-      description: 'Name of the game',
+      description: 'Name of the spell',
       validation: rule => rule
         .required()
-        .error('Name of game is required.')
+        .error('Name of spell is required.')
     }),
 
     defineField({
@@ -35,6 +35,7 @@ export const spells = defineType({
         name: 'description',
         title: 'Description',
         type: 'text',
+        rows: 4,
         description: 'A brief description of the spell'
       }),
 
@@ -144,6 +145,13 @@ export const spells = defineType({
       title: 'Drop Only',
       type: 'boolean',
       description: 'Whether the spell can only be obtained as a drop'
+    }),
+
+    defineField({
+      name: 'notes',
+      title: 'Notes',
+      type: 'array',
+      of: [{type: 'block'}]
     }),
   ]
 });
