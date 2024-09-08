@@ -1,0 +1,16 @@
+
+/* General Layout */
+body {
+  background-color: $background-color;
+  color: $text-color;
+  font-family: 'Georgia', serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+}

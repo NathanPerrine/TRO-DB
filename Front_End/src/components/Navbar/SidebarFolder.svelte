@@ -1,0 +1,85 @@
+<script lang="ts">
+	import { type SidebarItem } from "./sidebar-items";
+  import SidebarLink from "./SidebarLink.svelte";
+  export let item: SidebarItem;
+
+  let expanded = false
+</script>
+
+<button
+  class={expanded ? 'expanded' : ''}
+  on:click|preventDefault={() => expanded = !expanded}
+>
+  <span>{item.title}</span>
+  <span class="icon">▶</span>
+</button>
+
+<ul
+style:display={expanded ? 'block': 'none'}
+>
+  {#if item.subItems}
+    {#each item.subItems as subItem}
+      <li>
+        {#if subItem.subItems}
+          <svelte:self item={subItem} />
+        {:else}
+          <SidebarLink item={subItem} />
+        {/if}
+      </li>
+    {/each}
+  {/if}
+</ul>
+
+<style lang="scss">
+  button {
+    font-size: 100%;
+    font-family: inherit;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border: 0;
+    border-radius: 5px;
+
+    padding: 10px 15px;
+    width: 100%;
+
+    background-color: inherit;
+    color: $text-color;
+    text-decoration: none;
+    background-color: lighten($sidebar-background-color, 5%);
+    transition: background-color 0.2s ease;
+
+    cursor: pointer;
+
+    &:hover {
+      background-color: $link-hover-background;
+      color: #fff;
+    }
+
+    .icon {
+      font-size: 12px;
+      color: $text-color;
+      transition: transform 0.3s ease;
+    }
+
+    &.expanded {
+      background-color: $link-hover-background;
+      .icon {
+        transform: rotate(90deg);
+      }
+    }
+  }
+
+  ul {
+		padding: 0.2em 0 0 0.5em;
+		margin: 0.5em 0 0 0.5em;
+		list-style: none;
+		border-left: 2px solid $divider-color;
+	}
+
+	li {
+		padding: 0.2em 0;
+	}
+</style>
