@@ -28,10 +28,10 @@
 
 <style lang="scss">
 .sidebar {
-  background-color: $sidebar-background-color;
+  background: linear-gradient(to right, #fdf4df, #fbe8c8, #f8dbb1, #f5c898);
   padding: 20px;
-  width: 200px;
-  border-right: 2px solid $divider-color;
+  width: 250px;
+  border-right: 2px solid #a8714d;;
   overflow-y: auto;
 
   h2 {
@@ -39,6 +39,8 @@
     margin-top: 0;
     margin-bottom: 15px;
     font-weight: bold;
+    border: none;
+    border-image: none;
   }
 
   ul {

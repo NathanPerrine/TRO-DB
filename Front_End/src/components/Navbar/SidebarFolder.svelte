@@ -11,7 +11,7 @@
   on:click|preventDefault={() => expanded = !expanded}
 >
   <span>{item.title}</span>
-  <span class="icon">▶</span>
+  <span class="arrow">▶</span>
 </button>
 
 <ul
@@ -45,10 +45,9 @@ style:display={expanded ? 'block': 'none'}
     padding: 10px 15px;
     width: 100%;
 
-    background-color: inherit;
+    background-color: transparent;
     color: $text-color;
     text-decoration: none;
-    background-color: lighten($sidebar-background-color, 5%);
     transition: background-color 0.2s ease;
 
     cursor: pointer;
@@ -58,7 +57,7 @@ style:display={expanded ? 'block': 'none'}
       color: #fff;
     }
 
-    .icon {
+    .arrow {
       font-size: 12px;
       color: $text-color;
       transition: transform 0.3s ease;
@@ -66,7 +65,7 @@ style:display={expanded ? 'block': 'none'}
 
     &.expanded {
       background-color: $link-hover-background;
-      .icon {
+      .arrow {
         transform: rotate(90deg);
       }
     }

@@ -52,11 +52,12 @@ export const sidebarItems: SidebarItem[] = [
   {
     title: "Magic",
     subItems: [
-      { title: "Thaumaturgy", link: "/magic/thaumaturgy" },
-      { title: "Mysticism", link: "/magic/mysticism" },
-      { title: "Elementalism", link: "/magic/elementalism" },
-      { title: "Sorcery", link: "/magic/sorcery" },
-      { title: "Necromancy", link: "/magic/necromancy" },
+      { title: "Thaumaturgy", link: "/thaumaturgy" },
+      { title: "Mysticism", link: "/mysticism" },
+      { title: "Elementalism", link: "/elementalism" },
+      { title: "Sorcery", link: "/sorcery" },
+      { title: "Necromancy", link: "/necromancy" },
+      { title: "Enchanting", link: "/enchanting"},
     ]
   },
   { title: "Monsters", link: "/monsters" },
