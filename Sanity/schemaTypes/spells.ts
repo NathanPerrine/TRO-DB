@@ -45,11 +45,11 @@ export const spells = defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Thaumaturgy', value: 'Thaumaturgy' },
-          { title: 'Mysticism', value: 'Mysticism' },
-          { title: 'Elementalism', value: 'Elementalism' },
-          { title: 'Sorcery', value: 'Sorcery' },
-          { title: 'Necromancy', value: 'Necromancy' },
+          { title: 'Thaumaturgy', value: 'thaumaturgy' },
+          { title: 'Mysticism', value: 'mysticism' },
+          { title: 'Elementalism', value: 'elementalism' },
+          { title: 'Sorcery', value: 'sorcery' },
+          { title: 'Necromancy', value: 'necromancy' },
         ],
         layout: 'dropdown'
       },
@@ -62,12 +62,12 @@ export const spells = defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Familiar', value: 'Familiar' },
-          { title: 'Proficient', value: 'Proficient' },
-          { title: 'Expert', value: 'Expert' },
-          { title: 'Master', value: 'Master' },
-          { title: 'Grandmaster', value: 'Grandmaster' },
-          { title: 'Supreme-Master', value: 'Supreme-Master' },
+          { title: 'Familiar', value: 'familiar' },
+          { title: 'Proficient', value: 'proficient' },
+          { title: 'Expert', value: 'expert' },
+          { title: 'Master', value: 'master' },
+          { title: 'Grandmaster', value: 'grandmaster' },
+          { title: 'Supreme-Master', value: 'supreme-master' },
         ],
         layout: 'dropdown'
       },

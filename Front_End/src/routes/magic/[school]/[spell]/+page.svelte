@@ -2,10 +2,11 @@
     import type { PageData } from './$types';
 
     export let data: PageData;
+    console.log(data.data[0].title)
 </script>
 
 <main>
-  <h1>Light Dart</h1>
+  <h1>{data.data[0].title}</h1>
   <p>Conjure a small, radiant dart of pure light, hurling it towards an enemy to deal minor magical damage.</p>
 
   <h2>Resource Cost & Usage</h2>
