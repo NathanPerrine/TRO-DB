@@ -36,6 +36,13 @@ export const load = (async ({ params }) => {
       }
     })
 
+    const alphabetizedSpells = Object.fromEntries(
+      Object.entries(spells).map(([level, spells]) => [
+        level,
+        spells.sort((a, b) => a.title.localeCompare(b.title))
+      ])
+    );
+
     console.log(data)
-    return {spells};
+    return {spells: alphabetizedSpells};
 }) satisfies PageServerLoad;

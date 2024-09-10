@@ -131,15 +131,6 @@ export const spells = defineType({
       description: 'Whether the spell can be enchanted'
     }),
 
-    // {
-    //   name: 'learnedFrom',
-    //   title: 'Learned From',
-    //   type: 'reference',
-    //   to: [{ type: 'spellbook' }],
-    //   description: 'The spellbook from which this spell was learned'
-    // },
-    // Can easily make a link <a href="spellbook of {title}">
-
     defineField({
       name: 'dropOnly',
       title: 'Drop Only',
