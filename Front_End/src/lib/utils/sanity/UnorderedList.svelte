@@ -4,9 +4,9 @@
 </script>
 
 {#if portableText.global.context.bulletContext === 'note'}
-  <ul class="ul-note"><slot /></ul>
+  <li class="ul-note"><slot /></li>
 {:else if portableText.global.context.bulletContext === 'diamond'}
-  <ul class="ul-diamond"><slot /></ul>
+  <li class="ul-diamond"><slot /></li>
 {:else}
-  <ul class=""><slot /></ul>
+  <li class=""><slot /></li>
 {/if}

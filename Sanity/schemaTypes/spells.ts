@@ -85,6 +85,15 @@ export const spells = defineType({
       name: 'spellDelay',
       title: 'Spell Delay',
       type: 'string',
+      options: {
+        list: [
+          { title: 'Very Short', value: 'Very Short' },
+          { title: 'Short', value: 'Short' },
+          { title: 'Medium', value: 'Medium' },
+          { title: 'Long', value: 'Long' },
+          { title: 'Very Long', value: 'Very Long' },
+        ]
+      },
       description: 'The time delay before the spell takes effect (in seconds)'
     }),
 

@@ -92,9 +92,9 @@
       value={data.spell.notes}
       context={{ bulletContext }}
       components={{
-        list: {
-          bullet: UnorderedList,
-        }
+        listItem: {
+          normal: UnorderedList
+        },
       }}
     />
   {:else}

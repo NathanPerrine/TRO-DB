@@ -3,10 +3,14 @@
   export let item: SidebarItem;
 </script>
 
-<a href={item.link}>{item.title}</a>
+{#if !item.disabled }
+  <a href={item.link}>{item.title}</a>
+{:else}
+  <p class="disabled">{item.title}</p>
+{/if}
 
 <style lang="scss">
-  a {
+  a, p {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -22,4 +26,8 @@
     color: #fff;
   }
 
+  .disabled {
+    color: gray;
+    text-decoration: line-through;
+  }
 </style>
