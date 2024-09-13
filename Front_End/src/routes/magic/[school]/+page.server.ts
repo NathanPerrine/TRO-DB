@@ -1,7 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { client } from '$lib/utils/sanity/client';
 import { error } from '@sveltejs/kit';
-import { type Spell } from '$lib/types/index';
+import type { Spell } from '$lib/types/index';
 
 
 export const load = (async ({ params }) => {
@@ -43,6 +43,5 @@ export const load = (async ({ params }) => {
       ])
     );
 
-    console.log(data)
     return {spells: alphabetizedSpells};
 }) satisfies PageServerLoad;

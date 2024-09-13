@@ -3,11 +3,7 @@ import { client } from '$lib/utils/sanity/client';
 import { error } from '@sveltejs/kit';
 import type { FullSpell } from '$lib/types/index'
 
-
-
 export const load = (async ({ params }) => {
-  console.log(params)
-  console.log(params.spell)
   const data = await client.fetch<FullSpell[]>(`*[_type == 'spell' && slug.current == '${params.spell}'] {
     title,
     spellSchool,
@@ -31,6 +27,5 @@ export const load = (async ({ params }) => {
       })
     }
 
-    console.log(data[0])
     return {spell: data[0]};
 }) satisfies PageServerLoad;
