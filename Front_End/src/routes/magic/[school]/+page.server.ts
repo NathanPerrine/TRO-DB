@@ -1,6 +1,5 @@
 import type { PageServerLoad } from './$types';
 import { client } from '$lib/utils/sanity/client';
-import { error } from '@sveltejs/kit';
 import type { Spell } from '$lib/types/index';
 
 
@@ -14,34 +13,36 @@ export const load = (async ({ params }) => {
     'supreme-master': [] as Spell[],
   }
 
-  const data = await client.fetch<Spell[]>(`*[_type == 'spell' && spellSchool=='${params.school}'] {
+  const description = await client.fetch(`*[_type == 'description' && name match '${params.school}'] {
+    name,
+    description,
+  }`)
+
+  const data = await client.fetch<Spell[]>(`*[_type == 'spell' && spellSchool =='${params.school}'] {
     title,
     spellSchool,
     level,
     slug,
     spellEffect,
     mpCost,
-    }`)
+  }`)
 
-    if (!data[0]){
-      error(404, {
-        message: "Sorry, that page has not been found. Please try again later."
-      })
+
+  data.forEach(spell => {
+    const { level } = spell;
+    if (spells[level]) {
+      spells[level].push(spell);
     }
+  })
 
-    data.forEach(spell => {
-      const { level } = spell;
-      if (spells[level]) {
-        spells[level].push(spell);
-      }
-    })
+  const alphabetizedSpells = Object.fromEntries(
+    Object.entries(spells).map(([level, spells]) => [
+      level,
+      spells.sort((a, b) => a.title.localeCompare(b.title))
+    ])
+  );
 
-    const alphabetizedSpells = Object.fromEntries(
-      Object.entries(spells).map(([level, spells]) => [
-        level,
-        spells.sort((a, b) => a.title.localeCompare(b.title))
-      ])
-    );
-
-    return {spells: alphabetizedSpells};
+    return {
+      spells: alphabetizedSpells,
+      description: description[0]};
 }) satisfies PageServerLoad;

@@ -42,11 +42,11 @@
           {data.item.sellPrice}
         {/if}
       </li>
-      <li><strong>Charges:</strong>
-        {#if data.item.charges}
+      {#if data.item.charges}
+        <li><strong>Charges:</strong>
           {data.item.charges}
-        {/if}
-      </li>
+        </li>
+      {/if}
     </ul>
   </section>
 

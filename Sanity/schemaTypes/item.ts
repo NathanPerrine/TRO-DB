@@ -64,7 +64,7 @@ export const items = defineType({
       title: 'Description (Identified)',
       type: 'text',
       rows: 3,
-      description: 'Description of the item once identified (e.g. You see a scroll => You see a scroll of Resist Fire.'
+      description: 'Description of the item once identified (e.g. You see a scroll => You see a scroll of Resist Fire.)'
     }),
 
     defineField({
@@ -99,7 +99,7 @@ export const items = defineType({
       name: 'charges',
       title: 'Charges',
       type: 'number',
-      description: 'Max charges the item can hold. (Only for items with charges, Orbs, Wands, etc.',
+      description: 'Max charges the item can hold. (Only for items with charges, Orbs, Wands, etc.)',
     }),
 
     defineField({

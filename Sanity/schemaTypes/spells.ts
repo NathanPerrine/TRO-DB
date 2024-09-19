@@ -32,6 +32,25 @@ export const spells = defineType({
     }),
 
     defineField({
+      name: 'tags',
+      title: 'Tags',
+      description: 'Tags useful for sorting. "Missing Info", "Healing", "Bugged", etc.',
+      type:'array',
+      of: [
+        {
+          name:'tag',
+          title:'Tag',
+          type:'string'
+        }
+      ],
+      options: {
+        layout: 'tags'
+      },
+      validation: rule => rule
+        .unique()
+    }),
+
+    defineField({
         name: 'description',
         title: 'Description',
         type: 'text',

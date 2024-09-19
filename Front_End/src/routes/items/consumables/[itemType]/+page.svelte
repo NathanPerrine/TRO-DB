@@ -6,15 +6,11 @@
 
 <main>
   <header>
-    <h1>Scrolls</h1>
-    <p>
-      Scrolls are magical single-use items that contain a variety of effects, ranging from powerful buff spells to summoning monsters in combat.
-      They can be found from monster loot or occasionally sold in magic shops.
-    </p>
+    <h1>{data.description.name}</h1>
+    <p>{data.description.description}</p>
   </header>
-
   <section>
-    <h3></h3>
+    <div class="border-gradient"></div>
     <table>
       <thead>
         <tr>
@@ -25,7 +21,7 @@
       <tbody>
         {#each data.scrolls as scroll}
           <tr>
-            <td><a href="{scroll.slug.current}">{scroll.name}</a></td>
+            <td><a href="{data.description.name}/{scroll.slug.current}">{scroll.name}</a></td>
             <td>{scroll.descriptionIdentified}</td>
           </tr>
         {/each}

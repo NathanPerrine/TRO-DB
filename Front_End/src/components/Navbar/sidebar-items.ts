@@ -10,7 +10,8 @@ export const sidebarItems: SidebarItem[] = [
     title: "Areas",
     subItems: [
       { title: "Dungeons", link: "/areas/dungeons", disabled: true },
-      { title: "Overworld", link: "/areas/overworld", disabled: true }
+      { title: "Overworld", link: "/areas/overworld", disabled: true },
+      { title: "Towns", link: "/areas/towns", disabled: true},
     ]
   },
   {
@@ -42,12 +43,17 @@ export const sidebarItems: SidebarItem[] = [
       {
         title: "Consumables",
         subItems: [
-          { title: "Orbs", link: "/items/consumables/orbs", disabled: true },
-          { title: "Potions", link: "/items/consumables/potions", disabled: true },
-          { title: "Scrolls", link: "/items/consumables/scrolls", disabled: true },
-          { title: "Wands", link: "/items/consumables/wands", disabled: true }
+          { title: "Baubles", link: "/items/consumables/baubles", disabled: false },
+          { title: "Orbs", link: "/items/consumables/orbs", disabled: false },
+          { title: "Potions", link: "/items/consumables/potions", disabled: false },
+          { title: "Scrolls", link: "/items/consumables/scrolls", disabled: false },
+          { title: "Wands", link: "/items/consumables/wands", disabled: false }
         ]
-      }
+      },
+      { title: "Junk", link: "/items/junk", disabled: true
+      },
+      { title: "Dungeon Items", link: "/items/dungeon-items", disabled: true,
+      },
     ]
   },
   {
@@ -58,7 +64,7 @@ export const sidebarItems: SidebarItem[] = [
       { title: "Elementalism", link: "/magic/elementalism", disabled: false },
       { title: "Sorcery", link: "/magic/sorcery", disabled: false },
       { title: "Necromancy", link: "/magic/necromancy", disabled: false },
-      { title: "Enchanting", link: "/magic/enchanting", disabled: false},
+      { title: "Enchanting", link: "/guides/enchanting", disabled: true},
     ]
   },
   { title: "Quests", link: "/quests", disabled: true },

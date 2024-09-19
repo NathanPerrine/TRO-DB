@@ -43,6 +43,13 @@ h2, h3, h4 {
   font-family: 'Garamond', serif;
 }
 
+.border-gradient {
+  border-bottom: 3px solid;
+  border-image: linear-gradient(to right, #cc5500, transparent) 1;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+}
+
 /* List styling */
 
 ul {

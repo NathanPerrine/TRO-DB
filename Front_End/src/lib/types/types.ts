@@ -17,10 +17,10 @@ export type FullSpell = Spell & {
   extendable: boolean;
   enchantable: boolean;
   dropOnly: boolean;
-  notes?: [];
+  notes?: [],
 }
 
-export type Item ={
+export type Item = {
   name: string,
   slug: Slug,
   type: 'junk' | 'potion' | 'elixir' | 'bauble' | 'scroll' | 'wand' | 'orb' | 'spellbook' | 'ability book' | 'dungeon',
@@ -31,5 +31,10 @@ export type Item ={
   buyPrice?: number,
   sellPrice?: number,
   charges?: number,
-  notes?: [];
+  notes?: [],
+}
+
+export type Description = {
+  name: string,
+  description: string,
 }
