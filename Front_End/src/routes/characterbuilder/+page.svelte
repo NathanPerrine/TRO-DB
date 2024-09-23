@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { alignmentInfo, pvpInfo, statInfo, races, classes, alignments, raceClassStats, type Character, pvpOptions } from "./characterBuilder"
+  import { alignmentInfo, pvpInfo, statInfo, races, classes, alignments, raceClassStats, type Character, type Stats, pvpOptions } from "./characterBuilder"
+	import InfoContent from "./InfoContent.svelte";
 
-  type Stats = 'strength' | 'dexterity' | 'intelligence' | 'endurance'
+
 
   let character: Character = {
     strength: raceClassStats.human.adventurer.strength,
@@ -52,25 +53,7 @@
     }
   };
 
-  function getScoreDescription(score: number) {
-    if (score <= 5) {
-      return 'Terrible';
-    } else if (score <= 8) {
-      return 'Poor';
-    } else if (score <= 13) {
-      return 'Average';
-    } else if (score <= 17) {
-      return 'good';
-    } else if (score <= 21) {
-      return 'Excellent';
-    } else {
-      return 'Fantastic';
-    }
-  }
 
-  function getBaseStat(stat: Stats) {
-    return raceClassStats[character.race][character.class][stat];
-  }
 
 </script>
 
@@ -159,75 +142,69 @@
     </div>
 
     <div class="info-column">
-      <!-- Race Class Stats -->
-      <div>
-        <p>As
-          {#if character.race == 'human' || 'giant'}
-            a
-          {:else}
-            an
-          {/if}
-          <span class="text-emphasis">{character.race} {character.class}</span>, your base attributes are set at Strength <span class="text-emphasis">{getBaseStat('strength')}</span>, Dexterity: <span class="text-emphasis">{getBaseStat('dexterity')}</span>, Intelligence: <span class="text-emphasis">{getBaseStat('intelligence')}</span>, Endurance: <span class="text-emphasis">{getBaseStat('endurance')}</span>. Your attribute points may be divided in any way among your four base attributes.
-        </p>
-      </div>
-      <!-- Strength -->
-      <div>
-        <p>A strength of <span class="text-emphasis">{character.strength}</span> is considered <span class="text-emphasis">{getScoreDescription(character.strength)}</span>. {statInfo.strength}</p>
-      </div>
-      <!-- Dexterity -->
-      <div>
-        <p>A dexterity of <span class="text-emphasis">{character.dexterity}</span> is considered <span class="text-emphasis">{getScoreDescription(character.dexterity)}</span>. {statInfo.dexterity}</p>
-      </div>
-      <!-- Intelligence -->
-      <div>
-        <p>An intelligence of <span class="text-emphasis">{character.intelligence}</span> is considered <span class="text-emphasis">{getScoreDescription(character.intelligence)}</span>. {statInfo.intelligence}</p>
-      </div>
-      <!-- Endurance -->
-      <div>
-        <p>An endurance of <span class="text-emphasis">{character.endurance}</span> is considered <span class="text-emphasis">{getScoreDescription(character.endurance)}</span>. {statInfo.endurance}</p>
-      </div>
-      <!-- alignment -->
-      <div>
-        <p>
-          {#if character.alignment == 'good'}
-            {@html alignmentInfo.good}
-          {:else if character.alignment == 'neutral'}
-            {@html alignmentInfo.neutral}
-          {:else if character.alignment == 'evil'}
-            {@html alignmentInfo.evil}
-          {/if}
-        </p>
-      </div>
-      <!-- PvP -->
-      <div>
-        <p>
-          {#if character.pvp == 'on'}
-            {pvpInfo.on}
-          {:else if character.pvp == 'off'}
-            {pvpInfo.off}
-          {/if}
-        </p>
-      </div>
-
+      <div class="info-container">
+        <!-- Race Class Stats -->
+        <InfoContent stat="characterInfo" character={character} />
+        <!-- Strength -->
+        <InfoContent stat="strength" character={character} />
+        <!-- Dexterity -->
+        <InfoContent stat="dexterity" character={character} />
+        <!-- Intelligence -->
+        <InfoContent stat="intelligence" character={character} />
+        <!-- Endurance -->
+        <InfoContent stat="endurance" character={character} />
+        <!-- alignment -->
+        <InfoContent stat="alignment" character={character} />
+        <!-- PvP -->
+        <InfoContent stat="pvp" character={character} />
     </div>
+    </div>
+
     <div class="export-column">
 
     </div>
   </div>
-
-
 </main>
 
 <style lang="scss">
   .builder-container {
     display: flex;
     justify-content: space-between;
+    width: 100%;
 
     .stat-column,
-    .info-column,
     .export-column {
-      width: 100%;
+      flex-grow: 1;
+      flex-basis: 0;
+    }
 
+    .info-column {
+      position: relative;
+      flex-grow: 3;
+      flex-basis: 0;
+
+      background-color: #f9f4eb;
+
+      border: 2px solid #6c574a;
+      padding: 20px;
+      margin: 20px 0;
+      height: 75vh;
+
+
+      font-family: 'IM Fell English', serif;
+      font-size: 1.2rem;
+      color: #4a3726;
+      line-height: 1.8;
+
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+
+      .info-container {
+        height: 100%;
+        overflow: auto;
+      }
+    }
+
+    .stat-column,{
       .stat-container {
         display: flex;
         flex-direction: column;
@@ -250,10 +227,8 @@
           display: flex;
           justify-content: center;
           align-items: center;
-
           height: 50px;
           width: 50px;
-
           font-size: 24px;
         }
 
@@ -261,29 +236,28 @@
           font-size: 18px;
         }
 
-        .sphere{
+        .sphere {
           height: 50px;
           width: 50px;
-          position:relative;
-          background-color:lightgray;
-          border-radius:50%;
-          text-align:center;
-          vertical-align:middle;
+          position: relative;
+          background-color: lightgray;
+          border-radius: 50%;
+          text-align: center;
+          vertical-align: middle;
           line-height: 50px;
-          box-shadow: 1px 1px 1px gray,
-            inset 0px 0px 10px black;
-          }
+          box-shadow: 1px 1px 1px gray, inset 0px 0px 10px black;
 
-        .sphere::after{
-          background-color: rgba(255,255,255,.5);
-          content:'';
-          height:50%;
-          width: 15%;
-          left:18%;
-          top:0%;
-          position:absolute;
-          border-radius:50%;
-          transform: rotate(45deg);
+          &::after {
+            background-color: rgba(255, 255, 255, 0.5);
+            content: '';
+            height: 50%;
+            width: 15%;
+            left: 18%;
+            top: 0%;
+            position: absolute;
+            border-radius: 50%;
+            transform: rotate(45deg);
+          }
         }
 
         .stat-minus,
@@ -297,10 +271,10 @@
         }
       }
     }
-  }
 
-  :global(.text-emphasis) {
-    text-transform: capitalize;
-    color: #cc5500;
+    :global(.text-emphasis) {
+      text-transform: capitalize;
+      color: #cc5500;
+    }
   }
 </style>

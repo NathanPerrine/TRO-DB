@@ -17,6 +17,8 @@ type StatInfo = {
   endurance: string,
 }
 
+export type Stats = 'strength' | 'dexterity' | 'intelligence' | 'endurance'
+
 export const statInfo: StatInfo = {
   strength: 'Your strength directly affects your carrying capacity and the amount of melee damage you can inflict.  A higher strength will also make the following skills easier to master: short sword, long sword, two-handed sword, club, axe, maul, mace, unarmed combat, shield use, weaponsmith, and armorsmith.',
   dexterity: 'Your dexterity directly affects your movement rate and the amount of throwing weapon damage you can inflict.  A higher dexterity will also make the following skills easier to master: short sword, long sword, mace, unarmed combat, dagger, throwing weapons, shield use, critical striking, acrobatics, detect/disarm traps, pick pockets, pick locks, weaponsmith, and armorsmith.',
