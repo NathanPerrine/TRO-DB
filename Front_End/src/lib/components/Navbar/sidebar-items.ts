@@ -20,8 +20,8 @@ export const sidebarItems: SidebarItem[] = [
       {
         title: "Books",
         subItems: [
-          { title: "Skill Books", link: "/items/books/skillbooks", disabled: true },
-          { title: "Spell Books", link: "/items/books/spellbooks", disabled: true }
+          { title: "Skillbooks", link: "/items/books/skillbooks", disabled: false },
+          { title: "Spellbooks", link: "/items/books/spellbooks", disabled: false }
         ]
       },
       {

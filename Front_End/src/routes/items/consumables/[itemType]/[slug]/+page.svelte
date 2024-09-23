@@ -1,10 +1,8 @@
 <script lang="ts">
-	import { PortableText } from '@portabletext/svelte';
-    import type { PageData } from './$types';
-	import UnorderedList from '$lib/utils/sanity/UnorderedList.svelte';
+  import type { PageData } from './$types';
+	import Notes from '$lib/components/Notes/Notes.svelte';
 
-    export let data: PageData;
-    const bulletContext = 'note'
+  export let data: PageData;
 
 </script>
 
@@ -50,20 +48,5 @@
     </ul>
   </section>
 
-  <h2>Notes</h2>
-  {#if data.item.notes}
-    <PortableText
-      value={data.item.notes}
-      context={{ bulletContext }}
-      components={{
-        listItem: {
-          normal: UnorderedList
-        },
-      }}
-    />
-  {:else}
-    <ul class="ul-note">
-      <li></li>
-    </ul>
-  {/if}
+  <Notes notes={data.item.notes} />
 </main>

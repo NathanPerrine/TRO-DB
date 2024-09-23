@@ -1,10 +1,8 @@
 <script lang="ts">
-	import UnorderedList from '$lib/utils/sanity/UnorderedList.svelte';
+	import Notes from '$lib/components/Notes/Notes.svelte';
   import type { PageData } from './$types';
-  import { PortableText } from '@portabletext/svelte';
 
   export let data: PageData;
-  let bulletContext = 'note'
 </script>
 
 <main>
@@ -76,7 +74,7 @@
 
   <h2>Acquisition</h2>
   <ul class="ul-diamond">
-    <li>Learned From: <a href="/items/books/spellbooks/spellbook-of-${data.spell.slug.current}">Spellbook of {data.spell.title}</a> </li>
+    <li>Learned From: <a href="/items/books/{data.spell.spellbook?.bookType}/{data.spell.spellbook?.slug.current}">Spellbook of {data.spell.title}</a> </li>
     <li>Drop Only:
       {#if data.spell.dropOnly}
         <span class="check">&#10003</span>
@@ -86,20 +84,5 @@
     </li>
   </ul>
 
-  <h2>Notes</h2>
-  {#if data.spell.notes}
-    <PortableText
-      value={data.spell.notes}
-      context={{ bulletContext }}
-      components={{
-        listItem: {
-          normal: UnorderedList
-        },
-      }}
-    />
-  {:else}
-    <ul class="ul-note">
-      <li></li>
-    </ul>
-  {/if}
+  <Notes notes={data.spell.notes} />
 </main>

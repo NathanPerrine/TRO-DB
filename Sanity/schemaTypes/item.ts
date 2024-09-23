@@ -43,8 +43,6 @@ export const items = defineType({
           { title: 'Scroll', value: 'scroll' },
           { title: 'Wand', value: 'wand' },
           { title: 'Orb', value: 'orb' },
-          { title: 'Spellbook', value: 'spellbook' },
-          { title: 'Ability Book', value: 'abilityBook' },
           { title: 'Dungeon', value: 'dungeon' },
         ],
       },

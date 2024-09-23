@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { client } from '$lib/utils/sanity/client';
-import type { Spell } from '$lib/types/index';
+import type { Spell } from '$lib';
 
 
 export const load = (async ({ params }) => {
@@ -25,6 +25,7 @@ export const load = (async ({ params }) => {
     slug,
     spellEffect,
     mpCost,
+    dropOnly
   }`)
 
 

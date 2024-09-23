@@ -1,10 +1,11 @@
 import type { PageServerLoad } from './$types';
 import { client } from '$lib/utils/sanity/client';
 import { error } from '@sveltejs/kit';
-import type { FullSpell } from '$lib/types/index'
+import type { FullSpell } from '$lib'
 
 export const load = (async ({ params }) => {
   const data = await client.fetch<FullSpell[]>(`*[_type == 'spell' && slug.current == '${params.spell}'] {
+    _id,
     title,
     spellSchool,
     level,
@@ -19,7 +20,11 @@ export const load = (async ({ params }) => {
     enchantable,
     dropOnly,
     notes,
-    }`)
+    "spellbook": *[_type == 'book' && linkedSpell._ref == ^._id][0]{
+      slug,
+      bookType,
+    }
+  }`)
 
     if (!data){
       error(404, {
