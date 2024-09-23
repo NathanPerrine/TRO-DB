@@ -102,4 +102,5 @@ export type Character = {
   class: Classes,
   alignment: Alignments,
   pvp: PvPOptions,
+  availablePoints: number,
 }

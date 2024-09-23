@@ -2,7 +2,7 @@
 	import { alignmentInfo, pvpInfo, raceClassStats, statInfo } from './characterBuilder';
 	import type { Character, Stats } from './characterBuilder';
 
-	export let stat: string = '';
+	export let stat: string;
 	export let character: Character;
 
 	function getScoreDescription(score: number) {
