@@ -104,7 +104,9 @@
 		font-size: 18px;
 		font-weight: normal;
 		cursor: pointer;
-		transition: background-color 0.3s ease, transform 0.2s ease;
+		transition:
+			background-color 0.3s ease,
+			transform 0.2s ease;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -173,7 +175,9 @@
 			border-radius: 50%;
 			text-align: center;
 			line-height: 50px;
-			box-shadow: 1px 1px 1px gray, inset 0px 0px 10px black;
+			box-shadow:
+				1px 1px 1px gray,
+				inset 0px 0px 10px black;
 			position: relative;
 
 			&::after {
