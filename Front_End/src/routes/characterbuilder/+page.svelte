@@ -1,5 +1,6 @@
 <script lang="ts">
   import { alignmentInfo, pvpInfo, statInfo, races, classes, alignments, raceClassStats, type Character, type Stats, pvpOptions } from "./characterBuilder"
+	import ImportExport from "./ImportExport.svelte";
 	import InfoContent from "./InfoContent.svelte";
 	import StatContainer from "./StatContainer.svelte";
 
@@ -66,7 +67,7 @@
     </div>
 
     <div class="export-column">
-
+      <ImportExport bind:character />
     </div>
   </div>
 </main>
@@ -81,6 +82,12 @@
     .export-column {
       flex-grow: 1;
       flex-basis: 0;
+    }
+
+    .export-column {
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .info-column {
