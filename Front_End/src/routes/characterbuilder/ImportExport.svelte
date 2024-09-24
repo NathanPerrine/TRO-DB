@@ -1,37 +1,42 @@
 <script lang="ts">
-	import type { Character } from "./characterBuilder";
+	import type { Character } from './characterBuilder';
 
 	export let character: Character;
 
 	let code: string = '';
-  // $: console.log(character);
-	// $: code;
 
-  $: code = JSON.stringify(character)
+	$: code = btoa(JSON.stringify(character));
 
-  function importBuild() {
-    character = JSON.parse(code)
-  }
+	function importBuild() {
+		character = JSON.parse(atob(code));
+	}
 
-  function exportBuild() {
-    navigator.clipboard.writeText(code)
-  }
-
+	function exportBuild() {
+		navigator.clipboard.writeText(code);
+	}
 </script>
 
-<div>
-	<h3>Import / Export</h3>
+<div class="saveLoad-container">
 	<textarea rows="4" bind:value={code}></textarea>
 	<div class="button-container tooltip">
-		<button class="import-button" on:click={importBuild} >Import</button>
-		<button class="export-button" on:click={exportBuild} >
-      Export
-      <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
-    </button>
+		<button class="import-button" on:click={importBuild}>Import</button>
+		<button class="export-button" on:click={exportBuild}>
+			Export
+			<span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+		</button>
 	</div>
+	<p>
+		Note: This currently has no validation. If in doubt reset the character race / class and try to
+		recreate it yourself.
+	</p>
 </div>
 
 <style lang="scss">
+	.saveLoad-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
 	textarea {
 		background-color: #f9f4eb;
 		color: #4a3726;
@@ -81,41 +86,41 @@
 			transform: scale(1.05);
 		}
 
-    &:active {
-      transform: scale(0.90);
-    }
+		&:active {
+			transform: scale(0.9);
+		}
 	}
 
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 140px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  z-index: 1;
-  bottom: 150%;
-  left: 50%;
-  margin-left: -75px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
+	.tooltip .tooltiptext {
+		visibility: hidden;
+		width: 140px;
+		background-color: #555;
+		color: #fff;
+		text-align: center;
+		border-radius: 6px;
+		padding: 5px;
+		position: absolute;
+		z-index: 1;
+		bottom: 150%;
+		left: 50%;
+		margin-left: -75px;
+		opacity: 0;
+		transition: opacity 0.3s;
+	}
 
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
+	.tooltip .tooltiptext::after {
+		content: '';
+		position: absolute;
+		top: 100%;
+		left: 50%;
+		margin-left: -5px;
+		border-width: 5px;
+		border-style: solid;
+		border-color: #555 transparent transparent transparent;
+	}
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
+	.tooltip:hover .tooltiptext {
+		visibility: visible;
+		opacity: 1;
+	}
 </style>

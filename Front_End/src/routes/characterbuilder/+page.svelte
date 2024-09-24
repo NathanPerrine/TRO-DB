@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { races, classes, alignments, raceClassStats, pvpOptions } from './characterBuilder';
-  import type { Character } from './characterBuilder'
+	import type { Character } from './characterBuilder';
 	import ImportExport from './ImportExport.svelte';
 	import InfoContent from './InfoContent.svelte';
 	import StatContainer from './StatContainer.svelte';
@@ -28,6 +28,8 @@
 		character.pvp = pvpOptions[0];
 		character.availablePoints = 8;
 	}
+
+	let activeTab = 'statInfo';
 </script>
 
 <main>
@@ -56,7 +58,24 @@
 		</div>
 
 		<div class="info-column">
-			<div class="info-container">
+			<div class="tabs">
+				<button
+					class="tab-button"
+					class:active={activeTab === 'statInfo'}
+					on:click={() => (activeTab = 'statInfo')}>Stat Info</button
+				>
+				<button
+					class="tab-button"
+					class:active={activeTab === 'classInfo'}
+					on:click={() => (activeTab = 'classInfo')}>Class Info</button
+				>
+				<button
+					class="tab-button"
+					class:active={activeTab === 'saveLoad'}
+					on:click={() => (activeTab = 'saveLoad')}>Save / Load</button
+				>
+			</div>
+			<div class="info-container" class:hidden={activeTab !== 'statInfo'}>
 				<!-- Race Class Stats -->
 				<InfoContent stat="characterInfo" {character} />
 				<!-- Strength -->
@@ -72,11 +91,17 @@
 				<!-- PvP -->
 				<InfoContent stat="pvp" {character} />
 			</div>
+			<div class="skill-container" class:hidden={activeTab !== 'classInfo'}>
+				<InfoContent stat="class" {character} />
+			</div>
+			<div class="saveLoad-container" class:hidden={activeTab !== 'saveLoad'}>
+				<ImportExport bind:character />
+			</div>
 		</div>
 
-		<div class="export-column">
-			<ImportExport bind:character />
-		</div>
+		<!-- <div class="export-column">
+
+		</div> -->
 	</div>
 </main>
 
@@ -86,14 +111,12 @@
 		justify-content: space-between;
 		width: 100%;
 
-		.stat-column,
-		.export-column {
+		.stat-column {
 			flex-grow: 1;
 			flex-basis: 0;
 		}
 
-		.stat-column,
-		.export-column {
+		.stat-column {
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
@@ -110,7 +133,9 @@
 			border: 2px solid #6c574a;
 			padding: 20px;
 			margin: 20px 0;
-			height: 75vh;
+			height: 80vh;
+			// max-width: 900px;
+			z-index: 1;
 
 			font-family: 'IM Fell English', serif;
 			font-size: 1.2rem;
@@ -119,7 +144,8 @@
 
 			box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 
-			.info-container {
+			.info-container,
+			.skill-container {
 				height: 100%;
 				overflow: auto;
 			}
@@ -155,5 +181,61 @@
 				transform: scale(0.9);
 			}
 		}
+	}
+
+	.tabs {
+		position: absolute;
+		top: -45px;
+		left: 10px;
+		display: flex;
+		gap: 8px;
+		z-index: -1;
+
+		.tab-button {
+			background-color: #f9f4eb;
+			color: #cc5500;
+			border: 2px solid #6c574a;
+			border-bottom: none;
+			border-radius: 4px 4px 0 0;
+			padding: 10px 20px;
+			font-size: 14px;
+			cursor: pointer;
+			transition:
+				background-color 0.3s ease,
+				transform 0.2s ease;
+			position: relative;
+			text-wrap: nowrap;
+			width: 110px;
+			height: 40px;
+
+			&:not(.active) {
+				&::after {
+					content: '';
+					position: absolute;
+					width: 104%;
+					right: -2px;
+					height: 40%;
+					background: #f9f4eb;
+					top: 73%;
+				}
+			}
+
+			/* Active tab styling */
+			&.active {
+				background-color: #fdf4df;
+				color: #cc5500;
+				font-weight: bold;
+				transform: scale(1.05);
+				border-color: #6c574a;
+			}
+
+			&:hover {
+				transform: scale(1.05);
+			}
+		}
+	}
+
+	.hidden {
+		display: none;
 	}
 </style>

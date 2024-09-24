@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { alignmentInfo, pvpInfo, raceClassStats, statInfo } from './characterBuilder';
+	import {
+		alignmentInfo,
+		classInfo,
+		pvpInfo,
+		raceClassStats,
+		statInfo,
+		classSkills
+	} from './characterBuilder';
 	import type { Character, Stats } from './characterBuilder';
 
 	export let stat: string;
@@ -78,6 +85,46 @@
 					{pvpInfo.off}
 				{/if}
 			</p>
+		</div>
+	{:else if stat == 'class'}
+		<div class="info-content">
+			<blockquote class="quote capitalize">{character.class}</blockquote>
+		</div>
+		<div class="info-content">
+			{classInfo[character.class]}
+		</div>
+		<div class="info-content">
+			As {#if character.class == 'adventurer'}an{:else}a{/if}
+			{character.class}, you will start with the following skills:
+			<ul class="ul-diamond">
+				{#each classSkills[character.class].skills as skill}
+					<li>{skill.skill} : {skill.level}</li>
+				{/each}
+			</ul>
+		</div>
+		<div class="info-content">
+			{#if character.class == 'adventurer' || character.class == 'wizard'}
+				<span class="capitalize">{character.class}s</span> additionally start with the following
+				magic skills, depending on their alignment.
+				<span class="text-emphasis">Good</span>:
+				{#each classSkills[character.class].magic.good as magicSkill}
+					<ul class="ul-diamond">
+						<li>{magicSkill.skill} : {magicSkill.level}</li>
+					</ul>
+				{/each}
+				<span class="text-emphasis">Neutral</span>:
+				{#each classSkills[character.class].magic.neutral as magicSkill}
+					<ul class="ul-diamond">
+						<li>{magicSkill.skill} : {magicSkill.level}</li>
+					</ul>
+				{/each}
+				<span class="text-emphasis">Evil</span>:
+				{#each classSkills[character.class].magic.evil as magicSkill}
+					<ul class="ul-diamond">
+						<li>{magicSkill.skill} : {magicSkill.level}</li>
+					</ul>
+				{/each}
+			{/if}
 		</div>
 	{/if}
 </section>

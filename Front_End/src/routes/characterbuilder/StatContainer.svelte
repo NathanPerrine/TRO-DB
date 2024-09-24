@@ -132,10 +132,6 @@
 		}
 	}
 
-	.capitalize {
-		text-transform: capitalize;
-	}
-
 	.stat-container {
 		display: flex;
 		flex-direction: column;
