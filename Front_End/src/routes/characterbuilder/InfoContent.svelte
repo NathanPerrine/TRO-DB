@@ -105,7 +105,7 @@
 		<div class="info-content">
 			{#if character.class == 'adventurer' || character.class == 'wizard'}
 				<span class="capitalize">{character.class}s</span> additionally start with the following
-				magic skills, depending on their alignment.
+				magic skills, depending on their alignment. <br>
 				<span class="text-emphasis">Good</span>:
 				{#each classSkills[character.class].magic.good as magicSkill}
 					<ul class="ul-diamond">
