@@ -98,10 +98,6 @@
 				<ImportExport bind:character />
 			</div>
 		</div>
-
-		<!-- <div class="export-column">
-
-		</div> -->
 	</div>
 </main>
 
@@ -128,9 +124,9 @@
 			flex-grow: 3;
 			flex-basis: 0;
 
-			background-color: #f9f4eb;
+			background-color: $color-background;
 
-			border: 2px solid #6c574a;
+			border: 2px solid $color-border;
 			padding: 20px;
 			margin: 20px 0;
 			height: 80vh;
@@ -139,7 +135,6 @@
 
 			font-family: 'IM Fell English', serif;
 			font-size: 1.2rem;
-			color: #4a3726;
 			line-height: 1.8;
 
 			box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
@@ -148,37 +143,6 @@
 			.skill-container {
 				height: 100%;
 				overflow: auto;
-			}
-		}
-
-		:global(.text-emphasis) {
-			text-transform: capitalize;
-			color: #cc5500;
-		}
-
-		button {
-			background-color: #cc5500;
-			color: #fdf4df;
-			border: 2px solid #6c574a;
-			border-radius: 4px;
-			padding: 8px 12px;
-			font-size: 18px;
-			font-weight: normal;
-			cursor: pointer;
-			transition:
-				background-color 0.3s ease,
-				transform 0.2s ease;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-top: 16px;
-
-			&:hover {
-				transform: scale(1.05);
-			}
-
-			&:active {
-				transform: scale(0.9);
 			}
 		}
 	}
@@ -192,9 +156,7 @@
 		z-index: -1;
 
 		.tab-button {
-			background-color: #f9f4eb;
-			color: #cc5500;
-			border: 2px solid #6c574a;
+			border: 2px solid $color-border;
 			border-bottom: none;
 			border-radius: 4px 4px 0 0;
 			padding: 10px 20px;
@@ -207,6 +169,7 @@
 			text-wrap: nowrap;
 			width: 110px;
 			height: 40px;
+      margin-top: 16px;
 
 			&:not(.active) {
 				&::after {
@@ -215,18 +178,15 @@
 					width: 104%;
 					right: -2px;
 					height: 40%;
-					background: #f9f4eb;
+					background: $color-background;
 					top: 73%;
 				}
 			}
 
-			/* Active tab styling */
+			/* Active tab */
 			&.active {
-				background-color: #fdf4df;
-				color: #cc5500;
 				font-weight: bold;
 				transform: scale(1.05);
-				border-color: #6c574a;
 			}
 
 			&:hover {

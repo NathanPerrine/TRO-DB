@@ -46,25 +46,24 @@ style:display={expanded ? 'block': 'none'}
     width: 100%;
 
     background-color: transparent;
-    color: $text-color;
+    color: $color-text;
     text-decoration: none;
     transition: background-color 0.2s ease;
 
     cursor: pointer;
 
     &:hover {
-      background-color: $link-hover-background;
-      color: #fff;
+      background: linear-gradient(to right, $color-accent-hover 30%, rgba($color-accent-hover, 0) 90%);
     }
 
     .arrow {
       font-size: 12px;
-      color: $text-color;
+      color: $color-text;
       transition: transform 0.3s ease;
     }
 
     &.expanded {
-      background-color: $link-hover-background;
+      background: linear-gradient(to right, $color-accent-hover 30%, rgba($color-accent-hover, 0) 90%);
       .arrow {
         transform: rotate(90deg);
       }
@@ -75,7 +74,7 @@ style:display={expanded ? 'block': 'none'}
 		padding: 0.2em 0 0 0.5em;
 		margin: 0.5em 0 0 0.5em;
 		list-style: none;
-		border-left: 2px solid $divider-color;
+		border-left: 2px solid $color-divider;
 	}
 
 	li {

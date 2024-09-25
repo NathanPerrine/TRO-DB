@@ -91,22 +91,26 @@
 			<blockquote class="quote capitalize">{character.class}</blockquote>
 		</div>
 		<div class="info-content">
-			{classInfo[character.class]}
+			<p>{classInfo[character.class]}</p>
 		</div>
 		<div class="info-content">
-			As {#if character.class == 'adventurer'}an{:else}a{/if}
-			{character.class}, you will start with the following skills:
+			<p>
+				As {#if character.class == 'adventurer'}an{:else}a{/if}
+				{character.class}, you will start with the following skills:
+			</p>
 			<ul class="ul-diamond">
 				{#each classSkills[character.class].skills as skill}
 					<li>{skill.skill} : {skill.level}</li>
 				{/each}
 			</ul>
 		</div>
-		<div class="info-content">
-			{#if character.class == 'adventurer' || character.class == 'wizard'}
-				<span class="capitalize">{character.class}s</span> additionally start with the following
-				magic skills, depending on their alignment. <br>
-				<span class="text-emphasis">Good</span>:
+		{#if character.class == 'adventurer' || character.class == 'wizard'}
+			<div class="info-content">
+        <p>
+          <span class="capitalize">{character.class}s</span> additionally start with the following
+          magic skills, depending on their alignment. <br />
+          <span class="text-emphasis">Good</span>:
+        </p>
 				{#each classSkills[character.class].magic.good as magicSkill}
 					<ul class="ul-diamond">
 						<li>{magicSkill.skill} : {magicSkill.level}</li>
@@ -124,8 +128,8 @@
 						<li>{magicSkill.skill} : {magicSkill.level}</li>
 					</ul>
 				{/each}
-			{/if}
-		</div>
+			</div>
+		{/if}
 	{/if}
 </section>
 
@@ -133,14 +137,14 @@
 	.info-content {
 		padding: 10px;
 		margin: 8px 0px;
-		border-left: 3px solid #6c574a;
-		background-color: #fcf8f3;
+		border-left: 3px solid $color-border;
+		background-color: darken($color-background, 5%);
 		font-style: italic;
 	}
 
 	.quote {
 		font-family: 'Cinzel', serif;
-		color: #cc5500;
+		color: $color-text;
 		text-align: center;
 		margin: 10px 0;
 		font-weight: bold;

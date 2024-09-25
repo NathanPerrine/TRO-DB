@@ -28,14 +28,14 @@
 
 <style lang="scss">
 .sidebar {
-  background: linear-gradient(to right, #fdf4df, #fbe8c8, #f8dbb1, #f5c898);
+  background: linear-gradient(to left, $color-accent 5%, $color-background 13%);
   padding: 20px;
   width: 250px;
-  border-right: 2px solid #a8714d;;
+  border-right: 2px solid $color-divider;
   overflow-y: auto;
 
   h2 {
-    color: $header-color;
+    color: $color-header;
     margin-top: 0;
     margin-bottom: 15px;
     font-weight: bold;

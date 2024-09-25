@@ -1,0 +1,188 @@
+/* General Layout */
+body {
+	background-color: $color-background;
+	color: $color-text;
+	font-family: 'Georgia', serif;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	height: 100vh;
+}
+
+main {
+	flex-grow: 1;
+	width: 100%;
+	padding: 30px;
+	color: $color-text;
+	font-family: 'Georgia', serif;
+	overflow-y: auto;
+	background: linear-gradient(to right, $color-accent 0%, $color-background 3%);
+}
+
+p {
+	margin: 5px 0;
+  color: $color-text;
+}
+
+.capitalize {
+	text-transform: capitalize;
+}
+
+.text-emphasis {
+  color: $color-text-accent;
+}
+
+.text-center {
+  text-align: center;
+}
+
+/* Disabled */
+.inactive {
+  color: $color-inactive;
+}
+
+/* Headers */
+h1 {
+	color: $color-header;
+	border-bottom: 3px solid;
+	border-image: linear-gradient(to right, $color-border, transparent) 1;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	font-family: 'Garamond', serif;
+}
+
+h2, h3, h4 {
+	color: $color-header;
+	border-bottom: 3px solid;
+	border-image: linear-gradient(to right, $color-border, transparent) 1;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	font-family: 'Garamond', serif;
+}
+
+.border-gradient {
+	border-bottom: 3px solid;
+	border-image: linear-gradient(to right, $color-border, transparent) 1;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+}
+
+/* Lists */
+ul {
+	margin: 5px 0;
+}
+
+.ul-diamond {
+	list-style-type: '◆';
+}
+
+.ul-note {
+	list-style-type: '✎';
+}
+
+li {
+	padding-left: 8px;
+
+	&::marker {
+		color: $color-text;
+	}
+}
+
+/* Buttons */
+button {
+  background-color: $color-button-bg;
+  color: $color-button-text;
+  padding: 10px 20px;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $color-button-hover;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    background-color: $color-button-hover;
+    transform: scale(0.9);
+  }
+}
+
+/* Links */
+a {
+  color: $color-text-accent;
+  text-decoration: none;
+  border-bottom: 1px dashed $color-text-accent;
+  transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+
+  &:hover {
+    color: $color-header;
+    border-bottom-color: $color-header;
+  }
+
+  &:active {
+    color: $color-accent-hover;
+    border-bottom-color: $color-accent-hover;
+  }
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+  background-color: $color-accent;
+  color: $color-text;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border: 1px solid $color-border;
+}
+
+th {
+  background-color: $color-header;
+  color: $color-background;
+}
+
+tr:nth-child(even) {
+  background-color: $color-hover;
+}
+
+tr:hover {
+  background-color: $color-accent-hover;
+}
+
+/* Textareas */
+textarea {
+  padding: 10px;
+  margin: 10px;
+  border: 1px solid $color-border;
+  border-radius: 4px;
+  background: $color-background;
+  color: $color-text;
+  font-family: 'Arial', sans-serif;
+  resize: vertical;
+
+  &::placeholder {
+    color: $color-inactive;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $color-accent-hover;
+    background: linear-gradient(to bottom, $color-accent-hover, rgba($color-accent-hover, 0));
+  }
+
+  &:hover {
+    border-color: $color-hover;
+  }
+
+  &:disabled {
+    background-color: $color-inactive;
+    border-color: $color-inactive;
+    color: $color-border;
+    cursor: not-allowed;
+  }
+}

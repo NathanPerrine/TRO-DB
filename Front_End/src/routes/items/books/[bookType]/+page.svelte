@@ -39,7 +39,7 @@
           <tr>
             <th style="width: 25%">Book</th>
             <th>Description</th>
-            <th style="width: 10%">Drop Only</th>
+            <th style="width: 15%">Drop Only</th>
           </tr>
         </thead>
         <tbody>

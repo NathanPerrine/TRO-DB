@@ -18,8 +18,8 @@
       <tr>
         <th style="width:20%">Spell</th>
         <th style="width:5%">Mana</th>
-        <th style="width:65%">Effect</th>
-        <th style="width:10%">Drop Only</th>
+        <th >Effect</th>
+        <th style="width:15%">Drop Only</th>
       </tr>
     </thead>
     <tbody>

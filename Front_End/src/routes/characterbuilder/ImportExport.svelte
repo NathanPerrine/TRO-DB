@@ -5,6 +5,9 @@
 
 	let code: string = '';
 
+
+// This function is only provided for compatibility with legacy web platform APIs and should never be used in new code, because they use strings to represent binary data and predate the introduction of typed arrays in JavaScript. For code running using Node.js APIs, converting between base64-encoded strings and binary data should be performed using Buffer.from(str, 'base64') and buf.toString('base64').
+
 	$: code = btoa(JSON.stringify(character));
 
 	function importBuild() {
@@ -37,28 +40,6 @@
 		flex-direction: column;
 		justify-content: center;
 	}
-	textarea {
-		background-color: #f9f4eb;
-		color: #4a3726;
-		border: 2px solid #6c574a;
-		border-radius: 4px;
-		padding: 10px;
-		font-size: 16px;
-		line-height: 1.5;
-		resize: none;
-		box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-		transition: border-color 0.3s ease;
-
-		&:focus {
-			border-color: #cc5500;
-			outline: none;
-			box-shadow: 0 0 10px rgba(204, 85, 0, 0.5);
-		}
-
-		&::placeholder {
-			color: #9c8b7a;
-		}
-	}
 
 	.button-container {
 		display: flex;
@@ -66,36 +47,11 @@
 		margin-top: 20px;
 	}
 
-	button {
-		background-color: #cc5500;
-		color: #fdf4df;
-		border: 2px solid #6c574a;
-		border-radius: 4px;
-		padding: 8px 12px;
-		font-size: 18px;
-		font-weight: normal;
-		cursor: pointer;
-		transition:
-			background-color 0.3s ease,
-			transform 0.2s ease;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		&:hover {
-			transform: scale(1.05);
-		}
-
-		&:active {
-			transform: scale(0.9);
-		}
-	}
-
 	.tooltip .tooltiptext {
 		visibility: hidden;
 		width: 140px;
-		background-color: #555;
-		color: #fff;
+		background-color: darken($color-background, 5%);
+		color: $color-text;
 		text-align: center;
 		border-radius: 6px;
 		padding: 5px;
@@ -116,7 +72,7 @@
 		margin-left: -5px;
 		border-width: 5px;
 		border-style: solid;
-		border-color: #555 transparent transparent transparent;
+		border-color: $color-border transparent transparent transparent;
 	}
 
 	.tooltip:hover .tooltiptext {

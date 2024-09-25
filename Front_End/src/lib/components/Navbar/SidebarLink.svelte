@@ -6,15 +6,18 @@
 {#if !item.disabled }
   <a href={item.link}>{item.title}</a>
 {:else}
-  <p class="disabled">{item.title}</p>
+  <p class="inactive">{item.title}</p>
 {/if}
 
 <style lang="scss">
+  a {
+    border: none;
+  }
   a, p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: $text-color;
+    color: $color-text;
     text-decoration: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -22,12 +25,12 @@
   }
 
   a:hover {
-    background-color: $link-hover-background;
-    color: #fff;
+    background: linear-gradient(to right, $color-accent-hover 30%, rgba($color-accent-hover, 0) 90%);
+    color: $color-text;
   }
 
-  .disabled {
-    color: gray;
+  .inactive {
+    color: $color-inactive;
     text-decoration: line-through;
   }
 </style>

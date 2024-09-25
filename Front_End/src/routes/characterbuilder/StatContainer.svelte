@@ -67,80 +67,42 @@
 
 {#if stat == 'strength' || stat == 'dexterity' || stat == 'intelligence' || stat == 'endurance'}
 	<div class="stat-container">
-		<h3 class="stat capitalize">{stat}</h3>
+		<h3 class="stat capitalize text-center">{stat}</h3>
 		<div class="stat-selectors">
-			<button class="stat-minus" on:click={() => updateStat(-1)}></button>
+			<button class="stat-minus" on:click={() => updateStat(-1)}>-</button>
 			<div class="sphere stat-value">{character[stat]}</div>
-			<button class="stat-plus" on:click={() => updateStat(1)}></button>
+			<button class="stat-plus" on:click={() => updateStat(1)}>+</button>
 		</div>
 	</div>
 {:else if stat == 'availablePoints'}
 	<div class="stat-container">
-		<h3 class="stat">Available Points</h3>
+		<h3 class="stat text-center">Available Points</h3>
 		<div class="stat-selectors">
 			<div class="sphere stat-value">{character.availablePoints}</div>
 		</div>
 	</div>
 {:else if stat == 'race' || stat == 'class' || stat == 'alignment' || stat == 'pvp'}
 	<div class="stat-container">
-		<h3 class="stat capitalize">{stat}</h3>
+		<h3 class="stat capitalize text-center">{stat}</h3>
 		<div class="stat-selectors">
-			<button class="stat-minus arrow-left" on:click={() => changeSelection(stat, -1)}></button>
+			<button class="stat-minus arrow-left" on:click={() => changeSelection(stat, -1)}>←</button>
 			<div class="stat-value capitalize text-md">
 				{character[stat]}
 			</div>
-			<button class="stat-plus arrow-right" on:click={() => changeSelection(stat, 1)}></button>
+			<button class="stat-plus arrow-right" on:click={() => changeSelection(stat, 1)}>→</button>
 		</div>
 	</div>
 {/if}
 
 <style lang="scss">
 	button {
-		background-color: #cc5500;
-		color: #fdf4df;
-		border: 2px solid #6c574a;
-		border-radius: 4px;
-		padding: 8px 12px;
-		font-size: 18px;
-		font-weight: normal;
-		cursor: pointer;
-		transition:
-			background-color 0.3s ease,
-			transform 0.2s ease;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		&:hover {
-			transform: scale(1.05);
-		}
-
-		&:before {
-			content: '-';
-		}
-
-		&.stat-plus:before {
-			content: '+';
-		}
-
-		&.arrow-left:before {
-			content: '←';
-		}
-
-		&.arrow-right:before {
-			content: '→';
-		}
+    padding: 0px;
 	}
 
 	.stat-container {
 		display: flex;
 		flex-direction: column;
 		width: 175px;
-
-		.stat {
-			display: flex;
-			justify-content: center;
-		}
 
 		.stat-selectors {
 			width: 175px;
@@ -166,23 +128,22 @@
 		.sphere {
 			height: 50px;
 			width: 50px;
-			background-color: #e28e51;
-			color: white;
+			background-color: $color-accent-hover;
+			color: $color-text;
 			border-radius: 50%;
 			text-align: center;
 			line-height: 50px;
 			box-shadow:
-				1px 1px 1px gray,
-				inset 0px 0px 10px black;
+				inset 0px 0px 10px $color-accent;
 			position: relative;
 
 			&::after {
-				background-color: #d3b79b;
+				background-color: $color-text;
 				content: '';
-				height: 50%;
+				height: 30%;
 				width: 15%;
 				left: 18%;
-				top: 0;
+				top: 10%;
 				position: absolute;
 				border-radius: 50%;
 				transform: rotate(45deg);
