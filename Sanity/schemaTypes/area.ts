@@ -37,7 +37,7 @@ export const areas = defineType({
         list: [
           { title: 'Dungeon', value: 'dungeon' },
           { title: 'Town', value: 'town' },
-          { title: 'Overworld', value: 'overworld' },
+          { title: 'Zone', value: 'zone' },
         ],
         layout: 'dropdown',
       },
