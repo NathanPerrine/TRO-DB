@@ -1,6 +1,6 @@
 import type { PageServerLoad } from './$types';
 import { client } from '$lib/utils/sanity/client';
-import type { Spell } from '$lib';
+import type { Description, Spell } from '$lib';
 
 
 export const load = (async ({ params }) => {
@@ -13,9 +13,10 @@ export const load = (async ({ params }) => {
     'supreme-master': [] as Spell[],
   }
 
-  const description = await client.fetch(`*[_type == 'description' && name match '${params.school}'] {
+  const description = await client.fetch<Description[]>(`*[_type == 'description' && name match '${params.school}'] {
     name,
     description,
+    extras,
   }`)
 
   const data = await client.fetch<Spell[]>(`*[_type == 'spell' && spellSchool =='${params.school}'] {

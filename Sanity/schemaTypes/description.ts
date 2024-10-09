@@ -17,6 +17,14 @@ export const descriptions = defineType({
       title: 'Description',
       type: 'text',
       description: 'Short, 1 paragraph description.',
+    }),
+
+    defineField({
+      name: 'extras',
+      title: 'Extras',
+      type: 'array',
+      of: [{ type: 'block' }],
+      description: 'Any additional information required.'
     })
   ]
 })
