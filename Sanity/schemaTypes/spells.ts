@@ -106,6 +106,7 @@ export const spells = defineType({
       type: 'string',
       options: {
         list: [
+          { title: 'Can not be used in battle.', value: 'Can not be used in battle.' },
           { title: 'Very Short', value: 'Very Short' },
           { title: 'Short', value: 'Short' },
           { title: 'Medium', value: 'Medium' },
