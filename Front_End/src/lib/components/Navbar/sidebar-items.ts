@@ -10,7 +10,7 @@ export const sidebarItems: SidebarItem[] = [
     title: "Areas",
     subItems: [
       { title: "Dungeons", link: "/areas/dungeons", disabled: true },
-      { title: "Overworld", link: "/areas/overworld", disabled: true },
+      { title: "Zones", link: "/areas/zones", disabled: false },
       { title: "Towns", link: "/areas/towns", disabled: true},
     ]
   },
@@ -68,7 +68,7 @@ export const sidebarItems: SidebarItem[] = [
     ]
   },
   { title: "Quests", link: "/quests", disabled: true },
-  { title: "Monsters", link: "/monsters", disabled: true },
+  { title: "Mobs", link: "/mobs", disabled: false },
   { title: "NPCs", link: "/npcs", disabled: true },
   { title: "Shops", link: "/shops", disabled: true },
   { title: "Character Builder", link: '/characterbuilder', disabled: false},

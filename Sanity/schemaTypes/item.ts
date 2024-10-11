@@ -8,8 +8,8 @@ export const items = defineType({
     defineField({
       name: 'name',
       title: 'Name',
-      type: 'string',
       description: 'Name of the item.',
+      type: 'string',
       validation: Rule => Rule.required(),
     }),
 
@@ -52,52 +52,52 @@ export const items = defineType({
     defineField({
       name: 'description',
       title: 'Description',
+      description: 'A brief description of the item.',
       type: 'text',
       rows: 2,
-      description: 'A brief description of the item.',
     }),
 
     defineField({
       name: 'descriptionIdentified',
       title: 'Description (Identified)',
+      description: 'Description of the item once identified (e.g. You see a scroll => You see a scroll of Resist Fire.)',
       type: 'text',
       rows: 3,
-      description: 'Description of the item once identified (e.g. You see a scroll => You see a scroll of Resist Fire.)'
     }),
 
     defineField({
       name: 'weight',
       title: 'Weight',
-      type: 'number',
       description: 'Weight of the item.',
+      type: 'number',
     }),
 
     defineField({
       name: 'condition',
       title: 'Condition',
-      type: 'number',
       description: 'Max condition of the item.',
+      type: 'number',
     }),
 
     defineField({
       name: 'buyPrice',
       title: 'Buy Price',
-      type: 'number',
       description: 'Only if this item is for sale in a shop.',
+      type: 'number',
     }),
 
     defineField({
       name: 'sellPrice',
       title: 'Sell Price',
-      type: 'number',
       description: 'Price if sold to a shop.',
+      type: 'number',
     }),
 
     defineField({
       name: 'charges',
       title: 'Charges',
-      type: 'number',
       description: 'Max charges the item can hold. (Only for items with charges, Orbs, Wands, etc.)',
+      type: 'number',
     }),
 
     defineField({

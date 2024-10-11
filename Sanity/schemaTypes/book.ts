@@ -8,8 +8,8 @@ export const books = defineType({
     defineField({
       name: 'name',
       title: 'Name',
-      type: 'string',
       description: 'Name of the item.',
+      type: 'string',
       validation: Rule => Rule.required(),
     }),
 
@@ -32,8 +32,8 @@ export const books = defineType({
     defineField({
       name: 'bookType',
       title: 'Book Type',
-      type: 'string',
       description: 'Skill or spell book?',
+      type: 'string',
       options: {
         list: [
           { title: 'Skillbook', value: 'skillbook' },
@@ -46,8 +46,8 @@ export const books = defineType({
     defineField({
       name: 'skill',
       title: 'Skill',
-      type: 'string',
       description: 'The skill taught by this book. (Elementalism, Meditation, etc.)',
+      type: 'string',
       options: {
         list: [
           { title: 'Light Piercing', value: 'Light Piercing' },
@@ -80,8 +80,8 @@ export const books = defineType({
     defineField({
       name: 'skillLevel',
       title: 'Skill Level',
+      description: 'Required skill level or skill level taught by this book.',
       type: 'string',
-      description: '',
       options: {
         list: [
           { title: 'Familiar', value: 'familiar' },
@@ -97,51 +97,51 @@ export const books = defineType({
     defineField({
       name: 'buildPoints',
       title: 'Build Points',
-      type: 'number',
       description: 'Only for skill books. Familiar: 1, Proficient: 2, Expert: 4, Master: 7, Grandmaster: 10, Supreme-Master: 13',
+      type: 'number',
     }),
 
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'text',
       description: 'Description of the book.',
+      type: 'text',
     }),
 
     defineField({
       name: 'weight',
       title: 'Weight',
-      type: 'number',
       description: 'Weight of the book.',
+      type: 'number',
     }),
 
     defineField({
       name: 'condition',
       title: 'Condition',
-      type: 'number',
       description: 'Max condition of the book.',
+      type: 'number',
     }),
 
     defineField({
       name: 'buyPrice',
       title: 'Buy Price',
-      type: 'number',
       description: 'The price to purchase this book at a shop.',
+      type: 'number',
     }),
 
     defineField({
       name: 'sellPrice',
       title: 'Sell Price',
-      type: 'number',
       description: 'The price to sell this book to a shop.',
+      type: 'number',
     }),
 
     defineField({
       name: 'linkedSpell',
       title: 'Linked Spell',
+      description: 'If this is a spellbook, link the spell taught by this book.',
       type: 'reference',
       to: [{ type: 'spell'}],
-      description: 'If this is a spellbook, link the spell taught by this book.'
     })
   ]
 })

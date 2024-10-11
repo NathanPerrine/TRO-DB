@@ -4,5 +4,6 @@ import type { Item } from "./types/item";
 import type { Slug } from "./types/slug";
 import type { Spell, FullSpell } from "./types/spell"
 import type { Book} from "./types/book";
+import type { Mob } from './types/mob';
 
-export type { Spell, FullSpell, Slug, Item, Description, Book };
+export type { Spell, FullSpell, Slug, Item, Description, Book, Mob };

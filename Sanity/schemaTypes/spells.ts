@@ -8,8 +8,8 @@ export const spells = defineType({
     defineField({
       name: 'title',
       title: 'Title',
-      type: 'string',
       description: 'Name of the spell',
+      type: 'string',
       validation: rule => rule
         .required()
         .error('Name of spell is required.')
@@ -53,14 +53,15 @@ export const spells = defineType({
     defineField({
         name: 'description',
         title: 'Description',
+        description: 'A brief description of the spell',
         type: 'text',
         rows: 4,
-        description: 'A brief description of the spell'
       }),
 
     defineField({
       name: 'spellSchool',
       title: 'Spell School',
+      description: 'The school of magic the spell belongs to',
       type: 'string',
       options: {
         list: [
@@ -72,12 +73,12 @@ export const spells = defineType({
         ],
         layout: 'dropdown'
       },
-      description: 'The school of magic the spell belongs to'
     }),
 
     defineField({
       name: 'level',
       title: 'Level',
+      description: 'The proficiency level required to cast the spell',
       type: 'string',
       options: {
         list: [
@@ -90,19 +91,19 @@ export const spells = defineType({
         ],
         layout: 'dropdown'
       },
-      description: 'The proficiency level required to cast the spell'
     }),
 
     defineField({
       name: 'mpCost',
       title: 'MP Cost',
+      description: 'The amount of magic points required to cast the spell',
       type: 'number',
-      description: 'The amount of magic points required to cast the spell'
     }),
 
     defineField({
       name: 'spellDelay',
       title: 'Spell Delay',
+      description: 'The time delay before the spell takes effect (in seconds)',
       type: 'string',
       options: {
         list: [
@@ -114,12 +115,12 @@ export const spells = defineType({
           { title: 'Very Long', value: 'Very Long' },
         ]
       },
-      description: 'The time delay before the spell takes effect (in seconds)'
     }),
 
     defineField({
       name: 'duration',
       title: 'Duration',
+      description: 'The duration of the spell’s effect',
       type: 'string',
       options: {
         list: [
@@ -127,44 +128,43 @@ export const spells = defineType({
           { title: 'SDM x Proficiency', value: 'SDM x Proficiency'}
         ]
       },
-      description: 'The duration of the spell’s effect'
     }),
 
     defineField({
       name: 'spellEffect',
       title: 'Spell Effect',
+      description: 'Description of the spell’s effect',
       type: 'text',
       rows: 3,
-      description: 'Description of the spell’s effect'
     }),
 
     defineField({
       name: 'chant',
       title: 'Chant',
+      description: 'The incantation or chant used to cast the spell',
       type: 'text',
       rows: 2,
-      description: 'The incantation or chant used to cast the spell'
     }),
 
     defineField({
       name: 'extendable',
       title: 'Extendable',
+      description: 'Whether the spell can be extended',
       type: 'boolean',
-      description: 'Whether the spell can be extended'
     }),
 
     defineField({
       name: 'enchantable',
       title: 'Enchantable',
+      description: 'Whether the spell can be enchanted',
       type: 'boolean',
-      description: 'Whether the spell can be enchanted'
     }),
 
     defineField({
       name: 'dropOnly',
       title: 'Drop Only',
+      description: 'Whether the spell can only be obtained as a drop',
       type: 'boolean',
-      description: 'Whether the spell can only be obtained as a drop'
     }),
 
     defineField({

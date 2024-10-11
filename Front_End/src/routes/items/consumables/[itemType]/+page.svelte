@@ -1,13 +1,14 @@
 <script lang="ts">
-    import type { PageData } from './$types';
+  import { PortableText } from '@portabletext/svelte';
+  import type { PageData } from './$types';
 
-    export let data: PageData;
+  export let data: PageData;
 </script>
 
 <main>
   <header>
     <h1>{data.description.name}</h1>
-    <p>{data.description.description}</p>
+    <PortableText value={data.description.description} components={{}} />
   </header>
   <section>
     <div class="border-gradient"></div>

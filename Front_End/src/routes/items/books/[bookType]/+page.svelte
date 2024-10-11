@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { PortableText } from '@portabletext/svelte';
   import type { PageData } from './$types';
   export let data: PageData;
 
@@ -12,7 +13,7 @@
 <main>
   <header>
     <h1>{data.description.name}</h1>
-    <p>{data.description.description}</p>
+    <PortableText value={data.description.description} components={{}} />
   </header>
 
   {#if data.description.name == 'Spellbooks'}

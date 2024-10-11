@@ -8,8 +8,8 @@ export const areas = defineType({
     defineField({
       name: 'name',
       title: 'Name',
-      type: 'string',
       description: 'Name of the area',
+      type: 'string',
     }),
 
     defineField({
@@ -31,8 +31,8 @@ export const areas = defineType({
     defineField({
       name: 'areaType',
       title: 'Area Type',
+      description: 'Type of area (e.g., Dungeon, Town, Zone).',
       type: 'string',
-      description: 'Type of area (e.g., Dungeon, Town, Overworld).',
       options: {
         list: [
           { title: 'Dungeon', value: 'dungeon' },
@@ -47,23 +47,33 @@ export const areas = defineType({
     defineField({
       name: 'description',
       title: 'Description',
-      type: 'text',
       description: 'Brief description of the area.',
+      type: 'text',
+    }),
+
+    defineField({
+      name: 'map',
+      title: 'Map',
+      description: 'Map of the area',
+      type: 'text',
+      initialValue: 'Coming soon...'
     }),
 
     defineField({
       name: 'directions',
       title: 'Directions',
-      type: 'string',
       description: 'Directions to the area, typically from the nearest towns teleporter.',
+      type: 'array',
+      of: [{ type: 'string' }],
+      hidden: ({ parent }) => !['dungeon', 'overworld'].includes(parent?.areaType),
     }),
 
     defineField({
       name: 'walkthrough',
       title: 'Walkthrough',
+      description: 'Walkthrough of the dungeon.',
       type: 'array',
       of: [{type: 'block'}],
-      description: 'Walkthrough of the dungeon.',
       hidden: ({ parent }) => parent?.areaType !== 'dungeon'
     }),
 
@@ -77,15 +87,15 @@ export const areas = defineType({
     defineField({
       name: 'notableDrops',
       title: 'Notable Drops',
-      type: 'array',
       description: 'Notable or Unique drops to this area.',
+      type: 'array',
       of: [{ type: 'reference', to: [{ type: 'item' }, { type: 'book' }]}],
       hidden: ({ parent }) => !['dungeon', 'overworld'].includes(parent?.areaType),
     }),
 
     defineField({
-      name: 'monsters',
-      title: 'Monsters in this area',
+      name: 'mobs',
+      title: 'Mobs in this area',
       type: 'array',
       of: [{ type: 'reference', to: [{ type: 'mob' }] }]
     }),
@@ -93,9 +103,9 @@ export const areas = defineType({
     defineField({
       name: 'connectedAreas',
       title: 'Connected Areas',
+      description: 'All areas that are directly connected to this one.',
       type: 'array',
-      description: 'Areas that are directly connected to this one.',
-      of: [{ type: 'reference', to: [{ type: 'area' }]}]
+      of: [{ type: 'reference', weak: true, to: [{ type: 'area' }]}]
     })
   ]
 })

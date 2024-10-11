@@ -10,7 +10,7 @@
 <main>
   <header>
     <h1>{data.description.name}</h1>
-    <p>{data.description.description}</p>
+    <PortableText value={data.description.description} components={{}} />
     {#if data.description.extras}
       <h3>Extra Info:</h3>
       <PortableText
