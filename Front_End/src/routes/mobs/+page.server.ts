@@ -11,12 +11,19 @@ export const load = (async ({}) => {
     }
   `);
 
-  const mobs = await client.fetch<Pick<Mob, 'name' | 'slug' | 'levelRange' | 'hpRange'>[]>(`
-    *[_type == 'mob']{
+  type partialMob = Pick<Mob, 'name' | 'slug' | 'levelRange' | 'hpRange' | 'inhabitedAreas'>;
+
+  const mobs = await client.fetch<partialMob[]>(`
+    *[_type == 'mob'] | order(name) {
       name,
       slug,
       levelRange,
-      hpRange
+      hpRange,
+      inhabitedAreas[] -> {
+        name,
+        slug,
+        areaType,
+      },
     }
   `);
 

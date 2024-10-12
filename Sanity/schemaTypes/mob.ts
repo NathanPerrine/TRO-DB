@@ -52,9 +52,9 @@ export const mobs = defineType({
           title: 'Level Maximum',
           type: 'number',
         }),
-      ]
+      ],
     }),
-// 69, 82. 1775, 2100
+
     defineField({
       name: 'hpRange',
       title: 'HP Range',
@@ -76,17 +76,25 @@ export const mobs = defineType({
           title: 'HP Maximum',
           type: 'number',
         }),
-      ]
+      ],
     }),
 
     defineField({
       name: 'alignment',
       title: 'Alignment',
-      description: 'Mob\'s alignment (e.g., good, evil, neutral)',
+      description: "Mob's alignment (e.g., good, evil, neutral)",
       type: 'string',
       options: {
         list: ['Good', 'Evil', 'Neutral'],
       },
+    }),
+
+    defineField({
+      name: 'boss',
+      title: 'Boss Mob',
+      description: 'Is this mob a boss of the dungeon?',
+      type: 'boolean',
+      initialValue: false,
     }),
 
     defineField({
@@ -104,13 +112,15 @@ export const mobs = defineType({
           name: 'min',
           title: 'Melee Defense Rating Minimum',
           type: 'number',
+          initialValue: 0,
         }),
         defineField({
           name: 'max',
           title: 'Melee Defense Rating Maximum',
           type: 'number',
+          initialValue: 0,
         }),
-      ]
+      ],
     }),
 
     defineField({
@@ -163,34 +173,34 @@ export const mobs = defineType({
       },
       fields: [
         defineField({
-            name: 'sorcery',
-            title: 'Sorcery',
-            type: 'number',
-            initialValue: 0,
+          name: 'sorcery',
+          title: 'Sorcery',
+          type: 'number',
+          initialValue: 0,
         }),
         defineField({
-            name: 'elementalism',
-            title: 'Elementalism',
-            type: 'number',
-            initialValue: 0,
+          name: 'elementalism',
+          title: 'Elementalism',
+          type: 'number',
+          initialValue: 0,
         }),
         defineField({
-            name: 'mysticism',
-            title: 'Mysticism',
-            type: 'number',
-            initialValue: 0,
+          name: 'mysticism',
+          title: 'Mysticism',
+          type: 'number',
+          initialValue: 0,
         }),
         defineField({
-            name: 'thaumaturgy',
-            title: 'Thaumaturgy',
-            type: 'number',
-            initialValue: 0,
+          name: 'thaumaturgy',
+          title: 'Thaumaturgy',
+          type: 'number',
+          initialValue: 0,
         }),
         defineField({
-            name: 'necromancy',
-            title: 'Necromancy',
-            type: 'number',
-            initialValue: 0,
+          name: 'necromancy',
+          title: 'Necromancy',
+          type: 'number',
+          initialValue: 0,
         }),
       ],
     }),
@@ -207,34 +217,34 @@ export const mobs = defineType({
       },
       fields: [
         defineField({
-            name: 'sorcery',
-            title: 'Sorcery',
-            type: 'number',
-            initialValue: 0,
+          name: 'sorcery',
+          title: 'Sorcery',
+          type: 'number',
+          initialValue: 0,
         }),
         defineField({
-            name: 'elementalism',
-            title: 'Elementalism',
-            type: 'number',
-            initialValue: 0,
+          name: 'elementalism',
+          title: 'Elementalism',
+          type: 'number',
+          initialValue: 0,
         }),
         defineField({
-            name: 'mysticism',
-            title: 'Mysticism',
-            type: 'number',
-            initialValue: 0,
+          name: 'mysticism',
+          title: 'Mysticism',
+          type: 'number',
+          initialValue: 0,
         }),
         defineField({
-            name: 'thaumaturgy',
-            title: 'Thaumaturgy',
-            type: 'number',
-            initialValue: 0,
+          name: 'thaumaturgy',
+          title: 'Thaumaturgy',
+          type: 'number',
+          initialValue: 0,
         }),
         defineField({
-            name: 'necromancy',
-            title: 'Necromancy',
-            type: 'number',
-            initialValue: 0,
+          name: 'necromancy',
+          title: 'Necromancy',
+          type: 'number',
+          initialValue: 0,
         }),
       ],
     }),
@@ -242,9 +252,17 @@ export const mobs = defineType({
     defineField({
       name: 'knownSpells',
       title: 'Known Spells',
-      description: 'spells that this mob can cast.',
+      description: 'Spells that this mob can cast.',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'spell' }] }]
+      of: [{type: 'reference', to: [{type: 'spell'}]}],
+    }),
+
+    defineField({
+      name: 'inhabitedAreas',
+      title: 'Inhabited Areas',
+      description: 'All known areas this mob inhabits.',
+      type: 'array',
+      of: [{type: 'reference', to: [{type: 'area'}]}],
     }),
 
     defineField({
@@ -252,7 +270,7 @@ export const mobs = defineType({
       title: 'Emotes',
       description: 'The emotes this mob can perform.',
       type: 'array',
-      of: [{ type: 'string' }]
+      of: [{type: 'string'}],
     }),
 
     defineField({
@@ -260,7 +278,7 @@ export const mobs = defineType({
       title: 'Notes',
       description: 'Any additional information required.',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [{type: 'block'}],
     }),
   ],
 })

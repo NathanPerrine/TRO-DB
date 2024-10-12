@@ -1,15 +1,13 @@
 <script lang="ts">
-  import { PortableText } from '@portabletext/svelte';
   import type { PageData } from './$types';
+  import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
 
   export let data: PageData;
 </script>
 
 <main>
-  <header>
-    <h1>{data.description.name}</h1>
-    <PortableText value={data.description.description} components={{}} />
-  </header>
+  <PageHeader description={data.description} />
+
   <section>
     <div class="border-gradient"></div>
     <table>
@@ -20,7 +18,7 @@
         </tr>
       </thead>
       <tbody>
-        {#each data.scrolls as scroll}
+        {#each data.items as scroll}
           <tr>
             <td><a href="{data.description.name}/{scroll.slug.current}">{scroll.name}</a></td>
             <td>{scroll.descriptionIdentified}</td>

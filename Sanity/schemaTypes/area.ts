@@ -56,7 +56,7 @@ export const areas = defineType({
       title: 'Map',
       description: 'Map of the area',
       type: 'text',
-      initialValue: 'Coming soon...'
+      initialValue: 'Coming soon? Maybe. In the meantime check out the wiki for a rather detailed world map.'
     }),
 
     defineField({

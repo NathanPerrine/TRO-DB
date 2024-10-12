@@ -97,8 +97,9 @@ export const books = defineType({
     defineField({
       name: 'buildPoints',
       title: 'Build Points',
-      description: 'Only for skill books. Familiar: 1, Proficient: 2, Expert: 4, Master: 7, Grandmaster: 10, Supreme-Master: 13',
+      description: 'Familiar: 1, Proficient: 2, Expert: 4, Master: 7, Grandmaster: 10, Supreme-Master: 13',
       type: 'number',
+      hidden: ({ parent }) => parent?.bookType !== 'skillbook',
     }),
 
     defineField({
@@ -139,9 +140,10 @@ export const books = defineType({
     defineField({
       name: 'linkedSpell',
       title: 'Linked Spell',
-      description: 'If this is a spellbook, link the spell taught by this book.',
+      description: 'The spell taught by this book.',
       type: 'reference',
       to: [{ type: 'spell'}],
+      hidden: ({ parent }) => parent?.bookType !== 'spellbook',
     })
   ]
 })

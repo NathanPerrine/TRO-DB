@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { PortableText } from '@portabletext/svelte';
   import type { PageData } from './$types';
+  import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
   export let data: PageData;
 
   let expandedSections: { [key: string]: boolean } = {};
@@ -11,10 +11,7 @@
 </script>
 
 <main>
-  <header>
-    <h1>{data.description.name}</h1>
-    <PortableText value={data.description.description} components={{}} />
-  </header>
+  <PageHeader description={data.description} />
 
   {#if data.description.name == 'Spellbooks'}
     {#each Object.keys(data.books) as skill}

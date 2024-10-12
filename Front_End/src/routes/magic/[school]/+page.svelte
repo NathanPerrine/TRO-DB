@@ -1,29 +1,12 @@
 <script lang="ts">
-  import { PortableText } from '@portabletext/svelte';
-  import UnorderedList from '$lib/utils/sanity/UnorderedList.svelte';
   import type { PageData } from './$types';
+  import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
 
   export let data: PageData;
-  const bulletContext = 'diamond';
 </script>
 
 <main>
-  <header>
-    <h1>{data.description.name}</h1>
-    <PortableText value={data.description.description} components={{}} />
-    {#if data.description.extras}
-      <h3>Extra Info:</h3>
-      <PortableText
-        value={data.description.extras}
-        context={{ bulletContext }}
-        components={{
-          listItem: {
-            normal: UnorderedList
-          }
-        }}
-      />
-    {/if}
-  </header>
+  <PageHeader description={data.description} />
 
   {#each Object.entries(data.spells) as [level, spells]}
     {#if spells.length}

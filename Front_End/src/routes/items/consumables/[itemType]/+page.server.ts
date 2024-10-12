@@ -17,7 +17,7 @@ export const load = (async ({ params }) => {
   }`)
 
   return {
-    scrolls: data,
+    items: data,
     description: description[0]
   };
 }) satisfies PageServerLoad;

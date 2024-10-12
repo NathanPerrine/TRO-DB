@@ -1,10 +1,9 @@
-import type { Slug } from './slug';
-import type { Spell } from './spell';
+import type { Slug, Spell, Area } from '$lib/index';
 
 type Range = {
   min?: number;
   max?: number;
-}
+};
 
 type SpellSchools = {
   sorcery: number;
@@ -12,17 +11,18 @@ type SpellSchools = {
   mysticism: number;
   thaumaturgy: number;
   necromancy: number;
-}
+};
 
 export type Mob = {
   name: string;
   slug: Slug;
-  description?: string,
+  description?: string;
   levelRange?: Range;
   hpRange?: Range;
   alignment?: 'Good' | 'Evil' | 'Neutral';
+  boss?: boolean,
   meleeDefense?: Range;
-  meleeAttributes: {
+  meleeAttributes?: {
     mdm?: number;
     evilMDM?: number;
     goodMDM?: number;
@@ -30,7 +30,8 @@ export type Mob = {
   };
   spellResistances: SpellSchools;
   spellDamageModifiers: SpellSchools;
-  knownSpells?: Pick<Spell, 'title' | 'slug'>[];
+  knownSpells?: Pick<Spell, 'title' | 'spellSchool' | 'slug'>[];
+  inhabitedAreas?: Pick<Area, 'name' | 'slug' | 'areaType'>[];
   emotes?: string[];
-  notes?: []
-}
+  notes?: [];
+};
