@@ -4,6 +4,8 @@ import {
   GiAncientSword,
   GiAxolotl,
   GiLightningTrio,
+  GiNinjaArmor,
+  GiRing,
   GiSwapBag,
 } from 'react-icons/gi'
 import { FaRegMap } from 'react-icons/fa'
@@ -11,8 +13,18 @@ import { bookList } from './bookList'
 import { spellList } from './spellList'
 import { itemList } from './itemList'
 import { areaList } from './areaList'
+import { accessoryList } from './accessoryList'
+import { equipmentList } from './equipmentList'
 
-const excludeFromDefault = ['item', 'book', 'spell', 'area']
+const excludeFromDefault = [
+  'item',
+  'book',
+  'spell',
+  'area',
+  'accessory',
+  'equipment',
+  'weaponType',
+]
 
 export const structure: StructureResolver = (S) =>
   S.list()
@@ -31,6 +43,14 @@ export const structure: StructureResolver = (S) =>
         .title('Books')
         .icon(FaBook)
         .child(bookList(S)),
+      S.documentTypeListItem('accessory')
+        .title('Accessories')
+        .icon(GiRing)
+        .child(accessoryList(S)),
+      S.documentTypeListItem('equipment')
+        .title('Equipment')
+        .icon(GiNinjaArmor)
+        .child(equipmentList(S)),
       S.divider(),
       S.documentTypeListItem('spell')
         .title('Spells')

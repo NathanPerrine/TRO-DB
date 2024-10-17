@@ -5,6 +5,8 @@ import { books } from './book'
 import { areas } from './area'
 import { mobs } from './mob'
 import { accessories } from './accessory'
+import { equipment } from './equipment'
+import { weaponType } from './weaponType'
 
 export const schemaTypes = [
   spells,
@@ -14,4 +16,6 @@ export const schemaTypes = [
   areas,
   mobs,
   accessories,
+  equipment,
+  weaponType,
 ]

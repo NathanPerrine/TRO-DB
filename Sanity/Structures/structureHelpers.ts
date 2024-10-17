@@ -9,6 +9,9 @@ import {
   GiCorkedTube,
   GiAncientRuins,
   GiDeathZone,
+  GiNecklace,
+  GiBeltArmor,
+  GiDoorRingHandle,
 } from 'react-icons/gi'
 import { FaHome } from 'react-icons/fa'
 
@@ -70,4 +73,35 @@ export const areaTypes = [
   { title: 'Dungeon', icon: GiAncientRuins, value: 'dungeon' },
   { title: 'Town', icon: FaHome, value: 'town' },
   { title: 'Zone', icon: GiDeathZone, value: 'zone' },
+]
+
+export const accessoryTypes = [
+  { title: 'Amulet', icon: GiNecklace, value: 'amulet' },
+  { title: 'Belt', icon: GiBeltArmor, value: 'belt' },
+  { title: 'Ring', icon: GiDoorRingHandle, value: 'ring' },
+]
+
+export const weaponTypes = [
+  { title: 'Axe', value: 'axe' },
+  { title: 'Club', value: 'club' },
+  { title: 'Mace', value: 'mace' },
+  { title: 'Maul', value: 'maul' },
+  { title: 'Two Handed Swords', value: 'two handed sword' },
+  { title: 'Dagger', value: 'dagger' },
+  { title: 'Throwing Dagger', value: 'throwing dagger' },
+  { title: 'Fist', value: 'fist' },
+  { title: 'Long Sword', value: 'long sword' },
+  { title: 'Short Sword', value: 'short sword' },
+]
+
+export const armorTypes = [
+  { title: 'Helm', value: 'helm' },
+  { title: 'Cowl', value: 'cowl' },
+  { title: 'Chest', value: 'chest' },
+  { title: 'Robe', value: 'robe' },
+  { title: 'Wrists', value: 'wrists' },
+  { title: 'Skirt', value: 'skirt' },
+  { title: 'Legs', value: 'legs' },
+  { title: 'Feet', value: 'feet' },
+  { title: 'Shield', value: 'shield' },
 ]
