@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineField, defineType } from 'sanity'
 
 export const books = defineType({
   name: 'book',
@@ -10,7 +10,7 @@ export const books = defineType({
       title: 'Name',
       description: 'Name of the item.',
       type: 'string',
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
@@ -19,14 +19,11 @@ export const books = defineType({
       type: 'slug',
       options: {
         source: 'name',
-        slugify: input => input
-          .toLowerCase()
-          .replace(/\s+/g, '-')
-          .slice(0, 200)
+        slugify: (input) =>
+          input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
       },
-      validation: rule => rule
-        .required()
-        .error('Must generat a slug for navigation.')
+      validation: (rule) =>
+        rule.required().error('Must generat a slug for navigation.'),
     }),
 
     defineField({
@@ -38,15 +35,16 @@ export const books = defineType({
         list: [
           { title: 'Skillbook', value: 'skillbook' },
           { title: 'Spellbook', value: 'spellbook' },
-        ]
+        ],
       },
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
       name: 'skill',
       title: 'Skill',
-      description: 'The skill taught by this book. (Elementalism, Meditation, etc.)',
+      description:
+        'The skill taught by this book. (Elementalism, Meditation, etc.)',
       type: 'string',
       options: {
         list: [
@@ -73,8 +71,8 @@ export const books = defineType({
           { title: 'Meditation', value: 'Meditation' },
           { title: 'Critical Strikes', value: 'Critical Strikes' },
           { title: 'Shield Usage', value: 'Shield Usage' },
-        ]
-      }
+        ],
+      },
     }),
 
     defineField({
@@ -90,14 +88,15 @@ export const books = defineType({
           { title: 'Master', value: 'master' },
           { title: 'Grandmaster', value: 'grandmaster' },
           { title: 'Supreme-Master', value: 'supreme-master' },
-        ]
+        ],
       },
     }),
 
     defineField({
       name: 'buildPoints',
       title: 'Build Points',
-      description: 'Familiar: 1, Proficient: 2, Expert: 4, Master: 7, Grandmaster: 10, Supreme-Master: 13',
+      description:
+        'Familiar: 1, Proficient: 2, Expert: 4, Master: 7, Grandmaster: 10, Supreme-Master: 13',
       type: 'number',
       hidden: ({ parent }) => parent?.bookType !== 'skillbook',
     }),
@@ -142,8 +141,34 @@ export const books = defineType({
       title: 'Linked Spell',
       description: 'The spell taught by this book.',
       type: 'reference',
-      to: [{ type: 'spell'}],
+      to: [{ type: 'spell' }],
       hidden: ({ parent }) => parent?.bookType !== 'spellbook',
-    })
-  ]
+    }),
+  ],
+  preview: {
+    select: {
+      name: 'name',
+      bookType: 'bookType',
+      skill: 'skill',
+      skillLevel: 'skillLevel',
+    },
+    prepare({ name, bookType, skill, skillLevel }) {
+      return {
+        title: name,
+        subtitle: `${skill} | ${bookType} | ${skillLevel}`,
+      }
+    },
+  },
+  orderings: [
+    {
+      title: 'All Books',
+      name: 'bookType',
+      by: [
+        { field: 'skill', direction: 'asc' },
+        { field: 'bookType', direction: 'asc' },
+        { field: 'skillLevel', direction: 'asc' },
+        { field: 'name', direction: 'asc' },
+      ],
+    },
+  ],
 })

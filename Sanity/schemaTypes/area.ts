@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineField, defineType } from 'sanity'
 
 export const areas = defineType({
   name: 'area',
@@ -18,14 +18,11 @@ export const areas = defineType({
       type: 'slug',
       options: {
         source: 'name',
-        slugify: input => input
-          .toLowerCase()
-          .replace(/\s+/g, '-')
-          .slice(0, 200)
+        slugify: (input) =>
+          input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
       },
-      validation: rule => rule
-        .required()
-        .error('Must generate a slug for navigation.')
+      validation: (rule) =>
+        rule.required().error('Must generate a slug for navigation.'),
     }),
 
     defineField({
@@ -41,7 +38,7 @@ export const areas = defineType({
         ],
         layout: 'dropdown',
       },
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
@@ -56,16 +53,56 @@ export const areas = defineType({
       title: 'Map',
       description: 'Map of the area',
       type: 'text',
-      initialValue: 'Coming soon? Maybe. In the meantime check out the wiki for a rather detailed world map.'
+      initialValue:
+        'Coming soon? Maybe. In the meantime check out the wiki for a rather detailed world map.',
     }),
 
     defineField({
       name: 'directions',
       title: 'Directions',
-      description: 'Directions to the area, typically from the nearest towns teleporter.',
+      description:
+        'Directions to the area, typically from the nearest town’s teleporter.',
       type: 'array',
-      of: [{ type: 'string' }],
-      hidden: ({ parent }) => !['dungeon', 'overworld'].includes(parent?.areaType),
+      of: [
+        {
+          type: 'object',
+          name: 'directionEntry',
+          title: 'Direction Entry',
+          fields: [
+            {
+              name: 'town',
+              title: 'Nearest Town',
+              type: 'reference',
+              to: [{ type: 'area' }],
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'directions',
+              title: 'Direction (String)',
+              type: 'string',
+              description: 'E.g., "1R 8D"',
+              validation: (Rule) => Rule.required(),
+            },
+          ],
+          preview: {
+            select: {
+              title: 'town.name',
+              subtitle: 'directions',
+            },
+            prepare(selection) {
+              const { title, subtitle } = selection
+              return {
+                title: title || 'No area selected',
+                subtitle: subtitle
+                  ? `Directions: ${subtitle}`
+                  : 'No directions provided',
+              }
+            },
+          },
+        },
+      ],
+      hidden: ({ parent }) =>
+        !['dungeon', 'overworld'].includes(parent?.areaType),
     }),
 
     defineField({
@@ -73,15 +110,15 @@ export const areas = defineType({
       title: 'Walkthrough',
       description: 'Walkthrough of the dungeon.',
       type: 'array',
-      of: [{type: 'block'}],
-      hidden: ({ parent }) => parent?.areaType !== 'dungeon'
+      of: [{ type: 'block' }],
+      hidden: ({ parent }) => parent?.areaType !== 'dungeon',
     }),
 
     defineField({
       name: 'notes',
       title: 'Notes',
       type: 'array',
-      of: [{type: 'block'}]
+      of: [{ type: 'block' }],
     }),
 
     defineField({
@@ -89,15 +126,16 @@ export const areas = defineType({
       title: 'Notable Drops',
       description: 'Notable or Unique drops to this area.',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'item' }, { type: 'book' }]}],
-      hidden: ({ parent }) => !['dungeon', 'overworld'].includes(parent?.areaType),
+      of: [{ type: 'reference', to: [{ type: 'item' }, { type: 'book' }] }],
+      hidden: ({ parent }) =>
+        !['dungeon', 'overworld'].includes(parent?.areaType),
     }),
 
     defineField({
       name: 'mobs',
       title: 'Mobs in this area',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'mob' }] }]
+      of: [{ type: 'reference', to: [{ type: 'mob' }] }],
     }),
 
     defineField({
@@ -105,7 +143,29 @@ export const areas = defineType({
       title: 'Connected Areas',
       description: 'All areas that are directly connected to this one.',
       type: 'array',
-      of: [{ type: 'reference', weak: true, to: [{ type: 'area' }]}]
-    })
-  ]
+      of: [{ type: 'reference', weak: true, to: [{ type: 'area' }] }],
+    }),
+  ],
+  preview: {
+    select: {
+      name: 'name',
+      areaType: 'areaType',
+    },
+    prepare({ name, areaType }) {
+      return {
+        title: name,
+        subtitle: areaType,
+      }
+    },
+  },
+  orderings: [
+    {
+      title: 'Area',
+      name: 'areaType',
+      by: [
+        { field: 'areaType', direction: 'asc' },
+        { field: 'name', direction: 'asc' },
+      ],
+    },
+  ],
 })

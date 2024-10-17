@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineField, defineType } from 'sanity'
 
 export const items = defineType({
   name: 'item',
@@ -10,7 +10,7 @@ export const items = defineType({
       title: 'Name',
       description: 'Name of the item.',
       type: 'string',
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
@@ -19,14 +19,11 @@ export const items = defineType({
       type: 'slug',
       options: {
         source: 'name',
-        slugify: input => input
-          .toLowerCase()
-          .replace(/\s+/g, '-')
-          .slice(0, 200)
+        slugify: (input) =>
+          input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
       },
-      validation: rule => rule
-        .required()
-        .error('Must generat a slug for navigation.')
+      validation: (rule) =>
+        rule.required().error('Must generat a slug for navigation.'),
     }),
 
     defineField({
@@ -46,7 +43,7 @@ export const items = defineType({
           { title: 'Dungeon', value: 'dungeon' },
         ],
       },
-      validation: Rule => Rule.required(),
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
@@ -60,9 +57,19 @@ export const items = defineType({
     defineField({
       name: 'descriptionIdentified',
       title: 'Description (Identified)',
-      description: 'Description of the item once identified (e.g. You see a scroll => You see a scroll of Resist Fire.)',
+      description:
+        'Description of the item once identified (e.g. You see a scroll => You see a scroll of Resist Fire.)',
       type: 'text',
       rows: 3,
+    }),
+
+    defineField({
+      name: 'dungeon',
+      title: 'Dungeon',
+      description: 'What dungeon is this item from?',
+      type: 'reference',
+      to: [{ type: 'area' }],
+      hidden: ({ parent }) => parent?.type !== 'dungeon',
     }),
 
     defineField({
@@ -96,15 +103,18 @@ export const items = defineType({
     defineField({
       name: 'charges',
       title: 'Charges',
-      description: 'Max charges the item can hold. (Only for items with charges, Orbs, Wands, etc.)',
+      description:
+        'Max charges the item can hold. (Only for items with charges, Orbs, Wands, etc.)',
       type: 'number',
+      hidden: ({ parent }) =>
+        !['bauble', 'scroll', 'orb', 'wand'].includes(parent?.type),
     }),
 
     defineField({
       name: 'notes',
       title: 'Notes',
       type: 'array',
-      of: [{type: 'block'}]
-    })
-  ]
+      of: [{ type: 'block' }],
+    }),
+  ],
 })
