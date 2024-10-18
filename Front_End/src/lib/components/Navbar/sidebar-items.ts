@@ -9,8 +9,8 @@ export const sidebarItems: SidebarItem[] = [
   {
     title: 'Areas',
     subItems: [
-      { title: 'Dungeons', link: '/areas/dungeons', disabled: true },
-      { title: 'Towns', link: '/areas/towns', disabled: true },
+      { title: 'Dungeons', link: '/areas/dungeons', disabled: false },
+      { title: 'Towns', link: '/areas/towns', disabled: false },
       { title: 'Zones', link: '/areas/zones', disabled: false }
     ]
   },
@@ -61,8 +61,7 @@ export const sidebarItems: SidebarItem[] = [
       { title: 'Mysticism', link: '/magic/mysticism', disabled: false },
       { title: 'Elementalism', link: '/magic/elementalism', disabled: false },
       { title: 'Sorcery', link: '/magic/sorcery', disabled: false },
-      { title: 'Necromancy', link: '/magic/necromancy', disabled: false },
-      { title: 'Enchanting', link: '/guides/enchanting', disabled: true }
+      { title: 'Necromancy', link: '/magic/necromancy', disabled: false }
     ]
   },
   { title: 'Character Builder', link: '/characterbuilder', disabled: false },

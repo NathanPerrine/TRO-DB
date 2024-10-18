@@ -82,16 +82,52 @@ export const accessoryTypes = [
 ]
 
 export const weaponTypes = [
-  { title: 'Axe', value: 'axe' },
-  { title: 'Club', value: 'club' },
-  { title: 'Mace', value: 'mace' },
-  { title: 'Maul', value: 'maul' },
-  { title: 'Two Handed Swords', value: 'two handed sword' },
-  { title: 'Dagger', value: 'dagger' },
-  { title: 'Throwing Dagger', value: 'throwing dagger' },
-  { title: 'Fist', value: 'fist' },
-  { title: 'Long Sword', value: 'long sword' },
-  { title: 'Short Sword', value: 'short sword' },
+  { title: 'Axe', value: 'axe', refId: '69ddf126-720f-49e7-adb8-208de7173f83' },
+  {
+    title: 'Club',
+    value: 'club',
+    refId: '172576e9-f5c9-4c63-80cb-53133999a884',
+  },
+  {
+    title: 'Mace',
+    value: 'mace',
+    refId: '58b13bb9-4155-4a96-9445-3f8c99a640a5',
+  },
+  {
+    title: 'Maul',
+    value: 'maul',
+    refId: 'a7604c90-59c9-4273-ba5e-9925ccff86ea',
+  },
+  {
+    title: 'Two Handed Swords',
+    value: 'two handed sword',
+    refId: '2262dac8-0a83-47f4-93cd-dd1cee8214a4',
+  },
+  {
+    title: 'Dagger',
+    value: 'dagger',
+    refId: '86cbef31-6ed8-49c5-b323-b9f7b56fd279',
+  },
+  {
+    title: 'Throwing Dagger',
+    value: 'throwing dagger',
+    refId: '9457eefc-553e-421a-af1b-5ec8153d1af3',
+  },
+  {
+    title: 'Fist',
+    value: 'fist',
+    refId: 'a84d3ca0-9ae3-4aae-b581-8cfda359414e',
+  },
+  {
+    title: 'Long Sword',
+    value: 'long sword',
+    refId: '20ec3f4a-7941-49e2-8812-d6fce43e703b',
+  },
+  {
+    title: 'Short Sword',
+    value: 'short sword',
+    refId: 'dc158b3c-d9fc-4471-8aef-1c21064dfc74',
+  },
 ]
 
 export const armorTypes = [

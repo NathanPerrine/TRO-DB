@@ -46,7 +46,7 @@ export const equipmentList = (S: StructureBuilder) => {
                     S.documentTypeList('equipment')
                       .title(weaponType.title)
                       .filter(
-                        `_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType == '${weaponType.value}'`,
+                        `_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType._ref == '${weaponType.refId}'`,
                       )
                       .initialValueTemplates([
                         S.initialValueTemplateItem('equipment-template', {

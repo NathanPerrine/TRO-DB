@@ -61,7 +61,7 @@ export const areas = defineType({
       name: 'directions',
       title: 'Directions',
       description:
-        'Directions to the area, typically from the nearest town’s teleporter.',
+        "Directions to the area, typically from the nearest town's teleporter.",
       type: 'array',
       of: [
         {
@@ -71,9 +71,13 @@ export const areas = defineType({
           fields: [
             {
               name: 'town',
-              title: 'Nearest Town',
+              title: 'Nearest Town Teleporter',
               type: 'reference',
               to: [{ type: 'area' }],
+              options: {
+                filter: `areaType == 'town'`,
+                sort: [{ field: 'name', direction: 'asc' }],
+              },
               validation: (Rule) => Rule.required(),
             },
             {
@@ -101,8 +105,7 @@ export const areas = defineType({
           },
         },
       ],
-      hidden: ({ parent }) =>
-        !['dungeon', 'overworld'].includes(parent?.areaType),
+      hidden: ({ parent }) => !['dungeon', 'zone'].includes(parent?.areaType),
     }),
 
     defineField({
@@ -145,27 +148,5 @@ export const areas = defineType({
       type: 'array',
       of: [{ type: 'reference', weak: true, to: [{ type: 'area' }] }],
     }),
-  ],
-  preview: {
-    select: {
-      name: 'name',
-      areaType: 'areaType',
-    },
-    prepare({ name, areaType }) {
-      return {
-        title: name,
-        subtitle: areaType,
-      }
-    },
-  },
-  orderings: [
-    {
-      title: 'Area',
-      name: 'areaType',
-      by: [
-        { field: 'areaType', direction: 'asc' },
-        { field: 'name', direction: 'asc' },
-      ],
-    },
   ],
 })
