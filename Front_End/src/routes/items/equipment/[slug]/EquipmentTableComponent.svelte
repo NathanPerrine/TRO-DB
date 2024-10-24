@@ -153,22 +153,24 @@
       {#each filteredEquipmentList as equipmentPiece (equipmentPiece)}
         <tr animate:flip={{ duration: DEFAULT_DURATION }} transition:fade={{ duration: 300 }}>
           <td>
-            <a href="/items/equipment/{equipmentPiece.armorWeapon}/{equipmentPiece.slug.current}"
-              >{equipmentPiece.identifiedName}</a
-            >
+            {#if equipmentPiece.armorWeapon}
+              <a href="/items/equipment/{equipmentPiece.armorWeapon}/{equipmentPiece.slug.current}">
+                {equipmentPiece.identifiedName}
+              </a>
+            {:else}
+              <a href="/items/equipment/accessories/{equipmentPiece.slug.current}">
+                {equipmentPiece.identifiedName}
+              </a>
+            {/if}
           </td>
           <td>
             {#if equipmentPiece.rarity}
               <span class="capitalize rarity-{equipmentPiece.rarity}">{equipmentPiece.rarity}</span>
-            {:else}
-              Unknown
             {/if}
           </td>
           <td>
             {#if equipmentPiece.levelRequirement}
               {equipmentPiece.levelRequirement}
-            {:else}
-              Unknown
             {/if}
           </td>
           <td>
@@ -177,8 +179,6 @@
                 {#each equipmentPiece.attributes as attribute}
                   <li>{attribute}</li>
                 {/each}
-              {:else}
-                <li>Unknown</li>
               {/if}
             </ul>
           </td>

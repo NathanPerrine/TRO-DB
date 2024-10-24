@@ -4,11 +4,12 @@
   import EquipmentTable from './EquipmentTable.svelte';
 
   export let data: PageData;
+  console.log(data);
 </script>
 
 <main>
   {#if data.description}
     <PageHeader description={data.description} />
-    <EquipmentTable armorWeapons={data.description.name} equipmentList={data.equipment} />
+    <EquipmentTable equipmentType={data.description.name} equipmentList={data.equipment} />
   {/if}
 </main>

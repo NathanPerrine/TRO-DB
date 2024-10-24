@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Armor, Weapon } from '$lib';
+  import type { Accessory, Armor, Weapon } from '$lib';
   import Notes from '$lib/components/Notes/Notes.svelte';
   import type { PageData } from './$types';
 
@@ -11,6 +11,10 @@
 
   function isWeapon(equipment: any): equipment is Weapon {
     return equipment.armorWeapon === 'weapon';
+  }
+
+  function isAccessory(equipment: any): equipment is Accessory {
+    return equipment.armorWeapon == null;
   }
 </script>
 
@@ -79,9 +83,12 @@
 
     <h2>General Information</h2>
     <ul class="ul-diamond">
+      {#if isAccessory(data.equipment)}
+        <li>Slot: <span class="capitalize">{data.equipment.slot}</span></li>
+      {/if}
       <li>
         Rarity:
-        {#if data.equipment?.rarity}
+        {#if data.equipment?.rarity != null}
           <span class="rarity-{data.equipment.rarity}">{data.equipment.rarity}</span>
         {:else}
           TBD
@@ -89,7 +96,7 @@
       </li>
       <li>
         Level Requirement:
-        {#if data.equipment?.levelRequirement}
+        {#if data.equipment?.levelRequirement != null}
           <span>{data.equipment.levelRequirement}</span>
         {:else}
           TBD
@@ -97,7 +104,7 @@
       </li>
       <li>
         Weight:
-        {#if data.equipment?.weight}
+        {#if data.equipment?.weight != null}
           {data.equipment.weight}
         {:else}
           TBD
@@ -105,7 +112,7 @@
       </li>
       <li>
         Condition:
-        {#if data.equipment?.condition}
+        {#if data.equipment?.condition != null}
           {data.equipment.condition}
         {:else}
           TBD
@@ -113,17 +120,19 @@
       </li>
       <li>
         Sell Price:
-        {#if data.equipment?.sellPrice}
+        {#if data.equipment?.sellPrice != null}
           {data.equipment.sellPrice}
         {:else}
           TBD
         {/if}
       </li>
-      {#if data.equipment?.excludes}
-        <li>
-          Excludes:
-          {data.equipment.excludes}
-        </li>
+      {#if isArmor(data.equipment) || isWeapon(data.equipment)}
+        {#if data.equipment?.excludes}
+          <li>
+            Excludes:
+            {data.equipment.excludes}
+          </li>
+        {/if}
       {/if}
     </ul>
 

@@ -30,7 +30,7 @@ export const sidebarItems: SidebarItem[] = [
           {
             title: 'Accessories',
             link: '/items/equipment/accessories',
-            disabled: true
+            disabled: false
             // subItems: [
             //   { title: 'Amulets', link: '/items/equipment/accessories/amulets', disabled: true },
             //   {

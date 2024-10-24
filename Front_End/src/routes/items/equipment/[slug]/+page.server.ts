@@ -1,73 +1,154 @@
 import type { PageServerLoad } from './$types';
-import type {
-  Description,
-  Weapon,
-  WeaponType,
-  PickedArmor,
-  GroupedEquipment,
-  PickedWeapon
-} from '$lib';
+import type { Description, GroupedEquipment } from '$lib';
 import { client } from '$lib/utils/sanity/client';
+import { error } from '@sveltejs/kit';
+
+interface Data {
+  description: Description;
+  equipment: GroupedEquipment;
+}
+
+const VALID_SLUGS = ['weapons', 'armor', 'accessories'] as const;
+type ValidSlug = (typeof VALID_SLUGS)[number];
+
+const baseProjection = `{
+  identifiedName,
+  slug,
+  rarity,
+  attributes,
+  levelRequirement,
+  dropArea[]->{name, slug, areaType}
+}`;
+
+const armorProjection = `{
+  ...${baseProjection},
+  armorWeapon,
+  'armorType': armorAttributes.armorType,
+}`;
+
+const weaponProjection = `{
+  ...${baseProjection},
+  armorWeapon,
+  'weaponType': weaponAttributes.weaponType->name,
+}`;
+
+const accessoryProjection = `{
+  ...${baseProjection},
+  slot,
+}`;
+
+console.log(armorProjection);
+
+function isValidSlug(slug: string): slug is ValidSlug {
+  return VALID_SLUGS.includes(slug as ValidSlug);
+}
 
 export const load = (async ({ params }) => {
-  const description =
-    await client.fetch<Description>(`*[_type == 'description' && name match '${params.slug}'][0] {
-    name,
-    description,
-    extras
-  }`);
+  if (!isValidSlug(params.slug)) {
+    throw error(404, 'Page not found');
+  }
 
-  if (params.slug == 'armor') {
-    const armor = await client.fetch<PickedArmor[]>(`
-      *[_type == 'equipment' && armorWeapon == 'armor']{
-        identifiedName,
-        slug,
-        armorWeapon,
-        rarity,
-        attributes,
-        levelRequirement,
-        'armorType': armorAttributes.armorType,
-        dropArea[]->{name, slug, areaType},
-      }`);
+  if (params.slug === 'armor') {
+    const data = await client.fetch<Data>(
+      `{
+      'description': *[_type == 'description' && name match $slug][0] {
+        name,
+        description,
+        extras
+      },
+      'equipment': {
+        'helm': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'helm'] ${armorProjection},
 
-    const groupedByArmorType = armor.reduce<GroupedEquipment>((acc, item: PickedArmor) => {
-      if (!acc[item.armorType]) {
-        acc[item.armorType] = [];
+        'cowl': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'cowl'] ${armorProjection},
+
+        'chest': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'chest'] ${armorProjection},
+
+        'robe': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'robe'] ${armorProjection},
+
+        'wrists': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'wrists'] ${armorProjection},
+
+        'skirt': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'skirt'] ${armorProjection},
+
+        'legs': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'legs'] ${armorProjection},
+
+        'feet': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'feet'] ${armorProjection},
+
+        'shield': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'shield'] ${armorProjection}
       }
-      (acc[item.armorType] as PickedArmor[]).push(item);
-      return acc;
-    }, {});
+    }`,
+      { slug: params.slug }
+    );
 
     return {
-      description: description,
-      equipment: groupedByArmorType
+      description: data.description,
+      equipment: data.equipment
     };
   }
 
-  if (params.slug == 'weapons') {
-    const weapons = await client.fetch<PickedWeapon[]>(`
-      *[_type == 'equipment' && armorWeapon == 'weapon']{
-        identifiedName,
-        slug,
-        armorWeapon,
-        rarity,
-        attributes,
-        levelRequirement,
-        'weaponType': weaponAttributes.weaponType->name,
-        dropArea[]->{name, slug, areaType},
-      }`);
+  if (params.slug === 'weapons') {
+    const data = await client.fetch<Data>(
+      `{
+        'description': *[_type == 'description' && name match $slug][0] {
+          name,
+          description,
+          extras
+        },
+        'equipment': {
+          'axe': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'axe'] ${weaponProjection},
 
-    const groupedByWeaponType = weapons.reduce<GroupedEquipment>((acc, item: PickedWeapon) => {
-      if (!acc[item.weaponType]) {
-        acc[item.weaponType] = [];
-      }
-      (acc[item.weaponType] as PickedWeapon[]).push(item);
-      return acc;
-    }, {});
+          'club': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'club'] ${weaponProjection},
+
+          'mace': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'mace'] ${weaponProjection},
+
+          'maul': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'maul'] ${weaponProjection},
+
+          'two handed sword': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'two handed sword'] ${weaponProjection},
+
+          'dagger': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'dagger'] ${weaponProjection},
+
+          'throwing dagger': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'throwing dagger'] ${weaponProjection},
+
+          'fist': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'fist'] ${weaponProjection},
+
+          'long sword': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'long sword'] ${weaponProjection},
+
+          'short sword': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'short sword'] ${weaponProjection}
+        }
+      }`,
+      { slug: params.slug }
+    );
 
     return {
-      description: description,
-      equipment: groupedByWeaponType
+      description: data.description,
+      equipment: data.equipment
+    };
+  }
+
+  if (params.slug === 'accessories') {
+    const data = await client.fetch<Data>(
+      `{
+        'description': *[_type == 'description' && name match $slug][0]
+        {
+          name,
+          description,
+          extras
+        },
+
+        'equipment':
+        {
+          'amulet': *[_type == 'accessory' && slot == 'amulet'] ${accessoryProjection},
+          'belt': *[_type == 'accessory' && slot == 'belt'] ${accessoryProjection},
+          'baldric': *[_type == 'accessory' && slot == 'baldric'] ${accessoryProjection},
+          'backpack': *[_type == 'accessory' && slot == 'backpack'] ${accessoryProjection},
+          'ring': *[_type == 'accessory' && slot == 'ring'] ${accessoryProjection}
+        }
+      }`,
+      { slug: params.slug }
+    );
+
+    return {
+      description: data.description,
+      equipment: data.equipment
     };
   }
 }) satisfies PageServerLoad;
