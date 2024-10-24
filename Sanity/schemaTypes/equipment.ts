@@ -222,7 +222,7 @@ export const equipment = defineType({
       options: {
         list: ['Males', 'Females'],
       },
-      hidden: ({ parent }) => ['weapon'].includes(parent?.slot),
+      hidden: ({ parent }) => ['weapon'].includes(parent?.armorWeapon),
     }),
 
     defineField({
@@ -230,7 +230,16 @@ export const equipment = defineType({
       title: 'Drop Area',
       description: 'The area where this equipment can be found or obtained.',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'area' }] }],
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'area' }],
+          options: {
+            filter: `areaType == 'dungeon' || areaType == 'zone'`,
+            sort: [{ field: 'name', direction: 'asc' }],
+          },
+        },
+      ],
     }),
 
     defineField({
@@ -240,4 +249,14 @@ export const equipment = defineType({
       of: [{ type: 'block' }],
     }),
   ],
+  preview: {
+    select: {
+      name: 'identifiedName',
+    },
+    prepare({ name }) {
+      return {
+        title: name,
+      }
+    },
+  },
 })

@@ -82,7 +82,7 @@
     {#if data.mob.inhabitedAreas}
       <ul class="ul-diamond">
         {#each data.mob.inhabitedAreas as area}
-          <li><a href="areas/{area.areaType}/{area.slug.current}">{area.name}</a></li>
+          <li><a href="/areas/{area.areaType}/{area.slug.current}">{area.name}</a></li>
         {/each}
       </ul>
     {:else}

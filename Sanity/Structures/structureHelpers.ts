@@ -12,8 +12,9 @@ import {
   GiNecklace,
   GiBeltArmor,
   GiDoorRingHandle,
+  GiBackpack,
 } from 'react-icons/gi'
-import { FaHome } from 'react-icons/fa'
+import { FaHome, FaSlash } from 'react-icons/fa'
 
 export const skills = [
   { title: 'Light Piercing', value: 'Light Piercing' },
@@ -77,6 +78,8 @@ export const areaTypes = [
 
 export const accessoryTypes = [
   { title: 'Amulet', icon: GiNecklace, value: 'amulet' },
+  { title: 'Backpack', icon: GiBackpack, value: 'backpack' },
+  { title: 'Baldric', icon: FaSlash, value: 'baldric' },
   { title: 'Belt', icon: GiBeltArmor, value: 'belt' },
   { title: 'Ring', icon: GiDoorRingHandle, value: 'ring' },
 ]
@@ -135,8 +138,8 @@ export const armorTypes = [
   { title: 'Cowl', value: 'cowl' },
   { title: 'Chest', value: 'chest' },
   { title: 'Robe', value: 'robe' },
-  { title: 'Wrists', value: 'wrists' },
   { title: 'Skirt', value: 'skirt' },
+  { title: 'Wrists', value: 'wrist' },
   { title: 'Legs', value: 'legs' },
   { title: 'Feet', value: 'feet' },
   { title: 'Shield', value: 'shield' },

@@ -1,31 +1,31 @@
 /* General Layout */
 body {
-	background-color: $color-background;
-	color: $color-text;
-	font-family: 'Georgia', serif;
-	margin: 0;
-	padding: 0;
-	display: flex;
-	height: 100vh;
+  background-color: $color-background;
+  color: $color-text;
+  font-family: 'Georgia', serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  height: 100vh;
 }
 
 main {
-	flex-grow: 1;
-	width: 100%;
-	padding: 30px;
-	color: $color-text;
-	font-family: 'Georgia', serif;
-	overflow-y: auto;
-	background: linear-gradient(to right, $color-accent 0%, $color-background 3%);
+  flex-grow: 1;
+  width: 100%;
+  padding: 30px;
+  color: $color-text;
+  font-family: 'Georgia', serif;
+  overflow-y: auto;
+  background: linear-gradient(to right, $color-accent 0%, $color-background 3%);
 }
 
 p {
-	margin: 5px 0;
+  margin: 5px 0;
   color: $color-text;
 }
 
 .capitalize {
-	text-transform: capitalize;
+  text-transform: capitalize;
 }
 
 .text-emphasis {
@@ -36,6 +36,22 @@ p {
   text-align: center;
 }
 
+blockquote {
+  padding: 10px;
+  margin: 8px 0px;
+  border-left: 3px solid $color-border;
+  background-color: darken($color-background, 5%);
+  font-style: italic;
+}
+
+.quote {
+  font-family: 'Cinzel', serif;
+  color: $color-text;
+  text-align: center;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
 /* Disabled */
 .inactive {
   color: $color-inactive;
@@ -43,45 +59,47 @@ p {
 
 /* Headers */
 h1 {
-	color: $color-header;
-	border-bottom: 3px solid;
-	border-image: linear-gradient(to right, $color-border, transparent) 1;
-	padding-bottom: 5px;
-	margin-bottom: 5px;
-	font-family: 'Garamond', serif;
+  color: $color-header;
+  border-bottom: 3px solid;
+  border-image: linear-gradient(to right, $color-border, transparent) 1;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  font-family: 'Garamond', serif;
 }
 
-h2, h3, h4 {
-	color: $color-header;
-	border-bottom: 3px solid;
-	border-image: linear-gradient(to right, $color-border, transparent) 1;
-	padding-bottom: 5px;
-	margin-bottom: 5px;
-	font-family: 'Garamond', serif;
+h2,
+h3,
+h4 {
+  color: $color-header;
+  border-bottom: 3px solid;
+  border-image: linear-gradient(to right, $color-border, transparent) 1;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
+  font-family: 'Garamond', serif;
 }
 
 .border-gradient {
-	border-bottom: 3px solid;
-	border-image: linear-gradient(to right, $color-border, transparent) 1;
-	padding-bottom: 5px;
-	margin-bottom: 5px;
+  border-bottom: 3px solid;
+  border-image: linear-gradient(to right, $color-border, transparent) 1;
+  padding-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 /* Lists */
 ul {
-	margin: 5px 0;
+  margin: 5px 0;
 }
 
 .ul-diamond {
-	list-style-type: '◆';
+  list-style-type: '◆';
 }
 
 .ul-note {
-	list-style-type: '✎';
+  list-style-type: '✎';
 }
 
 .ul-sword {
-  list-style-type: '⚔'
+  list-style-type: '⚔';
 }
 
 .ul-none {
@@ -89,11 +107,11 @@ ul {
 }
 
 li {
-	padding-left: 8px;
+  padding-left: 8px;
 
-	&::marker {
-		color: $color-text;
-	}
+  &::marker {
+    color: $color-text;
+  }
 }
 
 /* Buttons */
@@ -121,7 +139,9 @@ a {
   color: $color-text-accent;
   text-decoration: none;
   border-bottom: 1px dashed $color-text-accent;
-  transition: color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  transition:
+    color 0.2s ease-in-out,
+    border-color 0.2s ease-in-out;
 
   &:hover {
     color: $color-header;
@@ -143,7 +163,8 @@ table {
   color: $color-text;
 }
 
-th, td {
+th,
+td {
   padding: 12px 15px;
   text-align: left;
   border: 1px solid $color-border;
@@ -193,4 +214,24 @@ textarea {
     color: $color-border;
     cursor: not-allowed;
   }
+}
+
+/* Rarity */
+.rarity-white {
+  color: $color-rarity-white;
+}
+.rarity-green {
+  color: $color-rarity-green;
+}
+.rarity-blue {
+  color: $color-rarity-blue;
+}
+.rarity-purple {
+  color: $color-rarity-purple;
+}
+.rarity-orange {
+  color: $color-rarity-orange;
+}
+.rarity-red {
+  color: $color-rarity-red;
 }

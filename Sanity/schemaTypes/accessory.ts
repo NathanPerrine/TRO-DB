@@ -46,6 +46,8 @@ export const accessories = defineType({
       options: {
         list: [
           { title: 'Amulet', value: 'amulet' },
+          { title: 'Backpack', value: 'backpack' },
+          { title: 'Baldric', value: 'baldric' },
           { title: 'Belt', value: 'belt' },
           { title: 'Ring', value: 'ring' },
         ],

@@ -1,16 +1,19 @@
 <script lang="ts">
-    import type { PageData } from './$types';
+  import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
+  import type { PageData } from './$types';
 
-    export let data: PageData;
+  export let data: PageData;
+  console.log(data);
 </script>
 
 <main>
-  <h2>Hi there.</h2>
-  <p>You seem to have stumbled upon a mostly empty accessory route. If you're looking for accessories, take a look at the pages below that will have the items you're probably looking for.</p>
+  {#if data.description}
+    <PageHeader description={data.description} />
+  {/if}
 
-  <ul class="ul-diamond">
-    <li><a href="/items/equipment/accessories/amulets">Amulets</a></li>
-    <li><a href="/items/equipment/accessories/belts">Belts</a></li>
-    <li><a href="/items/equipment/accessories/rings">Rings</a></li>
-  </ul>
+  <h2>Amulets</h2>
+  <h2>Baldrics</h2>
+  <h2>Backpacks</h2>
+  <h2>Belts</h2>
+  <h2>Rings</h2>
 </main>

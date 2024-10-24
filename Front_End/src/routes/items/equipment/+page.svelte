@@ -1,5 +1,15 @@
 <script lang="ts">
-    import type { PageData } from './$types';
+  import type { PageData } from './$types';
 
-    export let data: PageData;
+  export let data: PageData;
 </script>
+
+<main>
+  <p>Perhaps you're looking for some of the following:</p>
+
+  <ul>
+    <li><a href="/items/equipment/accessories">Accessories</a></li>
+    <li><a href="/items/equipment/armor">Armor</a></li>
+    <li><a href="/items/equipment/weapons">Weapons</a></li>
+  </ul>
+</main>

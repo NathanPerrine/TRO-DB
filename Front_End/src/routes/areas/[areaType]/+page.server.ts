@@ -16,12 +16,15 @@ export const load = (async ({ params }) => {
       name,
       slug,
       areaType,
-      directions,
+      directions[]{
+        town->{name, slug},
+        directions,
+      },
     }
-  `)
+  `);
 
   return {
     description: description,
-    areas: areas,
+    areas: areas
   };
 }) satisfies PageServerLoad;

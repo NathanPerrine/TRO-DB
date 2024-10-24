@@ -9,12 +9,16 @@ export const load = (async ({ params }) => {
     slug,
     description,
     map,
-    directions,
+    directions[]{
+      town->{name, slug},
+      directions,
+    },
     walkthrough,
     notes,
-    notableDrops[] -> {
-      name,
-      slug,
+    notableDrops{
+      books[]->{name, slug, bookType},
+      equipment[]->{identifiedName, slug, rarity, armorWeapon},
+      accessories[]->{identifiedName, slug, rarity, slot},
     },
     mobs[] -> {
       name,
@@ -31,9 +35,5 @@ export const load = (async ({ params }) => {
   }
   `);
 
-  console.log(area)
   return { area: area };
 }) satisfies PageServerLoad;
-
-
-

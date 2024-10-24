@@ -17,7 +17,7 @@
     {#each Object.keys(data.books) as skill}
       <h2>
         <button
-          class="headerButton"
+          class="header-button"
           class:expanded={expandedSections[skill]}
           on:click={() => toggleSection(skill)}
           aria-expanded={expandedSections[skill]}
@@ -75,7 +75,7 @@
 </main>
 
 <style lang="scss">
-  .headerButton {
+  .header-button {
     cursor: pointer;
     background: none;
     border: none;

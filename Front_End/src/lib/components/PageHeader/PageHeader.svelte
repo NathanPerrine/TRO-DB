@@ -9,7 +9,9 @@
 
 <header>
   <h1>{description.name}</h1>
-  <PortableText value={description.description} components={{}} />
+  {#if description.description}
+    <PortableText value={description.description} components={{}} />
+  {/if}
   {#if description.extras}
     <h3>Extra Info:</h3>
     <PortableText

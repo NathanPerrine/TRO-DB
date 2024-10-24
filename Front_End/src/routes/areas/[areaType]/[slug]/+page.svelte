@@ -16,15 +16,16 @@
     <h2>Map</h2>
     <p>{data.area.map}</p>
 
-
     <h2>Directions</h2>
     <ul class="ul-diamond">
       {#if data.area.directions}
-        {#each data.area.directions as directions}
-          <li>{directions}</li>
+        {#each data.area.directions as direction}
+          <li>
+            <a href="/areas/towns/{direction.town.slug.current}">{direction.town.name}</a>: {direction.directions}
+          </li>
         {/each}
       {:else}
-        <li>???</li>
+        <p>???</p>
       {/if}
     </ul>
 
@@ -37,7 +38,50 @@
 
     {#if data.area.areaType != 'town'}
       <h2>Notable Drops</h2>
-      <p>List of drops will be here</p>
+      {#if data.area.notableDrops}
+        {#if data.area.notableDrops.books}
+          <h3>Books:</h3>
+          <ul class="ul-diamond">
+            {#each data.area.notableDrops.books as book}
+              <li><a href="/items/books/{book.bookType}/{book.slug.current}">{book.name}</a></li>
+            {/each}
+          </ul>
+        {:else}
+          <p>No known notable book drops.</p>
+        {/if}
+        {#if data.area.notableDrops.equipment}
+          <h3>Armors / Weapons:</h3>
+          <ul class="ul-diamond">
+            {#each data.area.notableDrops.equipment as equipment}
+              <li>
+                <a
+                  class="rarity-{equipment.rarity}"
+                  href="/items/equipment/{equipment.armorWeapon}/{equipment.slug.current}"
+                  >{equipment.identifiedName}</a
+                >
+              </li>
+            {/each}
+          </ul>
+        {:else}
+          <p>No known notable armor or weapon drops.</p>
+        {/if}
+        {#if data.area.notableDrops.accessories}
+          <h3>Accessories:</h3>
+          <ul class="ul-diamond">
+            {#each data.area.notableDrops.accessories as accessory}
+              <li>
+                <a href="/items/equipment/accessory/{accessory.slot}/{accessory.slug.current}"
+                  >{accessory.identifiedName}</a
+                >
+              </li>
+            {/each}
+          </ul>
+        {:else}
+          <p>No known notable accessory drops.</p>
+        {/if}
+      {/if}
+    {:else}
+      <p>No known notable drops in this area.</p>
     {/if}
 
     {#if data.area.areaType != 'town'}
@@ -77,7 +121,7 @@
       {#if data.area.connectedAreas}
         {#each data.area.connectedAreas as connectedArea}
           <li>
-            <a href="areas/{connectedArea.areaType}/{connectedArea.slug.current}"
+            <a href="/areas/{connectedArea.areaType}/{connectedArea.slug.current}"
               >{connectedArea.name}</a
             >
           </li>

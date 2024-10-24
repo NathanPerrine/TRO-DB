@@ -29,15 +29,23 @@ export const sidebarItems: SidebarItem[] = [
         subItems: [
           {
             title: 'Accessories',
-            link: '#',
-            subItems: [
-              { title: 'Amulets', link: '/items/equipment/accessories/amulets', disabled: false },
-              { title: 'Belts', link: '/items/equipment/accessories/belts', disabled: false },
-              { title: 'Rings', link: '/items/equipment/accessories/rings', disabled: false }
-            ]
+            link: '/items/equipment/accessories',
+            disabled: true
+            // subItems: [
+            //   { title: 'Amulets', link: '/items/equipment/accessories/amulets', disabled: true },
+            //   {
+            //     title: 'Backpacks',
+            //     link: '/items/equipment/accessories/backpacks',
+            //     disabled: false
+            //   },
+            //   { title: 'Baldrics', link: '/items/equipment/accessories/baldrics', disabled: false },
+            //   { title: 'Belts', link: '/items/equipment/accessories/belts', disabled: false },
+            //   { title: 'Rings', link: '/items/equipment/accessories/rings', disabled: false }
+            // ]
           },
           { title: 'Armor', link: '/items/equipment/armor', disabled: false },
-          { title: 'Weapons', link: '/items/equipment/weapons', disabled: false }
+          { title: 'Weapons', link: '/items/equipment/weapons', disabled: false },
+          { title: 'Equipment Sets', link: '/items/equipment/sets', disabled: true }
         ]
       },
       {
@@ -50,8 +58,8 @@ export const sidebarItems: SidebarItem[] = [
           { title: 'Wands', link: '/items/consumables/wands', disabled: false }
         ]
       },
-      { title: 'Junk', link: '/items/junk', disabled: false },
-      { title: 'Dungeon Items', link: '/items/dungeon-items', disabled: false }
+      { title: 'Junk', link: '/items/junk', disabled: true },
+      { title: 'Dungeon Items', link: '/items/dungeon-items', disabled: true }
     ]
   },
   {
