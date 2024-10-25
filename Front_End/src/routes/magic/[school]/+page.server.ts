@@ -1,50 +1,70 @@
 import type { PageServerLoad } from './$types';
 import { client } from '$lib/utils/sanity/client';
 import type { Description, Spell } from '$lib';
+import { error } from '@sveltejs/kit';
 
+const VALID_SLUGS = ['thaumaturgy', 'mysticism', 'elementalism', 'sorcery', 'necromancy'];
+type ValidSlug = (typeof VALID_SLUGS)[number];
+
+function isValidSlug(slug: string): slug is ValidSlug {
+  return VALID_SLUGS.includes(slug as ValidSlug);
+}
+
+interface SpellLevels {
+  familiar: Spell[];
+  proficient: Spell[];
+  expert: Spell[];
+  master: Spell[];
+  grandmaster: Spell[];
+  'supreme-master': Spell[];
+}
+
+interface Data {
+  description: Description;
+  spells: SpellLevels;
+}
+
+const spellProjection = `{
+  title,
+  spellSchool,
+  level,
+  slug,
+  spellEffect,
+  mpCost,
+  dropOnly
+}`;
 
 export const load = (async ({ params }) => {
-  const spells = {
-    'familiar': [] as Spell[],
-    'proficient': [] as Spell[],
-    'expert': [] as Spell[],
-    'master': [] as Spell[],
-    'grandmaster': [] as Spell[],
-    'supreme-master': [] as Spell[],
+  if (!isValidSlug(params.school)) {
+    throw error(404, 'Page not Found.');
   }
 
-  const description = await client.fetch<Description[]>(`*[_type == 'description' && name match '${params.school}'] {
-    name,
-    description,
-    extras,
-  }`)
+  const data = await client.fetch<Data>(
+    `{
+      'description': *[_type == 'description' && name match $school][0]{
+        name,
+        description,
+        extras,
+      },
+      'spells': {
+        'familiar': *[_type == 'spell' && spellSchool match $school && level == 'familiar'] | order(title asc) ${spellProjection},
 
-  const data = await client.fetch<Spell[]>(`*[_type == 'spell' && spellSchool =='${params.school}'] {
-    title,
-    spellSchool,
-    level,
-    slug,
-    spellEffect,
-    mpCost,
-    dropOnly
-  }`)
+        'proficient': *[_type == 'spell' && spellSchool match $school && level == 'proficient'] | order(title asc) ${spellProjection},
 
+        'expert': *[_type == 'spell' && spellSchool match $school && level == 'expert'] | order(title asc) ${spellProjection},
 
-  data.forEach(spell => {
-    const { level } = spell;
-    if (spells[level]) {
-      spells[level].push(spell);
-    }
-  })
+        'master': *[_type == 'spell' && spellSchool match $school && level == 'master'] | order(title asc) ${spellProjection},
 
-  const alphabetizedSpells = Object.fromEntries(
-    Object.entries(spells).map(([level, spells]) => [
-      level,
-      spells.sort((a, b) => a.title.localeCompare(b.title))
-    ])
+        'grandmaster': *[_type == 'spell' && spellSchool match $school && level == 'grandmaster'] | order(title asc) ${spellProjection},
+
+        'supreme-master': *[_type == 'spell' && spellSchool match $school && level == 'supreme-master'] | order(title asc) ${spellProjection},
+      }
+    }`,
+    { school: params.school }
   );
 
-    return {
-      spells: alphabetizedSpells,
-      description: description[0]};
+  return {
+    description: data.description,
+    spells: data.spells
+  };
 }) satisfies PageServerLoad;

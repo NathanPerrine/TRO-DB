@@ -3,14 +3,24 @@
   import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
 
   export let data: PageData;
+
+  // Create ordered map of spells
+  const spellsMap = new Map([
+    ['familiar', data.spells.familiar],
+    ['proficient', data.spells.proficient],
+    ['expert', data.spells.expert],
+    ['master', data.spells.master],
+    ['grandmaster', data.spells.grandmaster],
+    ['supreme-master', data.spells['supreme-master']]
+  ]);
 </script>
 
 <main>
   <PageHeader description={data.description} />
 
-  {#each Object.entries(data.spells) as [level, spells]}
+  {#each Array.from(spellsMap) as [level, spells]}
     {#if spells.length}
-      <h2>{level.charAt(0).toUpperCase() + level.slice(1)} Spells</h2>
+      <h2>{level.charAt(0).toUpperCase() + level.slice(1).replace('-', ' ')} Spells</h2>
       <table>
         <thead>
           <tr>
@@ -28,9 +38,9 @@
               <td>{spell.spellEffect}</td>
               <td>
                 {#if spell.dropOnly}
-                  <span class="check">&#10003</span>
+                  <span class="check">&#10003;</span>
                 {:else}
-                  <span class="cross">&#10007</span>
+                  <span class="cross">&#10007;</span>
                 {/if}
               </td>
             </tr>

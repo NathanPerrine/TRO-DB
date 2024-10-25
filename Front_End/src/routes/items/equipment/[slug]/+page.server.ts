@@ -37,8 +37,6 @@ const accessoryProjection = `{
   slot,
 }`;
 
-console.log(armorProjection);
-
 function isValidSlug(slug: string): slug is ValidSlug {
   return VALID_SLUGS.includes(slug as ValidSlug);
 }
