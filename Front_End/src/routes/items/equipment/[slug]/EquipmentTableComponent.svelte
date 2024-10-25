@@ -169,7 +169,7 @@
             {/if}
           </td>
           <td>
-            {#if equipmentPiece.levelRequirement}
+            {#if equipmentPiece.levelRequirement != null}
               {equipmentPiece.levelRequirement}
             {/if}
           </td>

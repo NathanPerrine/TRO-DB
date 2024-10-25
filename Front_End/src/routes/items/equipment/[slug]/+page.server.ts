@@ -55,23 +55,23 @@ export const load = (async ({ params }) => {
         extras
       },
       'equipment': {
-        'helm': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'helm'] ${armorProjection},
+        'helm': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'helm'] | order(levelRequirement) ${armorProjection},
 
-        'cowl': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'cowl'] ${armorProjection},
+        'cowl': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'cowl'] | order(levelRequirement) ${armorProjection},
 
-        'chest': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'chest'] ${armorProjection},
+        'chest': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'chest'] | order(levelRequirement) ${armorProjection},
 
-        'robe': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'robe'] ${armorProjection},
+        'robe': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'robe'] | order(levelRequirement) ${armorProjection},
 
-        'wrists': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'wrists'] ${armorProjection},
+        'wrists': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'wrists'] | order(levelRequirement) ${armorProjection},
 
-        'skirt': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'skirt'] ${armorProjection},
+        'skirt': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'skirt'] | order(levelRequirement) ${armorProjection},
 
-        'legs': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'legs'] ${armorProjection},
+        'legs': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'legs'] | order(levelRequirement) ${armorProjection},
 
-        'feet': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'feet'] ${armorProjection},
+        'feet': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'feet'] | order(levelRequirement) ${armorProjection},
 
-        'shield': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'shield'] ${armorProjection}
+        'shield': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'shield'] | order(levelRequirement) ${armorProjection}
       }
     }`,
       { slug: params.slug }
@@ -92,25 +92,25 @@ export const load = (async ({ params }) => {
           extras
         },
         'equipment': {
-          'axe': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'axe'] ${weaponProjection},
+          'axe': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'axe'] | order(levelRequirement) ${weaponProjection},
 
-          'club': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'club'] ${weaponProjection},
+          'club': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'club'] | order(levelRequirement) ${weaponProjection},
 
-          'mace': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'mace'] ${weaponProjection},
+          'mace': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'mace'] | order(levelRequirement) ${weaponProjection},
 
-          'maul': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'maul'] ${weaponProjection},
+          'maul': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'maul'] | order(levelRequirement) ${weaponProjection},
 
-          'two handed sword': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'two handed sword'] ${weaponProjection},
+          'two handed sword': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'two handed sword'] | order(levelRequirement) ${weaponProjection},
 
-          'dagger': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'dagger'] ${weaponProjection},
+          'dagger': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'dagger'] | order(levelRequirement) ${weaponProjection},
 
-          'throwing dagger': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'throwing dagger'] ${weaponProjection},
+          'throwing dagger': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'throwing dagger'] | order(levelRequirement) ${weaponProjection},
 
-          'fist': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'fist'] ${weaponProjection},
+          'fist': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'fist'] | order(levelRequirement) ${weaponProjection},
 
-          'long sword': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'long sword'] ${weaponProjection},
+          'long sword': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'long sword'] | order(levelRequirement) ${weaponProjection},
 
-          'short sword': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'short sword'] ${weaponProjection}
+          'short sword': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'short sword'] | order(levelRequirement) ${weaponProjection}
         }
       }`,
       { slug: params.slug }
@@ -134,11 +134,11 @@ export const load = (async ({ params }) => {
 
         'equipment':
         {
-          'amulet': *[_type == 'accessory' && slot == 'amulet'] ${accessoryProjection},
-          'belt': *[_type == 'accessory' && slot == 'belt'] ${accessoryProjection},
-          'baldric': *[_type == 'accessory' && slot == 'baldric'] ${accessoryProjection},
-          'backpack': *[_type == 'accessory' && slot == 'backpack'] ${accessoryProjection},
-          'ring': *[_type == 'accessory' && slot == 'ring'] ${accessoryProjection}
+          'amulet': *[_type == 'accessory' && slot == 'amulet'] | order(levelRequirement) ${accessoryProjection},
+          'belt': *[_type == 'accessory' && slot == 'belt'] | order(levelRequirement) ${accessoryProjection},
+          'baldric': *[_type == 'accessory' && slot == 'baldric'] | order(levelRequirement) ${accessoryProjection},
+          'backpack': *[_type == 'accessory' && slot == 'backpack'] | order(levelRequirement) ${accessoryProjection},
+          'ring': *[_type == 'accessory' && slot == 'ring'] | order(levelRequirement) ${accessoryProjection}
         }
       }`,
       { slug: params.slug }
