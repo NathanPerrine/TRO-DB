@@ -5,7 +5,7 @@
   export let data: PageData;
 
   // Create ordered map of spells
-  const spellsMap = new Map([
+  $: spellsMap = new Map([
     ['familiar', data.spells.familiar],
     ['proficient', data.spells.proficient],
     ['expert', data.spells.expert],
