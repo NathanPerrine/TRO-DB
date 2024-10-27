@@ -1,4 +1,4 @@
-import type { Slug, Book } from '$lib/index'
+import type { Slug, Book } from '$lib'
 
 export type Spell = {
   title: string;

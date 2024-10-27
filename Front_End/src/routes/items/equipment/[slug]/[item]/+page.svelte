@@ -2,19 +2,26 @@
   import type { Accessory, Armor, Weapon } from '$lib';
   import Notes from '$lib/components/Notes/Notes.svelte';
   import type { PageData } from './$types';
+  import type { Equipment } from '$lib/types/equipment';
 
   export let data: PageData;
 
-  function isArmor(equipment: any): equipment is Armor {
-    return equipment.armorWeapon === 'armor';
+  function isArmor(equipment: Armor | Equipment | Accessory | undefined): equipment is Armor {
+    if (equipment) {
+      return 'armorWeapon' in equipment && equipment.armorWeapon === 'armor';
+    }
+    return false;
   }
 
-  function isWeapon(equipment: any): equipment is Weapon {
-    return equipment.armorWeapon === 'weapon';
+  function isWeapon(equipment: Armor | Equipment | Accessory | undefined): equipment is Weapon {
+    if (equipment) {
+      return 'armorWeapon' in equipment && equipment.armorWeapon === 'weapon';
+    }
+    return false;
   }
 
-  function isAccessory(equipment: any): equipment is Accessory {
-    return equipment.armorWeapon == null;
+  function isAccessory(equipment: Armor | Equipment | Accessory | undefined): equipment is Accessory {
+    return equipment ? !('armorWeapon' in equipment) : false;
   }
 </script>
 

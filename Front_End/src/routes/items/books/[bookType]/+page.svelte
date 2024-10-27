@@ -13,7 +13,7 @@
 <main>
   <PageHeader description={data.description} />
 
-  {#if data.description.name == 'Spellbooks'}
+  {#if data.description.name === 'Spellbooks'}
     {#each Object.keys(data.books) as skill}
       <h2>
         <button
@@ -60,7 +60,7 @@
         {/each}
       {/if}
     {/each}
-  {:else if data.description.name == 'Skillbooks'}
+  {:else if data.description.name === 'Skillbooks'}
     {#each Object.keys(data.books) as skill}
       <h2>{skill}</h2>
       {#each Object.keys(data.books[skill]) as skillLevel}

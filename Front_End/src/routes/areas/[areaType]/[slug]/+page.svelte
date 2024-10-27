@@ -29,14 +29,14 @@
       {/if}
     </ul>
 
-    {#if data.area.areaType == 'dungeon'}
+    {#if data.area.areaType === 'dungeon'}
       <h2>Walkthrough</h2>
       <PortableText value={data.area.walkthrough} components={{}} />
     {/if}
 
     <Notes notes={data.area.notes} />
 
-    {#if data.area.areaType != 'town'}
+    {#if data.area.areaType !== 'town'}
       <h2>Notable Drops</h2>
       {#if data.area.notableDrops}
         {#if data.area.notableDrops.books}
@@ -57,8 +57,9 @@
                 <a
                   class="rarity-{equipment.rarity}"
                   href="/items/equipment/{equipment.armorWeapon}/{equipment.slug.current}"
-                  >{equipment.identifiedName}</a
                 >
+                  {equipment.identifiedName}
+                </a>
               </li>
             {/each}
           </ul>
@@ -71,8 +72,9 @@
             {#each data.area.notableDrops.accessories as accessory}
               <li>
                 <a href="/items/equipment/accessory/{accessory.slot}/{accessory.slug.current}"
-                  >{accessory.identifiedName}</a
                 >
+                  {accessory.identifiedName}
+                </a>
               </li>
             {/each}
           </ul>
@@ -84,33 +86,33 @@
       <p>No known notable drops in this area.</p>
     {/if}
 
-    {#if data.area.areaType != 'town'}
+    {#if data.area.areaType !== 'town'}
       <h2>Mobs in this area</h2>
       {#if data.area.mobs}
         <table>
           <thead>
-            <tr>
-              <th style="width: 30%">Name</th>
-              <th style="">Level Range</th>
-              <th style="">HP Range</th>
-              <th style="">Area Boss</th>
-            </tr>
+          <tr>
+            <th style="width: 30%">Name</th>
+            <th style="">Level Range</th>
+            <th style="">HP Range</th>
+            <th style="">Area Boss</th>
+          </tr>
           </thead>
           <tbody>
-            {#each data.area.mobs as mob}
-              <tr>
-                <td><a href="/mobs/{mob.slug.current}">{mob.name}</a></td>
-                <td>{mob.levelRange?.min} - {mob.levelRange?.max}</td>
-                <td>{mob.hpRange?.min} - {mob.hpRange?.max}</td>
-                <td>
-                  {#if mob.boss}
-                    <span class="check">&#10003</span>
-                  {:else}
-                    <span class="cross">&#10007</span>
-                  {/if}
-                </td>
-              </tr>
-            {/each}
+          {#each data.area.mobs as mob}
+            <tr>
+              <td><a href="/mobs/{mob.slug.current}">{mob.name}</a></td>
+              <td>{mob.levelRange?.min} - {mob.levelRange?.max}</td>
+              <td>{mob.hpRange?.min} - {mob.hpRange?.max}</td>
+              <td>
+                {#if mob.boss}
+                  <span class="check">&#10003</span>
+                {:else}
+                  <span class="cross">&#10007</span>
+                {/if}
+              </td>
+            </tr>
+          {/each}
           </tbody>
         </table>
       {/if}
@@ -122,8 +124,9 @@
         {#each data.area.connectedAreas as connectedArea}
           <li>
             <a href="/areas/{connectedArea.areaType}/{connectedArea.slug.current}"
-              >{connectedArea.name}</a
             >
+              {connectedArea.name}
+            </a>
           </li>
         {/each}
       {/if}

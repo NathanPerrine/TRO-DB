@@ -234,7 +234,7 @@
   }
 
   .tag-container {
-    padding: 8px 0px;
+    padding: 8px 0;
 
     .active {
       color: $color-text-accent;

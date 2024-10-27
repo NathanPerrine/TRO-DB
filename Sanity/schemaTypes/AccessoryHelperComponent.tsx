@@ -40,8 +40,9 @@ export const DescriptionHelper: React.FC<StringInputProps> = (props) => {
   return (
     <Stack space={2}>
       <span>
-        Note: This field will update automatically if the accessory 'slot' is
-        updated.
+        {
+          "Note: This field will update automatically if the accessory 'slot' is updated."
+        }
       </span>
       <TextArea
         style={{ resize: 'vertical' }}
@@ -85,8 +86,9 @@ export const WeightHelper: React.FC<NumberInputProps> = (props) => {
   return (
     <Stack space={2}>
       <span>
-        Note: This field will update automatically if the accessory 'slot' is
-        updated.
+        {
+          "Note: This field will update automatically if the accessory 'slot' is updated."
+        }
       </span>
       <TextInput
         {...elementProps}
@@ -131,8 +133,9 @@ export const ConditionHelper: React.FC<NumberInputProps> = (props) => {
   return (
     <Stack space={2}>
       <span>
-        Note: This field will update automatically if the accessory 'slot' is
-        updated.
+        {
+          "Note: This field will update automatically if the accessory 'slot' is updated."
+        }
       </span>
       <TextInput
         {...elementProps}

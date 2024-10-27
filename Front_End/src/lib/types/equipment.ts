@@ -1,7 +1,7 @@
-import type { Area } from './area';
+import type { Area } from '$lib';
 import type { Rarity } from './rarity';
-import type { Slug } from './slug';
-import type { WeaponType } from './weaponType';
+import type { Slug } from '$lib';
+import type { WeaponType } from '$lib';
 
 export type Equipment = {
   name: string;

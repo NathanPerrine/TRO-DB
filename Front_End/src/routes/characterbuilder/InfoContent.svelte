@@ -1,18 +1,23 @@
 <script lang="ts">
+  import type { Character, Stats } from './characterBuilder';
   import {
     alignmentInfo,
     classInfo,
+    classSkills,
     pvpInfo,
     raceClassStats,
-    statInfo,
-    classSkills
+    statInfo
   } from './characterBuilder';
-  import type { Character, Stats } from './characterBuilder';
+  import TextWithEmphasis from '$lib/components/Text/TextWithEmphasis.svelte';
 
   export let stat: string;
   export let character: Character;
 
   function getScoreDescription(score: number) {
+    /**
+     * @description
+     * test test test
+     */
     if (score <= 5) {
       return 'Terrible';
     } else if (score <= 8) {
@@ -35,11 +40,11 @@
 
 <section>
   <!-- Character Base Info section -->
-  {#if stat == 'characterInfo'}
+  {#if stat === 'characterInfo'}
     <div class="info-content">
       <p>
         As
-        {#if character.race == 'human' || character.race == 'giant'}a{:else}an{/if}
+        {#if character.race === 'human' || character.race === 'giant'}a{:else}an{/if}
         <span class="text-emphasis">{character.race} {character.class}</span>, your base attributes
         are set at Strength <span class="text-emphasis">{getBaseStat('strength')}</span>, Dexterity:
         <span class="text-emphasis">{getBaseStat('dexterity')}</span>, Intelligence:
@@ -50,10 +55,10 @@
     </div>
 
     <!-- Character Stat section -->
-  {:else if stat == 'strength' || stat == 'dexterity' || stat == 'intelligence' || stat == 'endurance'}
+  {:else if stat === 'strength' || stat === 'dexterity' || stat === 'intelligence' || stat === 'endurance'}
     <div class="info-content">
       <blockquote class="quote">
-        {#if stat == 'strength' || stat == 'dexterity'}A{:else}An{/if}
+        {#if stat === 'strength' || stat === 'dexterity'}A{:else}An{/if}
         {stat} of <span class="text-emphasis">{character[stat]}</span> is considered
         <span class="text-emphasis">{getScoreDescription(character[stat])}</span>.
       </blockquote>
@@ -62,31 +67,31 @@
     </div>
 
     <!-- Character Alignment section -->
-  {:else if stat == 'alignment'}
+  {:else if stat === 'alignment'}
     <div class="info-content">
       <p>
-        {#if character.alignment == 'good'}
-          {@html alignmentInfo.good}
-        {:else if character.alignment == 'neutral'}
-          {@html alignmentInfo.neutral}
-        {:else if character.alignment == 'evil'}
-          {@html alignmentInfo.evil}
+        {#if character.alignment === 'good'}
+          <TextWithEmphasis segments={alignmentInfo.good.segments} />
+        {:else if character.alignment === 'neutral'}
+          <TextWithEmphasis segments={alignmentInfo.neutral.segments} />
+        {:else if character.alignment === 'evil'}
+          <TextWithEmphasis segments={alignmentInfo.evil.segments} />
         {/if}
       </p>
     </div>
 
     <!-- Character PvP section -->
-  {:else if stat == 'pvp'}
+  {:else if stat === 'pvp'}
     <div class="info-content">
       <p>
-        {#if character.pvp == 'on'}
+        {#if character.pvp === 'on'}
           {pvpInfo.on}
-        {:else if character.pvp == 'off'}
+        {:else if character.pvp === 'off'}
           {pvpInfo.off}
         {/if}
       </p>
     </div>
-  {:else if stat == 'class'}
+  {:else if stat === 'class'}
     <div class="info-content">
       <blockquote class="quote capitalize">{character.class}</blockquote>
     </div>
@@ -95,7 +100,7 @@
     </div>
     <div class="info-content">
       <p>
-        As {#if character.class == 'adventurer'}an{:else}a{/if}
+        As {#if character.class === 'adventurer'}an{:else}a{/if}
         {character.class}, you will start with the following skills:
       </p>
       <ul class="ul-diamond">
@@ -104,7 +109,7 @@
         {/each}
       </ul>
     </div>
-    {#if character.class == 'adventurer' || character.class == 'wizard'}
+    {#if character.class === 'adventurer' || character.class === 'wizard'}
       <div class="info-content">
         <p>
           <span class="capitalize">{character.class}s</span> additionally start with the following
@@ -136,7 +141,7 @@
 <style lang="scss">
   .info-content {
     padding: 10px;
-    margin: 8px 0px;
+    margin: 8px 0;
     border-left: 3px solid $color-border;
     background-color: darken($color-background, 5%);
     font-style: italic;

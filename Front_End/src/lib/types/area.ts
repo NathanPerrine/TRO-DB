@@ -1,9 +1,9 @@
-import type { Accessory } from './accessory';
-import type { Book } from './book';
+import type { Accessory } from '$lib';
+import type { Book } from '$lib';
 import type { Equipment } from './equipment';
-import type { Item } from './item';
-import type { Mob } from './mob';
-import type { Slug } from './slug';
+// import type { Item } from './item';
+import type { Mob } from '$lib';
+import type { Slug } from '$lib';
 
 type Direction = {
   town: Pick<Area, 'name' | 'slug'>;

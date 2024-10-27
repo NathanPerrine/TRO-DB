@@ -3,12 +3,6 @@
 	import SidebarFolder from './SidebarFolder.svelte';
 	import SidebarLink from './SidebarLink.svelte';
 
-  let expandedItems: Map<string, boolean> = new Map();
-
-  function toggle(item: string) {
-    expandedItems.set(item, !expandedItems.get(item));
-    expandedItems = expandedItems;
-  }
 </script>
 
 <nav class="sidebar">

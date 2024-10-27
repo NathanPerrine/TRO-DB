@@ -21,7 +21,7 @@ export const mobs = defineType({
         source: 'name',
         slugify: (input) => input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
       },
-      validation: (rule) => rule.required().error('Must generat a slug for navigation.'),
+      validation: (rule) => rule.required().error('Must generate a slug for navigation.'),
     }),
 
     defineField({

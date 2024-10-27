@@ -2,7 +2,7 @@ import type { Description, Mob } from '$lib';
 import { client } from '$lib/utils/sanity/client';
 import type { PageServerLoad } from './$types';
 
-export const load = (async ({}) => {
+export const load = (async () => {
   const description = await client.fetch<Description[]>(`
     *[_type == 'description' && name match 'mobs'] {
       name,

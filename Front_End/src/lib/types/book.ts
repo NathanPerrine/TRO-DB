@@ -1,4 +1,4 @@
-import type { FullSpell, Slug } from "$lib/index"
+import type { FullSpell, Slug } from '$lib'
 
 export type Book = {
   name: string,

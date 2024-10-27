@@ -1,4 +1,4 @@
-import type { Slug, Spell, Area } from '$lib/index';
+import type { Slug, Spell, Area } from '$lib';
 
 type Range = {
   min?: number;

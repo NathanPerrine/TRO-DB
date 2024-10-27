@@ -1,8 +1,6 @@
 import type { StructureResolver } from 'sanity/structure'
 import { FaBook } from 'react-icons/fa'
 import {
-  GiAncientSword,
-  GiAxolotl,
   GiLightningTrio,
   GiNinjaArmor,
   GiRing,

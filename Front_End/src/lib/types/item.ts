@@ -1,4 +1,4 @@
-import { type Slug } from '$lib/index';
+import { type Slug } from '$lib';
 
 export type Item = {
   name: string,
