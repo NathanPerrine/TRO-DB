@@ -143,7 +143,7 @@
     padding: 10px;
     margin: 8px 0;
     border-left: 3px solid $color-border;
-    background-color: darken($color-background, 5%);
+    background-color: adjust-lightness($color-background, -5%);
     font-style: italic;
   }
 </style>

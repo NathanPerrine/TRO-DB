@@ -1,16 +1,18 @@
-$color-background: #2c2c2c; // Medium gray background
-$color-text: #e0e0e0; // Light gray text for contrast
-$color-text-accent: #f0c674; // Accent color for text highlights
-$color-accent: #3a3a3a; // Darker gray for accents
-$color-accent-hover: #5c5c5c; // Accent hover color
-$color-hover: #4a4a4a; // Lighter gray for hover effect
-$color-border: #5a5a5a; // Medium-light gray for borders
-$color-header: #d0d0d0; // Light gray for headers
-$color-button-bg: #3a3a3a; // Dark gray button background
-$color-button-hover: #4c4c4c; // Lighter gray for hover effect
-$color-button-text: #ffffff; // Button text
-$color-inactive: #707070; // Dimmed inactive color
-$color-divider: #5a5a5a; // Lighter gray divider for separation
+@use 'sass:color';
+
+$color-background: #2c2c2c;
+$color-text: #e0e0e0;
+$color-text-accent: #f0c674;
+$color-accent: #3a3a3a;
+$color-accent-hover: #5c5c5c;
+$color-hover: #4a4a4a;
+$color-border: #5a5a5a;
+$color-header: #d0d0d0;
+$color-button-bg: #3a3a3a;
+$color-button-hover: #4c4c4c;
+$color-button-text: #ffffff;
+$color-inactive: #707070;
+$color-divider: #5a5a5a;
 
 $color-rarity-white: #ffffff;
 $color-rarity-green: #45cc20;

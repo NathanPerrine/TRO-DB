@@ -5,9 +5,13 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: `@import '$lib/scss/theme';`,
+        api: 'modern-compiler',
+        additionalData: `
+          @use '$lib/scss/mixins' as *;
+          @use '$lib/scss/theme' as *;
+        `
       }
     }
   },
-	plugins: [sveltekit()]
+  plugins: [sveltekit()]
 });

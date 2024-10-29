@@ -26,10 +26,6 @@
   ```
 -->
 <script lang="ts">
-  /**
-   * @description
-   * test test test
-   */
   type TextSegment = string | { text: string; emphasis: boolean };
 
   export let segments: TextSegment[];
