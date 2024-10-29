@@ -18,34 +18,37 @@
       {/each}
     </ul>
   {:else}
-    <table>
-      <thead>
-        <tr>
-          <th style="width: 45%">Name</th>
-          <th style="">Directions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each data.areas as area}
+    <div class="table-container">
+      <table>
+        <thead>
           <tr>
-            <td><a href="/areas/{area.areaType}/{area.slug.current}">{area.name}</a></td>
-            <td>
-              <ul class="ul-diamond">
-                {#if area.directions}
-                  {#each area.directions as direction}
-                    <li>
-                      <a href="/areas/towns/{direction.town.slug.current}">{direction.town.name}</a
-                      >: {direction.directions}
-                    </li>
-                  {/each}
-                {:else}
-                  <p>???</p>
-                {/if}
-              </ul>
-            </td>
+            <th style="width: 45%">Name</th>
+            <th style="">Directions</th>
           </tr>
-        {/each}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {#each data.areas as area}
+            <tr>
+              <td><a href="/areas/{area.areaType}/{area.slug.current}">{area.name}</a></td>
+              <td>
+                <ul class="ul-diamond">
+                  {#if area.directions}
+                    {#each area.directions as direction}
+                      <li>
+                        <a href="/areas/towns/{direction.town.slug.current}"
+                          >{direction.town.name}</a
+                        >: {direction.directions}
+                      </li>
+                    {/each}
+                  {:else}
+                    <p>???</p>
+                  {/if}
+                </ul>
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
   {/if}
 </main>

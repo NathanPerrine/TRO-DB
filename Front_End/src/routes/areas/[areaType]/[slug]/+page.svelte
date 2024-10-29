@@ -71,8 +71,7 @@
           <ul class="ul-diamond">
             {#each data.area.notableDrops.accessories as accessory}
               <li>
-                <a href="/items/equipment/accessory/{accessory.slot}/{accessory.slug.current}"
-                >
+                <a href="/items/equipment/accessory/{accessory.slot}/{accessory.slug.current}">
                   {accessory.identifiedName}
                 </a>
               </li>
@@ -89,32 +88,34 @@
     {#if data.area.areaType !== 'town'}
       <h2>Mobs in this area</h2>
       {#if data.area.mobs}
-        <table>
-          <thead>
-          <tr>
-            <th style="width: 30%">Name</th>
-            <th style="">Level Range</th>
-            <th style="">HP Range</th>
-            <th style="">Area Boss</th>
-          </tr>
-          </thead>
-          <tbody>
-          {#each data.area.mobs as mob}
-            <tr>
-              <td><a href="/mobs/{mob.slug.current}">{mob.name}</a></td>
-              <td>{mob.levelRange?.min} - {mob.levelRange?.max}</td>
-              <td>{mob.hpRange?.min} - {mob.hpRange?.max}</td>
-              <td>
-                {#if mob.boss}
-                  <span class="check">&#10003</span>
-                {:else}
-                  <span class="cross">&#10007</span>
-                {/if}
-              </td>
-            </tr>
-          {/each}
-          </tbody>
-        </table>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 30%">Name</th>
+                <th style="">Level Range</th>
+                <th style="">HP Range</th>
+                <th style="">Area Boss</th>
+              </tr>
+            </thead>
+            <tbody>
+              {#each data.area.mobs as mob}
+                <tr>
+                  <td><a href="/mobs/{mob.slug.current}">{mob.name}</a></td>
+                  <td>{mob.levelRange?.min} - {mob.levelRange?.max}</td>
+                  <td>{mob.hpRange?.min} - {mob.hpRange?.max}</td>
+                  <td>
+                    {#if mob.boss}
+                      <span class="check">&#10003</span>
+                    {:else}
+                      <span class="cross">&#10007</span>
+                    {/if}
+                  </td>
+                </tr>
+              {/each}
+            </tbody>
+          </table>
+        </div>
       {/if}
     {/if}
 
@@ -123,8 +124,7 @@
       {#if data.area.connectedAreas}
         {#each data.area.connectedAreas as connectedArea}
           <li>
-            <a href="/areas/{connectedArea.areaType}/{connectedArea.slug.current}"
-            >
+            <a href="/areas/{connectedArea.areaType}/{connectedArea.slug.current}">
               {connectedArea.name}
             </a>
           </li>

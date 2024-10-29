@@ -110,95 +110,102 @@
       </button>
     {/each}
   </section>
-  <table>
-    <thead>
-      <tr>
-        <th>
-          <button class="header-button" on:click={() => handleSort('identifiedName')}>
-            <span>Item</span>
-            <span
-              class="arrow"
-              class:arrow-asc={currentSortField === 'identifiedName' && sortDirection === 'asc'}
-              class:arrow-desc={currentSortField === 'identifiedName' && sortDirection === 'desc'}
-              >▶</span
-            >
-          </button>
-        </th>
-        <th>
-          <button class="header-button" on:click={() => handleSort('rarity')}>
-            <span>Rarity</span>
-            <span
-              class="arrow"
-              class:arrow-asc={currentSortField === 'rarity' && sortDirection === 'asc'}
-              class:arrow-desc={currentSortField === 'rarity' && sortDirection === 'desc'}>▶</span
-            >
-          </button>
-        </th>
-        <th>
-          <button class="header-button" on:click={() => handleSort('levelRequirement')}>
-            <span>Level</span>
-            <span
-              class="arrow"
-              class:arrow-asc={currentSortField === 'levelRequirement' && sortDirection === 'asc'}
-              class:arrow-desc={currentSortField === 'levelRequirement' && sortDirection === 'desc'}
-              >▶</span
-            >
-          </button>
-        </th>
-        <th>Attributes</th>
-        <th>Drop Area</th>
-      </tr>
-    </thead>
-    <tbody>
-      {#each filteredEquipmentList as equipmentPiece (equipmentPiece)}
-        <tr animate:flip={{ duration: DEFAULT_DURATION }} transition:fade={{ duration: 300 }}>
-          <td>
-            {#if equipmentPiece.armorWeapon}
-              <a href="/items/equipment/{equipmentPiece.armorWeapon}/{equipmentPiece.slug.current}">
-                {equipmentPiece.identifiedName}
-              </a>
-            {:else}
-              <a href="/items/equipment/accessories/{equipmentPiece.slug.current}">
-                {equipmentPiece.identifiedName}
-              </a>
-            {/if}
-          </td>
-          <td>
-            {#if equipmentPiece.rarity}
-              <span class="capitalize rarity-{equipmentPiece.rarity}">{equipmentPiece.rarity}</span>
-            {/if}
-          </td>
-          <td>
-            {#if equipmentPiece.levelRequirement != null}
-              {equipmentPiece.levelRequirement}
-            {/if}
-          </td>
-          <td>
-            <ul class="ul-diamond">
-              {#if equipmentPiece.attributes}
-                {#each equipmentPiece.attributes as attribute}
-                  <li>{attribute}</li>
-                {/each}
-              {/if}
-            </ul>
-          </td>
-          <td>
-            <ul class="ul-diamond">
-              {#if equipmentPiece.dropArea}
-                {#each equipmentPiece.dropArea as area}
-                  <li>
-                    <a href="/areas/{area.areaType}/{area.slug.current}">{area.name}</a>
-                  </li>
-                {/each}
-              {:else}
-                <li>Unknown</li>
-              {/if}
-            </ul>
-          </td>
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>
+            <button class="header-button" on:click={() => handleSort('identifiedName')}>
+              <span>Item</span>
+              <span
+                class="arrow"
+                class:arrow-asc={currentSortField === 'identifiedName' && sortDirection === 'asc'}
+                class:arrow-desc={currentSortField === 'identifiedName' && sortDirection === 'desc'}
+                >▶</span
+              >
+            </button>
+          </th>
+          <th>
+            <button class="header-button" on:click={() => handleSort('rarity')}>
+              <span>Rarity</span>
+              <span
+                class="arrow"
+                class:arrow-asc={currentSortField === 'rarity' && sortDirection === 'asc'}
+                class:arrow-desc={currentSortField === 'rarity' && sortDirection === 'desc'}
+                >▶</span
+              >
+            </button>
+          </th>
+          <th>
+            <button class="header-button" on:click={() => handleSort('levelRequirement')}>
+              <span>Level</span>
+              <span
+                class="arrow"
+                class:arrow-asc={currentSortField === 'levelRequirement' && sortDirection === 'asc'}
+                class:arrow-desc={currentSortField === 'levelRequirement' &&
+                  sortDirection === 'desc'}>▶</span
+              >
+            </button>
+          </th>
+          <th>Attributes</th>
+          <th>Drop Area</th>
         </tr>
-      {/each}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {#each filteredEquipmentList as equipmentPiece (equipmentPiece)}
+          <tr animate:flip={{ duration: DEFAULT_DURATION }} transition:fade={{ duration: 300 }}>
+            <td>
+              {#if equipmentPiece.armorWeapon}
+                <a
+                  href="/items/equipment/{equipmentPiece.armorWeapon}/{equipmentPiece.slug.current}"
+                >
+                  {equipmentPiece.identifiedName}
+                </a>
+              {:else}
+                <a href="/items/equipment/accessories/{equipmentPiece.slug.current}">
+                  {equipmentPiece.identifiedName}
+                </a>
+              {/if}
+            </td>
+            <td>
+              {#if equipmentPiece.rarity}
+                <span class="capitalize rarity-{equipmentPiece.rarity}"
+                  >{equipmentPiece.rarity}</span
+                >
+              {/if}
+            </td>
+            <td>
+              {#if equipmentPiece.levelRequirement != null}
+                {equipmentPiece.levelRequirement}
+              {/if}
+            </td>
+            <td>
+              <ul class="ul-diamond">
+                {#if equipmentPiece.attributes}
+                  {#each equipmentPiece.attributes as attribute}
+                    <li>{attribute}</li>
+                  {/each}
+                {/if}
+              </ul>
+            </td>
+            <td>
+              <ul class="ul-diamond">
+                {#if equipmentPiece.dropArea}
+                  {#each equipmentPiece.dropArea as area}
+                    <li>
+                      <a href="/areas/{area.areaType}/{area.slug.current}">{area.name}</a>
+                    </li>
+                  {/each}
+                {:else}
+                  <li>Unknown</li>
+                {/if}
+              </ul>
+            </td>
+          </tr>
+        {/each}
+      </tbody>
+    </table>
+  </div>
 {/if}
 
 <style lang="scss">

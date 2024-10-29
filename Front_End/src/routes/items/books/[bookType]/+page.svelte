@@ -30,33 +30,34 @@
       {#if expandedSections[skill]}
         {#each Object.keys(data.books[skill]) as skillLevel}
           <h3>{skillLevel.charAt(0).toUpperCase() + skillLevel.slice(1)}</h3>
-
-          <table>
-            <thead>
-              <tr>
-                <th style="width: 25%">Book</th>
-                <th>Description</th>
-                <th style="width: 15%">Drop Only</th>
-              </tr>
-            </thead>
-            <tbody>
-              {#each data.books[skill][skillLevel] as book}
+          <div class="table-container">
+            <table>
+              <thead>
                 <tr>
-                  <td><a href="{book.bookType}/{book.slug.current}">{book.name}</a></td>
-                  <td>{book.description}</td>
-                  <td>
-                    {#if book.linkedSpell}
-                      {#if book.linkedSpell.dropOnly}
-                        <span class="check">&#10003</span>
-                      {:else}
-                        <span class="cross">&#10007</span>
-                      {/if}
-                    {/if}
-                  </td>
+                  <th style="width: 25%">Book</th>
+                  <th>Description</th>
+                  <th style="width: 15%">Drop Only</th>
                 </tr>
-              {/each}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {#each data.books[skill][skillLevel] as book}
+                  <tr>
+                    <td><a href="{book.bookType}/{book.slug.current}">{book.name}</a></td>
+                    <td>{book.description}</td>
+                    <td>
+                      {#if book.linkedSpell}
+                        {#if book.linkedSpell.dropOnly}
+                          <span class="check">&#10003</span>
+                        {:else}
+                          <span class="cross">&#10007</span>
+                        {/if}
+                      {/if}
+                    </td>
+                  </tr>
+                {/each}
+              </tbody>
+            </table>
+          </div>
         {/each}
       {/if}
     {/each}

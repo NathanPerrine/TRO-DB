@@ -1,0 +1,45 @@
+@use 'sass:map';
+
+// Define breakpoint values
+$breakpoints: (
+  'mobile': 768px,
+  'tablet': 1024px,
+  'desktop': 1440px
+);
+
+// Mixin for media queries based on breakpoints
+@mixin respond-to($breakpoint) {
+  // Check if the breakpoint exists in the map
+  @if map.has-key($breakpoints, $breakpoint) {
+    // Retrieve and apply the media query
+    @media (max-width: map.get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  }
+  // Warn if the breakpoint doesn't exist in the map
+  @else {
+    @warn "The breakpoint `#{$breakpoint}` does not exist. "
+        + "Available breakpoints are: #{map.keys($breakpoints)}.";
+  }
+}
+
+// Mixin for styles only on mobile
+@mixin mobile {
+  @include respond-to('mobile') {
+    @content;
+  }
+}
+
+// Mixin for styles only on tablet and up
+@mixin tablet-and-up {
+  @include respond-to('tablet') {
+    @content;
+  }
+}
+
+// Mixin for styles only on desktop
+@mixin desktop {
+  @include respond-to('desktop') {
+    @content;
+  }
+}

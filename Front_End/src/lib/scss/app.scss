@@ -1,3 +1,6 @@
+@use '$lib/scss/view_mixins' as *;
+@use 'sass:color';
+
 /* General Layout */
 body {
   background-color: $color-background;
@@ -10,13 +13,19 @@ body {
 }
 
 main {
-  flex-grow: 1;
-  width: 100%;
+  width: calc(100% - 225px);
+  max-width: 100vw;
   padding: 30px;
+  box-sizing: border-box;
   color: $color-text;
   font-family: 'Georgia', serif;
   overflow-y: auto;
   background: linear-gradient(to right, $color-accent 0%, $color-background 3%);
+
+  @include mobile {
+    width: 100%;
+    padding: 10px;
+  }
 }
 
 p {
@@ -40,7 +49,7 @@ blockquote {
   padding: 10px;
   margin: 8px 0;
   border-left: 3px solid $color-border;
-  background-color: adjust-lightness($color-background, -5%);
+  background-color: color.adjust($color-background, $lightness: -5%);
   font-style: italic;
 }
 
@@ -155,12 +164,19 @@ a {
 }
 
 /* Tables */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
 table {
   width: 100%;
+  max-width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
   background-color: $color-accent;
   color: $color-text;
+  white-space: nowrap;
 }
 
 th,

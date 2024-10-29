@@ -34,6 +34,8 @@
 </div>
 
 <style lang="scss">
+  @use 'sass:color';
+
   .saveLoad-container {
     display: flex;
     flex-direction: column;
@@ -49,7 +51,7 @@
   .tooltip .tooltiptext {
     visibility: hidden;
     width: 140px;
-    background-color: adjust-lightness($color-background, -5%);
+    background-color: color.adjust($color-background, $lightness: -5%);
     color: $color-text;
     text-align: center;
     border-radius: 6px;

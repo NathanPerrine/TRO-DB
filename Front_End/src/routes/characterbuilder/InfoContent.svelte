@@ -139,11 +139,13 @@
 </section>
 
 <style lang="scss">
+  @use 'sass:color';
+
   .info-content {
     padding: 10px;
     margin: 8px 0;
     border-left: 3px solid $color-border;
-    background-color: adjust-lightness($color-background, -5%);
+    background-color: color.adjust($color-background, $lightness: -5%);
     font-style: italic;
   }
 </style>

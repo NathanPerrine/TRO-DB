@@ -7,7 +7,6 @@ export default defineConfig({
       scss: {
         api: 'modern-compiler',
         additionalData: `
-          @use '$lib/scss/mixins' as *;
           @use '$lib/scss/theme' as *;
         `
       }

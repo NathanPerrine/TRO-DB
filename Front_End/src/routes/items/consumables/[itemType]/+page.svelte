@@ -10,21 +10,23 @@
 
   <section>
     <div class="border-gradient"></div>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        {#each data.items as scroll}
+    <div class="table-container">
+      <table>
+        <thead>
           <tr>
-            <td><a href="{data.description.name}/{scroll.slug.current}">{scroll.name}</a></td>
-            <td>{scroll.descriptionIdentified}</td>
+            <th>Name</th>
+            <th>Description</th>
           </tr>
-        {/each}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {#each data.items as scroll}
+            <tr>
+              <td><a href="{data.description.name}/{scroll.slug.current}">{scroll.name}</a></td>
+              <td>{scroll.descriptionIdentified}</td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
   </section>
 </main>

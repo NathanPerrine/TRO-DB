@@ -21,32 +21,34 @@
   {#each Array.from(spellsMap) as [level, spells]}
     {#if spells.length}
       <h2>{level.charAt(0).toUpperCase() + level.slice(1).replace('-', ' ')} Spells</h2>
-      <table>
-        <thead>
-          <tr>
-            <th style="width:20%">Spell</th>
-            <th style="width:5%">Mana</th>
-            <th>Effect</th>
-            <th style="width:15%">Drop Only</th>
-          </tr>
-        </thead>
-        <tbody>
-          {#each spells as spell}
+      <div class="table-container">
+        <table>
+          <thead>
             <tr>
-              <td><a href="{spell.spellSchool}/{spell.slug.current}">{spell.title}</a></td>
-              <td>{spell.mpCost}</td>
-              <td>{spell.spellEffect}</td>
-              <td>
-                {#if spell.dropOnly}
-                  <span class="check">&#10003;</span>
-                {:else}
-                  <span class="cross">&#10007;</span>
-                {/if}
-              </td>
+              <th style="width:20%">Spell</th>
+              <th style="width:5%">Mana</th>
+              <th>Effect</th>
+              <th style="width:15%">Drop Only</th>
             </tr>
-          {/each}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {#each spells as spell}
+              <tr>
+                <td><a href="{spell.spellSchool}/{spell.slug.current}">{spell.title}</a></td>
+                <td>{spell.mpCost}</td>
+                <td>{spell.spellEffect}</td>
+                <td>
+                  {#if spell.dropOnly}
+                    <span class="check">&#10003;</span>
+                  {:else}
+                    <span class="cross">&#10007;</span>
+                  {/if}
+                </td>
+              </tr>
+            {/each}
+          </tbody>
+        </table>
+      </div>
     {/if}
   {/each}
 </main>

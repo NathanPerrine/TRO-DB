@@ -1,7 +1,0 @@
-@use 'sass:color';
-
-@function adjust-lightness($color, $lighten) {
-  $adjustedColor: color.adjust($color, $lightness: $lighten);
-  // @return color.adjust($color, $lightness: $lighten);
-  @return $adjustedColor;
-}
