@@ -1,29 +1,25 @@
 <script lang="ts">
-	import { type SidebarItem } from "./sidebar-items";
-  import SidebarLink from "./SidebarLink.svelte";
+  import { type SidebarItem } from './sidebar-items';
+  import SidebarLink from './SidebarLink.svelte';
   export let item: SidebarItem;
+  export let onNavigate: () => void;
 
-  let expanded = false
+  let expanded = false;
 </script>
 
-<button
-  class={expanded ? 'expanded' : ''}
-  on:click|preventDefault={() => expanded = !expanded}
->
+<button class={expanded ? 'expanded' : ''} on:click|preventDefault={() => (expanded = !expanded)}>
   <span>{item.title}</span>
   <span class="arrow">▶</span>
 </button>
 
-<ul
-style:display={expanded ? 'block': 'none'}
->
+<ul style:display={expanded ? 'block' : 'none'}>
   {#if item.subItems}
     {#each item.subItems as subItem}
       <li>
         {#if subItem.subItems}
-          <svelte:self item={subItem} />
+          <svelte:self item={subItem} {onNavigate} />
         {:else}
-          <SidebarLink item={subItem} />
+          <SidebarLink item={subItem} {onNavigate} />
         {/if}
       </li>
     {/each}
@@ -53,7 +49,11 @@ style:display={expanded ? 'block': 'none'}
     cursor: pointer;
 
     &:hover {
-      background: linear-gradient(to right, $color-accent-hover 30%, rgba($color-accent-hover, 0) 90%);
+      background: linear-gradient(
+        to right,
+        $color-accent-hover 30%,
+        rgba($color-accent-hover, 0) 90%
+      );
     }
 
     .arrow {
@@ -63,7 +63,11 @@ style:display={expanded ? 'block': 'none'}
     }
 
     &.expanded {
-      background: linear-gradient(to right, $color-accent-hover 30%, rgba($color-accent-hover, 0) 90%);
+      background: linear-gradient(
+        to right,
+        $color-accent-hover 30%,
+        rgba($color-accent-hover, 0) 90%
+      );
       .arrow {
         transform: rotate(90deg);
       }
@@ -71,13 +75,13 @@ style:display={expanded ? 'block': 'none'}
   }
 
   ul {
-		padding: 0.2em 0 0 0.5em;
-		margin: 0.5em 0 0 0.5em;
-		list-style: none;
-		border-left: 2px solid $color-divider;
-	}
+    padding: 0.2em 0 0 0.5em;
+    margin: 0.5em 0 0 0.5em;
+    list-style: none;
+    border-left: 2px solid $color-divider;
+  }
 
-	li {
-		padding: 0.2em 0;
-	}
+  li {
+    padding: 0.2em 0;
+  }
 </style>

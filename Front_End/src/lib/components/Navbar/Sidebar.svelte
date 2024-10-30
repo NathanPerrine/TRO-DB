@@ -1,73 +1,45 @@
 <script lang="ts">
-  import { sidebarItems } from './sidebar-items';
-  import SidebarFolder from './SidebarFolder.svelte';
-  import SidebarLink from './SidebarLink.svelte';
+  import SidebarHeader from './SidebarHeader.svelte';
+  import SidebarList from './SidebarList.svelte';
+  import SidebarMenuIcon from './SidebarMenuIcon.svelte';
+  import { fade, slide } from 'svelte/transition';
+  import { quintOut } from 'svelte/easing';
 
-  $: isMobileMenuOpen = false;
+  export let isMobileMenuOpen = false;
+
+  const closeMenu = () => {
+    isMobileMenuOpen = false;
+  };
 </script>
 
 <nav class="sidebar">
-  <h2>Resources</h2>
-  <ul>
-    {#each sidebarItems as item}
-      <li>
-        {#if !item.subItems}
-          <SidebarLink {item} />
-        {:else}
-          <SidebarFolder {item} />
-        {/if}
-      </li>
-    {/each}
-  </ul>
+  <SidebarHeader />
+  <SidebarList onNavigate={closeMenu} />
 </nav>
 
-<div class="mobile-menu">
+<nav class="mobile-menu">
   <div class="mobile-menu-bar">
-    <h2>Resources</h2>
+    <SidebarHeader />
     <button class="mobile-menu-toggle" on:click={() => (isMobileMenuOpen = !isMobileMenuOpen)}>
-      {#if isMobileMenuOpen}
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-x"
-          ><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"
-          ></line></svg
-        >
-      {:else}
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="feather feather-menu"
-          ><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"
-          ></line><line x1="3" y1="18" x2="21" y2="18"></line></svg
-        >
-      {/if}
+      <SidebarMenuIcon isOpen={isMobileMenuOpen} />
     </button>
   </div>
+
   {#if isMobileMenuOpen}
-    <div class="mobile-menu-content">
-      <ul>
-        {#each sidebarItems as item}
-          <li>
-            {#if !item.subItems}
-              <SidebarLink {item} />
-            {:else}
-              <SidebarFolder {item} />
-            {/if}
-          </li>
-        {/each}
-      </ul>
+    <button class="mobile-menu-overlay" on:click={closeMenu} transition:fade={{ duration: 200 }}
+    ></button>
+    <div
+      class="mobile-menu-content"
+      transition:slide={{
+        duration: 300,
+        easing: quintOut,
+        axis: 'x'
+      }}
+    >
+      <SidebarList onNavigate={closeMenu} />
     </div>
   {/if}
-</div>
+</nav>
 
 <style lang="scss">
   @use '$lib/scss/view_mixins' as *;
@@ -82,24 +54,6 @@
     box-sizing: border-box;
     overflow-y: auto;
 
-    h2 {
-      color: $color-header;
-      margin-top: 0;
-      margin-bottom: 15px;
-      font-weight: bold;
-      border: none;
-      border-image: none;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      margin-bottom: 10px;
-    }
-
     @include mobile {
       display: none;
     }
@@ -113,6 +67,23 @@
       display: block;
     }
 
+    .mobile-menu-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 30;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+
+      &:active {
+        transform: scale(1);
+      }
+    }
+
     .mobile-menu-bar {
       background-color: $color-accent;
       color: $color-background;
@@ -120,36 +91,38 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-
-      h2 {
-        margin: 0;
-      }
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
 
       .mobile-menu-toggle {
         background: none;
         border: none;
         cursor: pointer;
-
-        svg {
-          width: 24px;
-          height: 24px;
-        }
       }
     }
 
     .mobile-menu-content {
       background-color: $color-background;
       padding: 20px;
-      border-bottom: 2px solid $color-divider;
+      border-right: 2px solid $color-divider;
+      position: fixed;
+      top: 52px; /* Adjust this value based on the mobile-menu-bar height */
+      left: 0;
+      bottom: 0;
+      width: 225px;
+      z-index: 40;
+      overflow-y: auto;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+    }
+  }
 
-      ul {
-        list-style: none;
-        padding: 0;
-
-        li {
-          margin-bottom: 10px;
-        }
-      }
+  /* This is to ensure the page content is not covered by the fixed mobile-menu-bar */
+  :global(body) {
+    @include mobile {
+      padding-top: 52px; /* Same as mobile-menu-bar height */
     }
   }
 </style>

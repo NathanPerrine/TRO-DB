@@ -1,10 +1,16 @@
 <script lang="ts">
-  import { type SidebarItem } from "./sidebar-items";
+  import { type SidebarItem } from './sidebar-items';
+  export let onNavigate: () => void;
   export let item: SidebarItem;
 </script>
 
-{#if !item.disabled }
-  <a href={item.link}>{item.title}</a>
+{#if !item.disabled}
+  <a
+    href={item.link}
+    on:click={() => {
+      onNavigate();
+    }}>{item.title}</a
+  >
 {:else}
   <p class="inactive">{item.title}</p>
 {/if}
@@ -13,7 +19,9 @@
   a {
     border: none;
   }
-  a, p {
+
+  a,
+  p {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -25,7 +33,11 @@
   }
 
   a:hover {
-    background: linear-gradient(to right, $color-accent-hover 30%, rgba($color-accent-hover, 0) 90%);
+    background: linear-gradient(
+      to right,
+      $color-accent-hover 30%,
+      rgba($color-accent-hover, 0) 90%
+    );
     color: $color-text;
   }
 
