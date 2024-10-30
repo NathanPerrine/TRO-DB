@@ -1,13 +1,29 @@
 <script lang="ts">
+  import { page } from '$app/stores';
   import { type SidebarItem } from './sidebar-items';
   import SidebarLink from './SidebarLink.svelte';
   export let item: SidebarItem;
   export let onNavigate: () => void;
 
   let expanded = false;
+
+  console.log(item);
+  console.log($page.url.pathname);
+
+  $: isActive = item.subItems?.some(
+    (subItem) =>
+      $page.url.pathname === subItem.link ||
+      subItem.subItems?.some((grandChild) => $page.url.pathname === grandChild.link)
+  );
+
+  $: console.log(isActive);
 </script>
 
-<button class={expanded ? 'expanded' : ''} on:click|preventDefault={() => (expanded = !expanded)}>
+<button
+  class:active={isActive}
+  class:expanded
+  on:click|preventDefault={() => (expanded = !expanded)}
+>
   <span>{item.title}</span>
   <span class="arrow">▶</span>
 </button>
@@ -62,15 +78,17 @@
       transition: transform 0.3s ease;
     }
 
+    &.active,
     &.expanded {
       background: linear-gradient(
         to right,
         $color-accent-hover 30%,
         rgba($color-accent-hover, 0) 90%
       );
-      .arrow {
-        transform: rotate(90deg);
-      }
+    }
+
+    &.expanded .arrow {
+      transform: rotate(90deg);
     }
   }
 

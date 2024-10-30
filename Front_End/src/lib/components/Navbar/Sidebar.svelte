@@ -26,7 +26,11 @@
   </div>
 
   {#if isMobileMenuOpen}
-    <button class="mobile-menu-overlay" on:click={closeMenu} transition:fade={{ duration: 200 }}
+    <button
+      class="mobile-menu-overlay"
+      aria-label="close menu"
+      on:click={closeMenu}
+      transition:fade={{ duration: 200 }}
     ></button>
     <div
       class="mobile-menu-content"

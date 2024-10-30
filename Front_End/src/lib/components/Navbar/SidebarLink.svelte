@@ -1,11 +1,15 @@
 <script lang="ts">
   import { type SidebarItem } from './sidebar-items';
+  import { page } from '$app/stores';
   export let onNavigate: () => void;
   export let item: SidebarItem;
+
+  $: isActive = $page.url.pathname === item.link;
 </script>
 
 {#if !item.disabled}
   <a
+    class:active={isActive}
     href={item.link}
     on:click={() => {
       onNavigate();
@@ -32,6 +36,7 @@
     transition: background-color 0.2s ease;
   }
 
+  .active,
   a:hover {
     background: linear-gradient(
       to right,
