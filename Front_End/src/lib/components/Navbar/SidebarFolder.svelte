@@ -7,9 +7,6 @@
 
   let expanded = false;
 
-  console.log(item);
-  console.log($page.url.pathname);
-
   $: isActive = item.subItems?.some(
     (subItem) =>
       $page.url.pathname === subItem.link ||
