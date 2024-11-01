@@ -1,4 +1,4 @@
-import { defineField, defineType } from "sanity";
+import { defineField, defineType } from 'sanity'
 
 export const spells = defineType({
   name: 'spell',
@@ -10,9 +10,7 @@ export const spells = defineType({
       title: 'Title',
       description: 'Name of the spell',
       type: 'string',
-      validation: rule => rule
-        .required()
-        .error('Name of spell is required.')
+      validation: (Rule) => Rule.required().error('Name of spell is required.'),
     }),
 
     defineField({
@@ -21,42 +19,39 @@ export const spells = defineType({
       type: 'slug',
       options: {
         source: 'title',
-        slugify: input => input
-          .toLowerCase()
-          .replace(/\s+/g, '-')
-          .slice(0, 200)
+        slugify: (input) =>
+          input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
       },
-      validation: rule => rule
-        .required()
-        .error('Must generate a slug for navigation.')
+      validation: (Rule) =>
+        Rule.required().error('Must generate a slug for navigation.'),
     }),
 
     defineField({
       name: 'tags',
       title: 'Tags',
-      description: 'Tags useful for sorting. "Missing Info", "Healing", "Bugged", etc.',
-      type:'array',
+      description:
+        'Tags useful for sorting. "Missing Info", "Healing", "Bugged", etc.',
+      type: 'array',
       of: [
         {
-          name:'tag',
-          title:'Tag',
-          type:'string'
-        }
+          name: 'tag',
+          title: 'Tag',
+          type: 'string',
+        },
       ],
       options: {
-        layout: 'tags'
+        layout: 'tags',
       },
-      validation: rule => rule
-        .unique()
+      validation: (Rule) => Rule.unique(),
     }),
 
     defineField({
-        name: 'description',
-        title: 'Description',
-        description: 'A brief description of the spell',
-        type: 'text',
-        rows: 4,
-      }),
+      name: 'description',
+      title: 'Description',
+      description: 'A brief description of the spell',
+      type: 'text',
+      rows: 4,
+    }),
 
     defineField({
       name: 'spellSchool',
@@ -71,7 +66,7 @@ export const spells = defineType({
           { title: 'Sorcery', value: 'sorcery' },
           { title: 'Necromancy', value: 'necromancy' },
         ],
-        layout: 'dropdown'
+        layout: 'dropdown',
       },
     }),
 
@@ -89,7 +84,7 @@ export const spells = defineType({
           { title: 'Grandmaster', value: 'grandmaster' },
           { title: 'Supreme-Master', value: 'supreme-master' },
         ],
-        layout: 'dropdown'
+        layout: 'dropdown',
       },
     }),
 
@@ -107,13 +102,16 @@ export const spells = defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Can not be used in battle.', value: 'Can not be used in battle.' },
+          {
+            title: 'Can not be used in battle.',
+            value: 'Can not be used in battle.',
+          },
           { title: 'Very Short', value: 'Very Short' },
           { title: 'Short', value: 'Short' },
           { title: 'Medium', value: 'Medium' },
           { title: 'Long', value: 'Long' },
           { title: 'Very Long', value: 'Very Long' },
-        ]
+        ],
       },
     }),
 
@@ -125,8 +123,8 @@ export const spells = defineType({
       options: {
         list: [
           { title: 'Instant', value: 'Instant' },
-          { title: 'SDM x Proficiency', value: 'SDM x Proficiency'}
-        ]
+          { title: 'SDM x Proficiency', value: 'SDM x Proficiency' },
+        ],
       },
     }),
 
@@ -171,7 +169,7 @@ export const spells = defineType({
       name: 'notes',
       title: 'Notes',
       type: 'array',
-      of: [{type: 'block'}]
+      of: [{ type: 'block' }],
     }),
-  ]
-});
+  ],
+})

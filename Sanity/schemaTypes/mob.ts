@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import { defineField, defineType } from 'sanity'
 
 export const mobs = defineType({
   name: 'mob',
@@ -19,9 +19,11 @@ export const mobs = defineType({
       type: 'slug',
       options: {
         source: 'name',
-        slugify: (input) => input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
+        slugify: (input) =>
+          input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
       },
-      validation: (rule) => rule.required().error('Must generate a slug for navigation.'),
+      validation: (Rule) =>
+        Rule.required().error('Must generate a slug for navigation.'),
     }),
 
     defineField({
@@ -254,7 +256,7 @@ export const mobs = defineType({
       title: 'Known Spells',
       description: 'Spells that this mob can cast.',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'spell'}]}],
+      of: [{ type: 'reference', to: [{ type: 'spell' }] }],
     }),
 
     defineField({
@@ -262,7 +264,7 @@ export const mobs = defineType({
       title: 'Inhabited Areas',
       description: 'All known areas this mob inhabits.',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'area'}]}],
+      of: [{ type: 'reference', to: [{ type: 'area' }] }],
     }),
 
     defineField({
@@ -270,7 +272,7 @@ export const mobs = defineType({
       title: 'Emotes',
       description: 'The emotes this mob can perform.',
       type: 'array',
-      of: [{type: 'string'}],
+      of: [{ type: 'string' }],
     }),
 
     defineField({
@@ -278,7 +280,7 @@ export const mobs = defineType({
       title: 'Notes',
       description: 'Any additional information required.',
       type: 'array',
-      of: [{type: 'block'}],
+      of: [{ type: 'block' }],
     }),
   ],
 })

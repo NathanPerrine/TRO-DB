@@ -31,17 +31,6 @@ export const sidebarItems: SidebarItem[] = [
             title: 'Accessories',
             link: '/items/equipment/accessories',
             disabled: false
-            // subItems: [
-            //   { title: 'Amulets', link: '/items/equipment/accessories/amulets', disabled: true },
-            //   {
-            //     title: 'Backpacks',
-            //     link: '/items/equipment/accessories/backpacks',
-            //     disabled: false
-            //   },
-            //   { title: 'Baldrics', link: '/items/equipment/accessories/baldrics', disabled: false },
-            //   { title: 'Belts', link: '/items/equipment/accessories/belts', disabled: false },
-            //   { title: 'Rings', link: '/items/equipment/accessories/rings', disabled: false }
-            // ]
           },
           { title: 'Armor', link: '/items/equipment/armor', disabled: false },
           { title: 'Weapons', link: '/items/equipment/weapons', disabled: false },

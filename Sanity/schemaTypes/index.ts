@@ -7,6 +7,7 @@ import { mobs } from './mob'
 import { accessories } from './accessory'
 import { equipment } from './equipment'
 import { weaponType } from './weaponType'
+import { guides } from './guide'
 
 export const schemaTypes = [
   spells,
@@ -18,4 +19,5 @@ export const schemaTypes = [
   accessories,
   equipment,
   weaponType,
+  guides,
 ]

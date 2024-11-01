@@ -9,6 +9,7 @@ import type { Area } from './types/area';
 import type { Accessory } from './types/accessory';
 import type { Armor, PickedArmor, GroupedEquipment, Weapon, PickedWeapon } from './types/equipment';
 import type { WeaponType } from './types/weaponType';
+import type { Guide } from './types/guide';
 
 export type {
   Spell,
@@ -25,5 +26,6 @@ export type {
   GroupedEquipment,
   Weapon,
   WeaponType,
-  PickedWeapon
+  PickedWeapon,
+  Guide
 };

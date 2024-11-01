@@ -12,8 +12,6 @@
       $page.url.pathname === subItem.link ||
       subItem.subItems?.some((grandChild) => $page.url.pathname === grandChild.link)
   );
-
-  $: console.log(isActive);
 </script>
 
 <button

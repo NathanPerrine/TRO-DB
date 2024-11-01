@@ -22,8 +22,8 @@ export const books = defineType({
         slugify: (input) =>
           input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
       },
-      validation: (rule) =>
-        rule.required().error('Must generate a slug for navigation.'),
+      validation: (Rule) =>
+        Rule.required().error('Must generate a slug for navigation.'),
     }),
 
     defineField({
