@@ -2,7 +2,10 @@
 * tags?
 
 # Current tags
-* Missing Info, Needs Testing, Buff, Heal
+* Missing Info, Needs Testing, Buff, Curse
+
+# Headers in notes
+* Use h4 tags
 
 # Linked spells in notes
 * /magic/{school}/{spell-slug}
@@ -21,11 +24,4 @@
 * Psychic Blast
 * Illusionary Foe (level 6 now?)
 * Cornucopia: link to loaf of bread / bottle of water when catalogued
-		
-		
-		
-Target weapon deals additional cold damage with each hit.
-Target weapon deals a large amount of additional cold damage with each hit.
-		
-As this spell needs to target a weapon directly, it cannot be used in combat.
-Stacks with Cold Steel II, a stronger version of this spell.
+* Elphames Justice: Is it in the game?

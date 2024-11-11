@@ -6,6 +6,7 @@ export interface SidebarItem {
 }
 
 export const sidebarItems: SidebarItem[] = [
+  { title: 'Home', link: '/', disabled: false },
   {
     title: 'Areas',
     subItems: [
@@ -62,7 +63,7 @@ export const sidebarItems: SidebarItem[] = [
     ]
   },
   { title: 'Character Builder', link: '/characterbuilder', disabled: false },
-  { title: 'Guides', link: '/guides', disabled: true },
+  { title: 'Guides', link: '/guides', disabled: false },
   { title: 'Mobs', link: '/mobs', disabled: false },
   { title: 'NPCs', link: '/npcs', disabled: true },
   { title: 'Quests', link: '/quests', disabled: true },

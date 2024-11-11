@@ -244,6 +244,7 @@
     padding: 8px 0;
 
     .active {
+      background-color: $color-button-hover;
       color: $color-text-accent;
       font-weight: bold;
     }

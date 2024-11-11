@@ -53,14 +53,14 @@
     } else if (attribute === 'alignment') {
       character.alignment =
         alignments[
-        (alignments.indexOf(character.alignment) + direction + alignments.length) %
-        alignments.length
-          ];
+          (alignments.indexOf(character.alignment) + direction + alignments.length) %
+            alignments.length
+        ];
     } else if (attribute === 'pvp') {
       character.pvp =
         pvpOptions[
-        (pvpOptions.indexOf(character.pvp) + direction + pvpOptions.length) % pvpOptions.length
-          ];
+          (pvpOptions.indexOf(character.pvp) + direction + pvpOptions.length) % pvpOptions.length
+        ];
     }
   };
 </script>

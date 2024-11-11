@@ -60,11 +60,7 @@
     cursor: pointer;
 
     &:hover {
-      background: linear-gradient(
-        to right,
-        $color-accent-hover 30%,
-        rgba($color-accent-hover, 0) 90%
-      );
+      background: linear-gradient(to right, var(--color-accent-hover) 30%, transparent 100%);
     }
 
     .arrow {
@@ -75,11 +71,7 @@
 
     &.active,
     &.expanded {
-      background: linear-gradient(
-        to right,
-        $color-accent-hover 30%,
-        rgba($color-accent-hover, 0) 90%
-      );
+      background: linear-gradient(to right, var(--color-accent-hover) 30%, transparent 100%);
     }
 
     &.expanded .arrow {

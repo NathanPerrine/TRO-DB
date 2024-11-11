@@ -17,6 +17,7 @@
 //   leveling: GuideProjection[];
 //   moneyMaking: GuideProjection[];
 //   crafting: GuideProjection[];
+//   other: GuideProjection[];
 // }
 
 // interface Data {
@@ -38,6 +39,7 @@
 //       'leveling': *[_type == 'guide' && category == 'leveling'] | order(_createdAt) ${guideProjection},
 //       'moneyMaking': *[_type == 'guide' && category == 'money making'] | order(_createdAt) ${guideProjection},
 //       'crafting': *[_type == 'guide' && category == 'crafting'] | order(_createdAt) ${guideProjection},
+//       'other': *[_type == 'guide' && category == 'other'] | order(_createdAt) ${guideProjection},
 //     }
 //   }`
 //   );

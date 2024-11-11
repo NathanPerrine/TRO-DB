@@ -1,0 +1,67 @@
+{
+  "themes": [
+    {
+      "name": "Arcane Depths",
+      "variables": {
+        "colorBackground": "#1a1a1d",
+        "colorText": "#e0e0e0",
+        "colorTextAccent": "#2fe9dd",
+        "colorAccent": "#2d2d30",
+        "colorAccentHover": "#383840",
+        "colorHover": "#2a2a32",
+        "colorBorder": "#454550",
+        "colorHeader": "#c8c8c8",
+        "colorButtonBg": "#2d2d35",
+        "colorButtonHover": "#383845",
+        "colorButtonText": "#ffffff",
+        "colorInactive": "#505058",
+        "colorDivider": "#454550",
+        "colorTableRow": "#1e1e22",
+        "colorTableRowAlt": "#222226",
+        "colorTableRowHover": "#2a2a32"
+      }
+    },
+    {
+      "name": "Dragon's Hoard",
+      "variables": {
+        "colorBackground": "#1a1a1d",
+        "colorText": "#e0e0e0",
+        "colorTextAccent": "#ffd700",
+        "colorAccent": "#2d2d2a",
+        "colorAccentHover": "#383832",
+        "colorHover": "#2a2a28",
+        "colorBorder": "#504a45",
+        "colorHeader": "#c8c8c0",
+        "colorButtonBg": "#2d2d25",
+        "colorButtonHover": "#38382f",
+        "colorButtonText": "#ffffff",
+        "colorInactive": "#585850",
+        "colorDivider": "#504a45",
+        "colorTableRow": "#1e1e1c",
+        "colorTableRowAlt": "#222220",
+        "colorTableRowHover": "#2a2a28"
+      }
+    },
+    {
+      "name": "Ancient Scroll",
+      "variables": {
+        "colorBackground": "#f4e4bc",
+        "colorText": "#2a1810",
+        "colorTextAccent": "#5c1a09",
+        "colorAccent": "#e8d4a4",
+        "colorAccentHover": "#C6925C",
+        "colorHover": "#ebd8aa",
+        "colorBorder": "#d2691e",
+        "colorHeader": "#593d30",
+        "colorButtonBg": "#d3b189",
+        "colorButtonHover": "#c49c75",
+        "colorButtonText": "#2a1810",
+        "colorInactive": "#c4b696",
+        "colorDivider": "#d2691e",
+        "colorTableRow": "#f0deb2",
+        "colorTableRowAlt": "#ecd8a8",
+        "colorTableRowHover": "#e8d4a4"
+      }
+    }
+  ]
+}

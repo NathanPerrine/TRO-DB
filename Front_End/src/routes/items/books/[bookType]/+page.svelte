@@ -43,7 +43,7 @@
                 {#each data.books[skill][skillLevel] as book}
                   <tr>
                     <td><a href="{book.bookType}/{book.slug.current}">{book.name}</a></td>
-                    <td>{book.description}</td>
+                    <td class="wrap">{book.description}</td>
                     <td>
                       {#if book.linkedSpell}
                         {#if book.linkedSpell.dropOnly}

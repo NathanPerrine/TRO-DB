@@ -4,6 +4,7 @@
   import SidebarMenuIcon from './SidebarMenuIcon.svelte';
   import { fade, slide } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
+  import ThemeSelector from './ThemeSelector.svelte';
 
   export let isMobileMenuOpen = false;
 
@@ -15,6 +16,8 @@
 <nav class="sidebar">
   <SidebarHeader />
   <SidebarList onNavigate={closeMenu} />
+  <h2>Theme</h2>
+  <ThemeSelector />
 </nav>
 
 <nav class="mobile-menu">
@@ -41,6 +44,8 @@
       }}
     >
       <SidebarList onNavigate={closeMenu} />
+      <h2>Theme</h2>
+      <ThemeSelector />
     </div>
   {/if}
 </nav>
@@ -49,7 +54,7 @@
   @use '$lib/scss/view_mixins' as *;
 
   .sidebar {
-    background: linear-gradient(to left, $color-accent 5%, $color-background 13%);
+    background: linear-gradient(to left, $color-accent 5%, $color-background 15%);
     padding: 20px;
     width: 225px;
     min-width: 225px;
@@ -113,7 +118,7 @@
       padding: 20px;
       border-right: 2px solid $color-divider;
       position: fixed;
-      top: 52px; /* Adjust this value based on the mobile-menu-bar height */
+      top: 52px;
       left: 0;
       bottom: 0;
       width: 225px;
@@ -126,7 +131,7 @@
   /* This is to ensure the page content is not covered by the fixed mobile-menu-bar */
   :global(body) {
     @include mobile {
-      padding-top: 52px; /* Same as mobile-menu-bar height */
+      padding-top: 52px;
     }
   }
 </style>

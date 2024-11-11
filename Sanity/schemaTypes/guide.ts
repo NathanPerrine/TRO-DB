@@ -57,6 +57,7 @@ export const guides = defineType({
           { title: 'Money Making', value: 'money making' },
           { title: 'New Player', value: 'new player' },
           { title: 'Crafting', value: 'crafting' },
+          { title: 'Other', value: 'other' },
         ],
       },
       validation: (Rule) => Rule.required(),

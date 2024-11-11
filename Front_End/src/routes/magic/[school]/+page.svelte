@@ -36,7 +36,7 @@
               <tr>
                 <td><a href="{spell.spellSchool}/{spell.slug.current}">{spell.title}</a></td>
                 <td>{spell.mpCost}</td>
-                <td>{spell.spellEffect}</td>
+                <td class="wrap">{spell.spellEffect}</td>
                 <td>
                   {#if spell.dropOnly}
                     <span class="check">&#10003;</span>

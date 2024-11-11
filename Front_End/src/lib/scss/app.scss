@@ -1,5 +1,24 @@
 @use '$lib/scss/view_mixins' as *;
-@use 'sass:color';
+
+:root {
+  // Default theme variables - should match your first theme in themes.json
+  --color-background: #1a1a1d;
+  --color-text: #e0e0e0;
+  --color-text-accent: #2fe9dd;
+  --color-accent: #2d2d30;
+  --color-accent-hover: #383840;
+  --color-hover: #2a2a32;
+  --color-border: #454550;
+  --color-header: #c8c8c8;
+  --color-button-bg: #2d2d35;
+  --color-button-hover: #383845;
+  --color-button-text: #ffffff;
+  --color-inactive: #505058;
+  --color-divider: #454550;
+  --color-table-row: #1e1e22;
+  --color-table-row-alt: #222226;
+  --color-table-row-hover: #2a2a32;
+}
 
 /* General Layout */
 body {
@@ -49,7 +68,7 @@ blockquote {
   padding: 10px;
   margin: 8px 0;
   border-left: 3px solid $color-border;
-  background-color: color.adjust($color-background, $lightness: -5%);
+  background-color: color-mix(in srgb, var(--color-background) 80%, black);
   font-style: italic;
 }
 
@@ -174,7 +193,7 @@ table {
   width: 100%;
   max-width: 100%;
   border-collapse: collapse;
-  background-color: $color-accent;
+  background-color: $color-table-row;
   color: $color-text;
   white-space: nowrap;
 }
@@ -192,11 +211,15 @@ th {
 }
 
 tr:nth-child(even) {
-  background-color: $color-hover;
+  background-color: $color-table-row-alt;
 }
 
 tr:hover {
-  background-color: $color-accent-hover;
+  background-color: $color-table-row-hover;
+}
+
+.wrap {
+  white-space: normal;
 }
 
 /* Textareas */
@@ -216,12 +239,7 @@ textarea {
 
   &:focus {
     outline: none;
-    border-color: $color-accent-hover;
-    background: linear-gradient(to bottom, $color-accent-hover, rgba($color-accent-hover, 0));
-  }
-
-  &:hover {
-    border-color: $color-hover;
+    background: linear-gradient(to bottom, var(--color-accent-hover) 30%, transparent 100%);
   }
 
   &:disabled {

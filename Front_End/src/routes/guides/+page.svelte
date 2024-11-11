@@ -61,7 +61,7 @@
                   </div>
                   <div class="date-info">
                     <span>Scribed: {formatDate(guide.createdAt)}</span>
-                    <span>Last Updated: {formatDate(guide.updatedAt)}</span>
+                    <span>Updated: {formatDate(guide.updatedAt)}</span>
                   </div>
                 </div>
               </div>
@@ -74,15 +74,6 @@
 </main>
 
 <style lang="scss">
-  @use 'sass:color';
-
-  // Color palette
-  $parchment: #f4e4bc;
-  $dark-brown: #2a1810;
-  $gold: #ffd700;
-  $red-brown: #8b4513;
-  $light-brown: #d2691e;
-
   h2,
   h3 {
     border: none;
@@ -103,15 +94,15 @@
   }
 
   .guide-container {
-    background: $parchment;
-    color: $dark-brown;
+    background: $color-background;
+    color: $color-text;
     padding: 2rem;
     font-family: serif;
   }
 
   .main-title {
     text-align: center;
-    color: $dark-brown;
+    color: $color-text;
     font-size: 3rem;
     margin: 2rem 0;
     text-transform: uppercase;
@@ -124,7 +115,7 @@
   }
 
   .type-title {
-    color: $dark-brown;
+    color: $color-text;
     font-size: 2rem;
     text-align: center;
     margin-bottom: 2rem;
@@ -141,19 +132,24 @@
   }
 
   .guide-card {
-    height: 250px; // Fixed total height
+    height: 250px;
     display: flex;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
 
     .card-frame {
-      background: color.adjust($parchment, $lightness: 5%);
+      background-color: color-mix(in srgb, var(--color-background) 95%, white);
       border-radius: 8px;
       padding: 1.5rem;
-      border: 3px solid $red-brown;
+      border: 3px solid $color-border;
       display: flex;
       flex-direction: column;
       width: 100%;
       box-sizing: border-box;
-      box-shadow: 0 2px 5px rgba($dark-brown, 0.2);
+      box-shadow: 0 2px 5px var(--color-border);
       position: relative;
       transition: all 0.3s ease;
 
@@ -164,7 +160,7 @@
         left: 5px;
         right: 5px;
         bottom: 5px;
-        border: 1px solid rgba($red-brown, 0.3);
+        border: 1px solid color-mix(in srgb, $color-border 30%, transparent);
         border-radius: 4px;
         pointer-events: none;
       }
@@ -172,7 +168,7 @@
   }
 
   .guide-title {
-    color: $red-brown;
+    color: $color-text-accent;
     font-size: 1.5rem;
     text-align: center;
     font-family: 'Medieval', serif;
@@ -181,14 +177,14 @@
     flex-direction: column;
     justify-content: center;
     margin: 0;
-    border-bottom: 2px solid $red-brown;
+    border-bottom: 2px solid $color-border;
     padding-bottom: 0.5rem;
     margin-bottom: 0.5rem;
   }
 
   .guide-summary {
     font-size: 1.1rem;
-    color: $dark-brown;
+    color: $color-text;
     line-height: 1.4;
     height: 3rem;
     display: -webkit-box;
@@ -200,10 +196,10 @@
   .guide-dates {
     height: 2rem;
     font-size: 0.9rem;
-    color: color.adjust($dark-brown, $lightness: 20%);
+    color: color-mix(in srgb, $color-text 80%, white);
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid rgba($red-brown, 0.3);
+    border-top: 1px solid color-mix(in srgb, $color-border 30%, transparent);
     padding-top: 1rem;
     margin-top: auto;
 
