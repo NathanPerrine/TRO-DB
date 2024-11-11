@@ -22,8 +22,8 @@
 
 /* General Layout */
 body {
-  background-color: $color-background;
-  color: $color-text;
+  background-color: var(--color-background);
+  color: var(--color-text);
   font-family: 'Georgia', serif;
   margin: 0;
   padding: 0;
@@ -36,10 +36,10 @@ main {
   max-width: 100vw;
   padding: 30px;
   box-sizing: border-box;
-  color: $color-text;
+  color: var(--color-text);
   font-family: 'Georgia', serif;
   overflow-y: auto;
-  background: linear-gradient(to right, $color-accent 0%, $color-background 3%);
+  background: linear-gradient(to right, var(--color-accent) 0%, var(--color-background) 3%);
 
   @include mobile {
     width: 100%;
@@ -49,7 +49,7 @@ main {
 
 p {
   margin: 5px 0;
-  color: $color-text;
+  color: var(--color-text);
 }
 
 .capitalize {
@@ -57,7 +57,7 @@ p {
 }
 
 .text-emphasis {
-  color: $color-text-accent;
+  color: var(--color-text-accent);
 }
 
 .text-center {
@@ -67,14 +67,14 @@ p {
 blockquote {
   padding: 10px;
   margin: 8px 0;
-  border-left: 3px solid $color-border;
+  border-left: 3px solid var(--color-border);
   background-color: color-mix(in srgb, var(--color-background) 80%, black);
   font-style: italic;
 }
 
 .quote {
   font-family: 'Cinzel', serif;
-  color: $color-text;
+  color: var(--color-text);
   text-align: center;
   margin: 10px 0;
   font-weight: bold;
@@ -82,14 +82,14 @@ blockquote {
 
 /* Disabled */
 .inactive {
-  color: $color-inactive;
+  color: var(--color-inactive);
 }
 
 /* Headers */
 h1 {
-  color: $color-header;
+  color: var(--color-header);
   border-bottom: 3px solid;
-  border-image: linear-gradient(to right, $color-border, transparent) 1;
+  border-image: linear-gradient(to right, var(--color-border), transparent) 1;
   padding-bottom: 5px;
   margin-bottom: 5px;
   font-family: 'Garamond', serif;
@@ -98,9 +98,9 @@ h1 {
 h2,
 h3,
 h4 {
-  color: $color-header;
+  color: var(--color-header);
   border-bottom: 3px solid;
-  border-image: linear-gradient(to right, $color-border, transparent) 1;
+  border-image: linear-gradient(to right, var(--color-border), transparent) 1;
   padding-bottom: 5px;
   margin-bottom: 5px;
   font-family: 'Garamond', serif;
@@ -108,7 +108,7 @@ h4 {
 
 .border-gradient {
   border-bottom: 3px solid;
-  border-image: linear-gradient(to right, $color-border, transparent) 1;
+  border-image: linear-gradient(to right, var(--color-border), transparent) 1;
   padding-bottom: 5px;
   margin-bottom: 5px;
 }
@@ -138,47 +138,47 @@ li {
   padding-left: 8px;
 
   &::marker {
-    color: $color-text;
+    color: var(--color-text);
   }
 }
 
 /* Buttons */
 button {
-  background-color: $color-button-bg;
-  color: $color-button-text;
+  background-color: var(--color-button-bg);
+  color: var(--color-button-text);
   padding: 10px 20px;
-  border: 1px solid $color-border;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   cursor: pointer;
 
   &:hover {
-    background-color: $color-button-hover;
+    background-color: var(--color-button-hover);
     transform: scale(1.05);
   }
 
   &:active {
-    background-color: $color-button-hover;
+    background-color: var(--color-button-hover);
     transform: scale(0.9);
   }
 }
 
 /* Links */
 a {
-  color: $color-text-accent;
+  color: var(--color-text-accent);
   text-decoration: none;
-  border-bottom: 1px dashed $color-text-accent;
+  border-bottom: 1px dashed var(--color-text-accent);
   transition:
     color 0.2s ease-in-out,
     border-color 0.2s ease-in-out;
 
   &:hover {
-    color: $color-header;
-    border-bottom-color: $color-header;
+    color: var(--color-header);
+    border-bottom-color: var(--color-header);
   }
 
   &:active {
-    color: $color-accent-hover;
-    border-bottom-color: $color-accent-hover;
+    color: var(--color-accent)-hover;
+    border-bottom-color: var(--color-accent-hover);
   }
 }
 
@@ -193,8 +193,8 @@ table {
   width: 100%;
   max-width: 100%;
   border-collapse: collapse;
-  background-color: $color-table-row;
-  color: $color-text;
+  background-color: var(--color-table-row);
+  color: var(--color-text);
   white-space: nowrap;
 }
 
@@ -202,20 +202,20 @@ th,
 td {
   padding: 12px 15px;
   text-align: left;
-  border: 1px solid $color-border;
+  border: 1px solid var(--color-border);
 }
 
 th {
-  background-color: $color-header;
-  color: $color-background;
+  background-color: var(--color-header);
+  color: var(--color-background);
 }
 
 tr:nth-child(even) {
-  background-color: $color-table-row-alt;
+  background-color: var(--color-table-row-alt);
 }
 
 tr:hover {
-  background-color: $color-table-row-hover;
+  background-color: var(--color-table-row-hover);
 }
 
 .wrap {
@@ -226,15 +226,15 @@ tr:hover {
 textarea {
   padding: 10px;
   margin: 10px;
-  border: 1px solid $color-border;
+  border: 1px solid var(--color-border);
   border-radius: 4px;
-  background: $color-background;
-  color: $color-text;
+  background: var(--color-background);
+  color: var(--color-text);
   font-family: 'Arial', sans-serif;
   resize: vertical;
 
   &::placeholder {
-    color: $color-inactive;
+    color: var(--color-inactive);
   }
 
   &:focus {
@@ -243,9 +243,9 @@ textarea {
   }
 
   &:disabled {
-    background-color: $color-inactive;
-    border-color: $color-inactive;
-    color: $color-border;
+    background-color: var(--color-inactive);
+    border-color: var(--color-inactive);
+    color: var(--color-border);
     cursor: not-allowed;
   }
 }

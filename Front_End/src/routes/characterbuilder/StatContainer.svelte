@@ -128,16 +128,16 @@
     .sphere {
       height: 50px;
       width: 50px;
-      background-color: $color-accent-hover;
-      color: $color-text;
+      background-color: var(--color-accent-hover);
+      color: var(--color-text);
       border-radius: 50%;
       text-align: center;
       line-height: 50px;
-      box-shadow: inset 0 0 10px $color-accent;
+      box-shadow: inset 0 0 10px var(--color-accent);
       position: relative;
 
       &::after {
-        background-color: $color-text;
+        background-color: var(--color-text);
         content: '';
         height: 30%;
         width: 15%;

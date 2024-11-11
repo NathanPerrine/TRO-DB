@@ -29,7 +29,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: $color-text;
+    color: var(--color-text);
     text-decoration: none;
     padding: 10px 15px;
     border-radius: 5px;
@@ -39,11 +39,11 @@
   .active,
   a:hover {
     background: linear-gradient(to right, var(--color-accent-hover) 30%, transparent 100%);
-    color: $color-text;
+    color: var(--color-text);
   }
 
   .inactive {
-    color: $color-inactive;
+    color: var(--color-inactive);
     text-decoration: line-through;
   }
 </style>

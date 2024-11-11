@@ -53,7 +53,7 @@
     width: 100%;
 
     background-color: transparent;
-    color: $color-text;
+    color: var(--color-text);
     text-decoration: none;
     transition: background-color 0.2s ease;
 
@@ -65,7 +65,7 @@
 
     .arrow {
       font-size: 12px;
-      color: $color-text;
+      color: var(--color-text);
       transition: transform 0.3s ease;
     }
 
@@ -83,7 +83,7 @@
     padding: 0.2em 0 0 0.5em;
     margin: 0.5em 0 0 0.5em;
     list-style: none;
-    border-left: 2px solid $color-divider;
+    border-left: 2px solid var(--color-divider);
   }
 
   li {

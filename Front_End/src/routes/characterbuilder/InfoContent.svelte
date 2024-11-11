@@ -142,13 +142,13 @@
   @use 'sass:color';
 
   .quote {
-    background-color: $color-background;
+    background-color: var(--color-background);
   }
 
   .info-content {
     padding: 10px;
     margin: 8px 0;
-    border-left: 3px solid $color-border;
+    border-left: 3px solid var(--color-border);
     background-color: color-mix(in srgb, var(--color-background) 80%, black);
     font-style: italic;
   }

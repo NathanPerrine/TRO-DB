@@ -121,6 +121,6 @@
 
 <style lang="scss">
   .equipment-header {
-    color: $color-text-accent;
+    color: var(--color-text-accent);
   }
 </style>

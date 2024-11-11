@@ -94,15 +94,15 @@
   }
 
   .guide-container {
-    background: $color-background;
-    color: $color-text;
+    background: var(--color-background);
+    color: var(--color-text);
     padding: 2rem;
     font-family: serif;
   }
 
   .main-title {
     text-align: center;
-    color: $color-text;
+    color: var(--color-text);
     font-size: 3rem;
     margin: 2rem 0;
     text-transform: uppercase;
@@ -115,7 +115,7 @@
   }
 
   .type-title {
-    color: $color-text;
+    color: var(--color-text);
     font-size: 2rem;
     text-align: center;
     margin-bottom: 2rem;
@@ -144,7 +144,7 @@
       background-color: color-mix(in srgb, var(--color-background) 95%, white);
       border-radius: 8px;
       padding: 1.5rem;
-      border: 3px solid $color-border;
+      border: 3px solid var(--color-border);
       display: flex;
       flex-direction: column;
       width: 100%;
@@ -160,7 +160,7 @@
         left: 5px;
         right: 5px;
         bottom: 5px;
-        border: 1px solid color-mix(in srgb, $color-border 30%, transparent);
+        border: 1px solid color-mix(in srgb, var(--color-border) 30%, transparent);
         border-radius: 4px;
         pointer-events: none;
       }
@@ -168,7 +168,7 @@
   }
 
   .guide-title {
-    color: $color-text-accent;
+    color: var(--color-text-accent);
     font-size: 1.5rem;
     text-align: center;
     font-family: 'Medieval', serif;
@@ -177,14 +177,14 @@
     flex-direction: column;
     justify-content: center;
     margin: 0;
-    border-bottom: 2px solid $color-border;
+    border-bottom: 2px solid var(--color-border);
     padding-bottom: 0.5rem;
     margin-bottom: 0.5rem;
   }
 
   .guide-summary {
     font-size: 1.1rem;
-    color: $color-text;
+    color: var(--color-text);
     line-height: 1.4;
     height: 3rem;
     display: -webkit-box;
@@ -196,10 +196,10 @@
   .guide-dates {
     height: 2rem;
     font-size: 0.9rem;
-    color: color-mix(in srgb, $color-text 80%, white);
+    color: color-mix(in srgb, var(--color-text) 80%, white);
     display: flex;
     justify-content: space-between;
-    border-top: 1px solid color-mix(in srgb, $color-border 30%, transparent);
+    border-top: 1px solid color-mix(in srgb, var(--color-border) 30%, transparent);
     padding-top: 1rem;
     margin-top: auto;
 

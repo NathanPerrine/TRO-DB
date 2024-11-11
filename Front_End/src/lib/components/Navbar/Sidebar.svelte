@@ -54,12 +54,12 @@
   @use '$lib/scss/view_mixins' as *;
 
   .sidebar {
-    background: linear-gradient(to left, $color-accent 5%, $color-background 15%);
+    background: linear-gradient(to left, var(--color-accent) 5%, var(--color-background) 15%);
     padding: 20px;
     width: 225px;
     min-width: 225px;
     max-width: 225px;
-    border-right: 2px solid $color-divider;
+    border-right: 2px solid var(--color-divider);
     box-sizing: border-box;
     overflow-y: auto;
 
@@ -94,8 +94,8 @@
     }
 
     .mobile-menu-bar {
-      background-color: $color-accent;
-      color: $color-background;
+      background-color: var(--color-accent);
+      color: var(--color-background);
       padding: 10px 20px;
       display: flex;
       justify-content: space-between;
@@ -114,9 +114,9 @@
     }
 
     .mobile-menu-content {
-      background-color: $color-background;
+      background-color: var(--color-background);
       padding: 20px;
-      border-right: 2px solid $color-divider;
+      border-right: 2px solid var(--color-divider);
       position: fixed;
       top: 52px;
       left: 0;

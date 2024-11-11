@@ -52,7 +52,7 @@
     visibility: hidden;
     width: 140px;
     background-color: color-mix(in srgb, var(--color-background) 95%, black);
-    color: $color-text;
+    color: var(--color-text);
     text-align: center;
     border-radius: 6px;
     padding: 5px;
@@ -73,7 +73,7 @@
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: $color-border transparent transparent transparent;
+    border-color: var(--color-border) transparent transparent transparent;
   }
 
   .tooltip:hover .tooltiptext {
