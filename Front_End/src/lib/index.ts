@@ -10,6 +10,7 @@ import type { Accessory } from './types/accessory';
 import type { Armor, PickedArmor, GroupedEquipment, Weapon, PickedWeapon } from './types/equipment';
 import type { WeaponType } from './types/weaponType';
 import type { Guide } from './types/guide';
+import type { SkillLevel } from './types/skillLevels';
 
 export type {
   Spell,
@@ -27,5 +28,6 @@ export type {
   Weapon,
   WeaponType,
   PickedWeapon,
-  Guide
+  Guide,
+  SkillLevel
 };

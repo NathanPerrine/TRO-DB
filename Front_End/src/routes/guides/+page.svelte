@@ -6,23 +6,25 @@
   // export let data: PageData;
   // console.log(data.guides);
 
-  $: guidesByType = mockGuides.reduce((acc, guide) => {
-    if (!acc[guide.type]) {
-      acc[guide.type] = [];
-    }
-    acc[guide.type].push(guide);
-    return acc;
-  }, {});
+  let guidesByType = $state(
+    mockGuides.reduce((acc, guide) => {
+      if (!acc[guide.type]) {
+        acc[guide.type] = [];
+      }
+      acc[guide.type].push(guide);
+      return acc;
+    }, {})
+  );
 
-  const formatDate = (date: string) => {
+  function formatDate(date: string) {
     return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'short',
       day: 'numeric'
     });
-  };
+  }
 
-  const getTypeIcon = (type: string) => {
+  function getTypeIcon(type: string) {
     switch (type.toLowerCase()) {
       case 'leveling':
         return 'sword';
@@ -35,7 +37,22 @@
       default:
         return 'scroll';
     }
-  };
+  }
+
+  let expandedSections = $state(
+    Object.keys(guidesByType).reduce(
+      (acc, type) => {
+        // Start with all sections expanded
+        acc[type] = true;
+        return acc;
+      },
+      {} as Record<string, boolean>
+    )
+  );
+
+  function toggleSection(type: string) {
+    expandedSections[type] = !expandedSections[type];
+  }
 </script>
 
 <main>
@@ -45,29 +62,41 @@
 
     {#each Object.entries(guidesByType) as [type, typeGuides]}
       <section class="guide-section">
-        <h2 class="type-title">
-          <i class={getTypeIcon(type)}></i>
-          {type} Guides
-        </h2>
-        <div class="guide-grid">
-          {#each typeGuides as guide}
-            <article class="guide-card">
-              <div class="card-frame">
-                <h3 class="guide-title">{guide.title}</h3>
-                <p class="guide-summary">{guide.summary}</p>
-                <div class="guide-dates">
-                  <div class="author-info">
-                    By: {guide.author}
-                  </div>
-                  <div class="date-info">
-                    <span>Scribed: {formatDate(guide.createdAt)}</span>
-                    <span>Updated: {formatDate(guide.updatedAt)}</span>
+        <div class="title-container">
+          <h2 class="type-title">
+            <button
+              class="header-button"
+              class:expanded={expandedSections[type]}
+              onclick={() => toggleSection(type)}
+              aria-expanded={expandedSections[type]}
+            >
+              <i class={getTypeIcon(type)}></i>
+              <span class="capitalize">{type} Guides</span>
+              <span class="arrow">▶</span>
+            </button>
+          </h2>
+        </div>
+        {#if expandedSections[type]}
+          <div class="guide-grid">
+            {#each typeGuides as guide}
+              <article class="guide-card">
+                <div class="card-frame">
+                  <h3 class="guide-title">{guide.title}</h3>
+                  <p class="guide-summary">{guide.summary}</p>
+                  <div class="guide-dates">
+                    <div class="author-info">
+                      By: {guide.author}
+                    </div>
+                    <div class="date-info">
+                      <span>Scribed: {formatDate(guide.createdAt)}</span>
+                      <span>Updated: {formatDate(guide.updatedAt)}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </article>
-          {/each}
-        </div>
+              </article>
+            {/each}
+          </div>
+        {/if}
       </section>
     {/each}
   </div>
@@ -77,6 +106,12 @@
   h2,
   h3 {
     border: none;
+  }
+
+  .title-container {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px dashed var(--color-border);
   }
 
   // Icon styles
@@ -110,15 +145,11 @@
     font-family: serif;
   }
 
-  .guide-section {
-    margin-bottom: 3rem;
-  }
-
   .type-title {
     color: var(--color-text);
     font-size: 2rem;
     text-align: center;
-    margin-bottom: 2rem;
+
     i {
       margin-right: 1rem;
     }

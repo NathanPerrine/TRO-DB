@@ -17,6 +17,7 @@
     display: flex;
     flex-direction: row;
     max-width: 100vw;
+    flex-grow: 1;
 
     @include mobile {
       flex-direction: column;

@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
+  import type { SkillLevel } from '$lib';
   export let data: PageData;
 
   let expandedSections: { [key: string]: boolean } = {};
@@ -40,7 +41,7 @@
                 </tr>
               </thead>
               <tbody>
-                {#each data.books[skill][skillLevel] as book}
+                {#each data.books[skill][skillLevel as SkillLevel] as book}
                   <tr>
                     <td><a href="{book.bookType}/{book.slug.current}">{book.name}</a></td>
                     <td class="wrap">{book.description}</td>
@@ -66,7 +67,7 @@
       <h2>{skill}</h2>
       {#each Object.keys(data.books[skill]) as skillLevel}
         <ul>
-          {#each data.books[skill][skillLevel] as book}
+          {#each data.books[skill][skillLevel as SkillLevel] as book}
             <li><a href="{book.bookType}/{book.slug.current}">{book.name}</a></li>
           {/each}
         </ul>
@@ -74,31 +75,3 @@
     {/each}
   {/if}
 </main>
-
-<style lang="scss">
-  .header-button {
-    cursor: pointer;
-    background: none;
-    border: none;
-    padding: 0;
-    font-size: inherit;
-    font-weight: inherit;
-    font-family: inherit;
-    color: inherit;
-
-    display: flex;
-    justify-content: start;
-    align-items: center;
-
-    .arrow {
-      font-size: 16px;
-      padding-left: 4px;
-      transition: transform 0.3s ease;
-      display: block;
-    }
-
-    &.expanded .arrow {
-      transform: rotate(90deg);
-    }
-  }
-</style>
