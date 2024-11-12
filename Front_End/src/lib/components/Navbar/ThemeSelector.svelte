@@ -12,11 +12,14 @@
 </script>
 
 <div class="theme-selector">
-  <select on:change={handleThemeChange} value={themeState.theme.name}>
-    {#each themes as theme}
-      <option value={theme.name}>{theme.name}</option>
-    {/each}
-  </select>
+  <div class="select-wrapper">
+    <select on:change={handleThemeChange} value={themeState.theme.name}>
+      {#each themes as theme}
+        <option value={theme.name}>{theme.name}</option>
+      {/each}
+    </select>
+    <span class="arrow">▶</span>
+  </div>
 </div>
 
 <style lang="scss">
@@ -24,22 +27,48 @@
     margin-top: 20px;
     padding: 0 10px;
 
-    select {
+    .select-wrapper {
+      position: relative;
+      display: inline-block;
       width: 100%;
-      padding: 8px;
-      background-color: var(--color-background);
-      color: var(--color-text);
-      border: 1px solid var(--color-border);
-      border-radius: 4px;
-      cursor: pointer;
 
-      &:hover {
-        background-color: var(--color-hover);
-      }
-
-      option {
+      select {
+        width: 100%;
+        padding: 8px;
+        padding-right: 24px;
         background-color: var(--color-background);
         color: var(--color-text);
+        font-weight: bold;
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+        appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--color-hover);
+        }
+
+        option {
+          background-color: var(--color-background);
+          color: var(--color-text);
+        }
+      }
+
+      .arrow {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 12px;
+        color: var(--color-text);
+        pointer-events: none;
+        transition: transform 0.3s ease;
+      }
+
+      select:focus + .arrow {
+        transform: translateY(-50%) rotate(90deg);
       }
     }
   }
