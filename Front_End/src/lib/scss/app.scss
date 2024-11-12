@@ -18,6 +18,12 @@
   --color-table-row: #1e1e22;
   --color-table-row-alt: #222226;
   --color-table-row-hover: #2a2a32;
+  --color-rarity-white: #ffffff;
+  --color-rarity-green: #45cc20;
+  --color-rarity-blue: #99bcf2;
+  --color-rarity-purple: #b462e1;
+  --color-rarity-orange: #ffa500;
+  --color-rarity-red: #ff0000;
 }
 
 /* General Layout */
@@ -252,20 +258,20 @@ textarea {
 
 /* Rarity */
 .rarity-white {
-  color: $color-rarity-white;
+  color: var(--color-rarity-white);
 }
 .rarity-green {
-  color: $color-rarity-green;
+  color: var(--color-rarity-green);
 }
 .rarity-blue {
-  color: $color-rarity-blue;
+  color: var(--color-rarity-blue);
 }
 .rarity-purple {
-  color: $color-rarity-purple;
+  color: var(--color-rarity-purple);
 }
 .rarity-orange {
-  color: $color-rarity-orange;
+  color: var(--color-rarity-orange);
 }
 .rarity-red {
-  color: $color-rarity-red;
+  color: var(--color-rarity-red);
 }

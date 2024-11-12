@@ -18,7 +18,13 @@
         "colorDivider": "#454550",
         "colorTableRow": "#1e1e22",
         "colorTableRowAlt": "#222226",
-        "colorTableRowHover": "#2a2a32"
+        "colorTableRowHover": "#2a2a32",
+        "color-rarity-white": "#ffffff",
+        "color-rarity-green": "#45cc20",
+        "color-rarity-blue": "#99bcf2",
+        "color-rarity-purple": "#b462e1",
+        "color-rarity-orange": "#ffa500",
+        "color-rarity-red": "#ff2e2e"
       }
     },
     {
@@ -39,7 +45,13 @@
         "colorDivider": "#504a45",
         "colorTableRow": "#1e1e1c",
         "colorTableRowAlt": "#222220",
-        "colorTableRowHover": "#2a2a28"
+        "colorTableRowHover": "#2a2a28",
+        "color-rarity-white": "#ffffff",
+        "color-rarity-green": "#45cc20",
+        "color-rarity-blue": "#99bcf2",
+        "color-rarity-purple": "#b462e1",
+        "color-rarity-orange": "#ffa500",
+        "color-rarity-red": "#ff2e2e"
       }
     },
     {
@@ -60,7 +72,13 @@
         "colorDivider": "#d2691e",
         "colorTableRow": "#f0deb2",
         "colorTableRowAlt": "#ecd8a8",
-        "colorTableRowHover": "#e8d4a4"
+        "colorTableRowHover": "#e8d4a4",
+        "color-rarity-white": "#5e5e5e",
+        "color-rarity-green": "#24730e",
+        "color-rarity-blue": "#145ac6",
+        "color-rarity-purple": "#813fa6",
+        "color-rarity-orange": "#91521b",
+        "color-rarity-red": "#ca1b1b"
       }
     }
   ]
