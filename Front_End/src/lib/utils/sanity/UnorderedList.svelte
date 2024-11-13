@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { BlockComponentProps } from '@portabletext/svelte';
-  export let portableText: BlockComponentProps<{bulletContext?: string}>;
+  export let portableText: BlockComponentProps<{ bulletContext?: string }>;
 </script>
 
 {#if portableText.global.context.bulletContext === 'note'}

@@ -11,6 +11,7 @@ import type { Armor, PickedArmor, GroupedEquipment, Weapon, PickedWeapon } from 
 import type { WeaponType } from './types/weaponType';
 import type { Guide } from './types/guide';
 import type { SkillLevel } from './types/skillLevels';
+import type { SanityDocumentProps } from './types/sanityDocumentProps';
 
 export type {
   Spell,
@@ -29,5 +30,6 @@ export type {
   WeaponType,
   PickedWeapon,
   Guide,
-  SkillLevel
+  SkillLevel,
+  SanityDocumentProps
 };

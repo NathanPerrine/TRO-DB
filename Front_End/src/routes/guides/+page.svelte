@@ -1,28 +1,17 @@
 <script lang="ts">
   import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
+  import { formatDate } from '$lib/utils/formatDate';
   import type { PageData } from './$types';
-  import { mockGuides } from './mockGuides';
 
-  // export let data: PageData;
-  // console.log(data.guides);
+  let { data }: { data: PageData } = $props();
 
-  let guidesByType = $state(
-    mockGuides.reduce((acc, guide) => {
-      if (!acc[guide.type]) {
-        acc[guide.type] = [];
-      }
-      acc[guide.type].push(guide);
-      return acc;
-    }, {})
-  );
-
-  function formatDate(date: string) {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  }
+  // Reorder `GUIDE_SECTION_ORDER` to update the order guides are displayed on the page
+  const GUIDE_SECTION_ORDER = ['New Player', 'Leveling', 'Money Making', 'Crafting', 'Other'];
+  const sortedGuides = Object.entries(data.guides).sort(([a], [b]) => {
+    const indexA = GUIDE_SECTION_ORDER.indexOf(a);
+    const indexB = GUIDE_SECTION_ORDER.indexOf(b);
+    return indexA - indexB;
+  });
 
   function getTypeIcon(type: string) {
     switch (type.toLowerCase()) {
@@ -40,7 +29,7 @@
   }
 
   let expandedSections = $state(
-    Object.keys(guidesByType).reduce(
+    Object.keys(data.guides).reduce(
       (acc, type) => {
         // Start with all sections expanded
         acc[type] = true;
@@ -56,11 +45,11 @@
 </script>
 
 <main>
-  <!-- <PageHeader description={data.description} /> -->
+  <PageHeader description={data.description} />
   <div class="guide-container">
     <h1 class="main-title">Adventure Guides</h1>
 
-    {#each Object.entries(guidesByType) as [type, typeGuides]}
+    {#each sortedGuides as [type, typeGuides]}
       <section class="guide-section">
         <div class="title-container">
           <h2 class="type-title">
@@ -79,21 +68,23 @@
         {#if expandedSections[type]}
           <div class="guide-grid">
             {#each typeGuides as guide}
-              <article class="guide-card">
-                <div class="card-frame">
-                  <h3 class="guide-title">{guide.title}</h3>
-                  <p class="guide-summary">{guide.summary}</p>
-                  <div class="guide-dates">
-                    <div class="author-info">
-                      By: {guide.author}
-                    </div>
-                    <div class="date-info">
-                      <span>Scribed: {formatDate(guide.createdAt)}</span>
-                      <span>Updated: {formatDate(guide.updatedAt)}</span>
+              <a href="/guides/{guide.slug.current}">
+                <article class="guide-card">
+                  <div class="card-frame">
+                    <h3 class="guide-title">{guide.title}</h3>
+                    <p class="guide-summary">{guide.summary}</p>
+                    <div class="guide-dates">
+                      <div class="author-info">
+                        By: {guide.author}
+                      </div>
+                      <div class="date-info">
+                        <span>Scribed: {formatDate(guide._createdAt)}</span>
+                        <span>Updated: {formatDate(guide._updatedAt)}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </article>
+                </article>
+              </a>
             {/each}
           </div>
         {/if}
@@ -152,6 +143,10 @@
 
     i {
       margin-right: 1rem;
+    }
+
+    .arrow {
+      margin-left: 1rem;
     }
   }
 
