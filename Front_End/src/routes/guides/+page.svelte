@@ -94,6 +94,10 @@
 </main>
 
 <style lang="scss">
+  a {
+    border-bottom: none;
+  }
+
   h2,
   h3 {
     border: none;

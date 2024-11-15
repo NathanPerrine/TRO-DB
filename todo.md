@@ -2,6 +2,7 @@
 - tags?
 - Guides -> 'Adventure Guides' doesn't seem to fit well
 - Guides -> When on a specific guide, the sidebar 'guide' doesn't light up active
+- Guides -> Slug -> Typing on the image component in portable text is a mess. Worked perfectly without using $props and having 'export let portableText', might be due to svelte 5 version mismatch.
 
 # Current tags
 

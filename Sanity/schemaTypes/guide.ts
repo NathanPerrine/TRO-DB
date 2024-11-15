@@ -78,6 +78,26 @@ export const guides = defineType({
               title: 'Alternative Text',
               description: 'Important for SEO and accessibilty.',
             },
+            {
+              name: 'alignment',
+              type: 'string',
+              title: 'Image Alignment',
+              options: {
+                list: [
+                  { title: 'Center', value: 'center' },
+                  { title: 'Left', value: 'left' },
+                  { title: 'Right', value: 'right' },
+                ],
+              },
+              initialValue: 'center',
+            },
+            {
+              name: 'width',
+              type: 'number',
+              title: 'Width (in pixels)',
+              validation: (Rule) => Rule.min(100).max(800),
+              initialValue: 400,
+            },
           ],
         },
       ],
