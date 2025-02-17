@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Character, Stats } from '../lib/types';
   import { races, classes, alignments, pvpOptions, raceClassStats } from '../lib/constants';
-  import { createCharacter } from '../lib/factories';
+  import { createCharacterPreservingSkills } from '../lib/factories';
 
   type StatType = Stats | 'availablePoints' | 'race' | 'class' | 'alignment' | 'pvp';
   type BackgroundKey = 'race' | 'class' | 'alignment' | 'pvp';
@@ -58,7 +58,7 @@
     const newIndex = (currentIndex + direction + currentChoices.length) % currentChoices.length;
     const newValue = currentChoices[newIndex];
 
-    character = createCharacter({
+    character = createCharacterPreservingSkills(character, {
       ...character.background,
       [attribute]: newValue
     });

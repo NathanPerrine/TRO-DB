@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createCharacter } from './lib/factories';
+  import { createCharacter, createDefaultCharacter } from './lib/factories';
   import type { Character } from './lib/types';
 
   import ImportExport from './components/ImportExport.svelte';
@@ -7,23 +7,50 @@
   import SkillPlanner from './components/SkillPlanner.svelte';
   import StatContainer from './components/StatContainer.svelte';
 
-  let character: Character = createCharacter({
-    race: 'human',
-    class: 'adventurer',
-    alignment: 'good',
-    pvp: 'off'
-  });
-
-  function reset() {
-    character = createCharacter({
+  let character: Character = $state(
+    createCharacter({
       race: 'human',
       class: 'adventurer',
       alignment: 'good',
       pvp: 'off'
-    });
+    })
+  );
+
+  const validTabs = ['statInfo', 'classInfo', 'skills', 'saveLoad'] as const;
+  type TabType = (typeof validTabs)[number];
+
+  let activeTab = $state<TabType>('statInfo');
+
+  $effect(() => {
+    const hash = window.location.hash.slice(1);
+    if (validTabs.includes(hash as TabType)) {
+      activeTab = hash as TabType;
+    } else {
+      window.location.hash = activeTab;
+    }
+  });
+
+  function setActiveTab(tab: TabType) {
+    activeTab = tab;
+    window.location.hash = tab;
   }
 
-  let activeTab = 'statInfo';
+  // Listen for hash changes, allows back / forward navigation.
+  $effect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.slice(1);
+      if (validTabs.includes(hash as TabType)) {
+        activeTab = hash as TabType;
+      }
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  });
+
+  function reset() {
+    character = createDefaultCharacter();
+  }
 </script>
 
 <main>
@@ -51,19 +78,23 @@
         <button
           class="tab-button"
           class:active={activeTab === 'statInfo'}
-          onclick={() => (activeTab = 'statInfo')}>Stat Info</button>
+          onclick={() => setActiveTab('statInfo')}>Stat Info</button
+        >
         <button
           class="tab-button"
           class:active={activeTab === 'classInfo'}
-          onclick={() => (activeTab = 'classInfo')}>Class Info</button>
+          onclick={() => setActiveTab('classInfo')}>Class Info</button
+        >
         <button
           class="tab-button"
           class:active={activeTab === 'skills'}
-          onclick={() => (activeTab = 'skills')}>Skill builder</button>
+          onclick={() => setActiveTab('skills')}>Skill builder</button
+        >
         <button
           class="tab-button"
           class:active={activeTab === 'saveLoad'}
-          onclick={() => (activeTab = 'saveLoad')}>Save / Load</button>
+          onclick={() => setActiveTab('saveLoad')}>Save / Load</button
+        >
       </div>
 
       <div class="info-container" class:hidden={activeTab !== 'statInfo'}>

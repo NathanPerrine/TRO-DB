@@ -84,6 +84,32 @@ export function createDefaultCharacter(): Character {
 }
 
 /**
+ * Creates a new character while preserving skills if possible
+ */
+export function createCharacterPreservingSkills(
+  oldCharacter: Character,
+  newBackground: {
+    race: Races;
+    class: Classes;
+    alignment: Alignments;
+    pvp: PvPOptions;
+  }
+): Character {
+  // Create the new character
+  const newCharacter = createCharacter(newBackground);
+
+  // Only preserve skills if class and alignment haven't changed
+  if (
+    oldCharacter.background.class === newBackground.class &&
+    oldCharacter.background.alignment === newBackground.alignment
+  ) {
+    newCharacter.skills = oldCharacter.skills;
+  }
+
+  return newCharacter;
+}
+
+/**
  * Creates a character from a saved character string
  * @throws Will throw an error if the string is invalid
  */
