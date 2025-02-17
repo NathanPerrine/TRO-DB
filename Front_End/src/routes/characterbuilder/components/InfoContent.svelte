@@ -1,40 +1,21 @@
 <script lang="ts">
-  import type { Character, Stats } from './characterBuilder';
+  import type { Character, Stats } from '../lib/types';
   import {
     alignmentInfo,
     classInfo,
-    classSkills,
+    classStartingSkills,
     pvpInfo,
     raceClassStats,
     statInfo
-  } from './characterBuilder';
+  } from '../lib/constants';
+  import { getScoreDescription } from '../lib/utils';
   import TextWithEmphasis from '$lib/components/Text/TextWithEmphasis.svelte';
 
   export let stat: string;
   export let character: Character;
 
-  function getScoreDescription(score: number) {
-    /**
-     * @description
-     * test test test
-     */
-    if (score <= 5) {
-      return 'Terrible';
-    } else if (score <= 8) {
-      return 'Poor';
-    } else if (score <= 13) {
-      return 'Average';
-    } else if (score <= 17) {
-      return 'good';
-    } else if (score <= 21) {
-      return 'Excellent';
-    } else {
-      return 'Fantastic';
-    }
-  }
-
   function getBaseStat(stat: Stats) {
-    return raceClassStats[character.race][character.class][stat];
+    return raceClassStats[character.background.race][character.background.class][stat];
   }
 </script>
 
@@ -44,9 +25,10 @@
     <div class="info-content">
       <p>
         As
-        {#if character.race === 'human' || character.race === 'giant'}a{:else}an{/if}
-        <span class="text-emphasis">{character.race} {character.class}</span>, your base attributes
-        are set at Strength <span class="text-emphasis">{getBaseStat('strength')}</span>, Dexterity:
+        {#if character.background.race === 'human' || character.background.race === 'giant'}a{:else}an{/if}
+        <span class="text-emphasis">{character.background.race} {character.background.class}</span>,
+        your base attributes are set at Strength
+        <span class="text-emphasis">{getBaseStat('strength')}</span>, Dexterity:
         <span class="text-emphasis">{getBaseStat('dexterity')}</span>, Intelligence:
         <span class="text-emphasis">{getBaseStat('intelligence')}</span>, Endurance:
         <span class="text-emphasis">{getBaseStat('endurance')}</span>. Your attribute points may be
@@ -59,8 +41,8 @@
     <div class="info-content">
       <blockquote class="quote">
         {#if stat === 'strength' || stat === 'dexterity'}A{:else}An{/if}
-        {stat} of <span class="text-emphasis">{character[stat]}</span> is considered
-        <span class="text-emphasis">{getScoreDescription(character[stat])}</span>.
+        {stat} of <span class="text-emphasis">{character.attributes[stat]}</span> is considered
+        <span class="text-emphasis">{getScoreDescription(character.attributes[stat])}</span>.
       </blockquote>
 
       <p>{statInfo[stat]}</p>
@@ -70,11 +52,11 @@
   {:else if stat === 'alignment'}
     <div class="info-content">
       <p>
-        {#if character.alignment === 'good'}
+        {#if character.background.alignment === 'good'}
           <TextWithEmphasis segments={alignmentInfo.good.segments} />
-        {:else if character.alignment === 'neutral'}
+        {:else if character.background.alignment === 'neutral'}
           <TextWithEmphasis segments={alignmentInfo.neutral.segments} />
-        {:else if character.alignment === 'evil'}
+        {:else if character.background.alignment === 'evil'}
           <TextWithEmphasis segments={alignmentInfo.evil.segments} />
         {/if}
       </p>
@@ -84,53 +66,53 @@
   {:else if stat === 'pvp'}
     <div class="info-content">
       <p>
-        {#if character.pvp === 'on'}
+        {#if character.background.pvp === 'on'}
           {pvpInfo.on}
-        {:else if character.pvp === 'off'}
+        {:else if character.background.pvp === 'off'}
           {pvpInfo.off}
         {/if}
       </p>
     </div>
   {:else if stat === 'class'}
     <div class="info-content">
-      <blockquote class="quote capitalize">{character.class}</blockquote>
+      <blockquote class="quote capitalize">{character.background.class}</blockquote>
     </div>
     <div class="info-content">
-      <p>{classInfo[character.class]}</p>
+      <p>{classInfo[character.background.class]}</p>
     </div>
     <div class="info-content">
       <p>
-        As {#if character.class === 'adventurer'}an{:else}a{/if}
-        {character.class}, you will start with the following skills:
+        As {#if character.background.class === 'adventurer'}an{:else}a{/if}
+        {character.background.class}, you will start with the following skills:
       </p>
       <ul class="ul-diamond">
-        {#each classSkills[character.class].skills as skill}
-          <li>{skill.skill} : {skill.level}</li>
+        {#each classStartingSkills[character.background.class].skills as skill}
+          <li>{skill.skill} : {skill.rankValue}</li>
         {/each}
       </ul>
     </div>
-    {#if character.class === 'adventurer' || character.class === 'wizard'}
+    {#if character.background.class === 'adventurer' || character.background.class === 'wizard'}
       <div class="info-content">
         <p>
-          <span class="capitalize">{character.class}s</span> additionally start with the following
-          magic skills, depending on their alignment. <br />
+          <span class="capitalize">{character.background.class}s</span> additionally start with the
+          following magic skills, depending on their alignment. <br />
           <span class="text-emphasis">Good</span>:
         </p>
-        {#each classSkills[character.class].magic.good as magicSkill}
+        {#each classStartingSkills[character.background.class].magic.good as magicSkill}
           <ul class="ul-diamond">
-            <li>{magicSkill.skill} : {magicSkill.level}</li>
+            <li>{magicSkill.skill} : {magicSkill.rankValue}</li>
           </ul>
         {/each}
         <span class="text-emphasis">Neutral</span>:
-        {#each classSkills[character.class].magic.neutral as magicSkill}
+        {#each classStartingSkills[character.background.class].magic.neutral as magicSkill}
           <ul class="ul-diamond">
-            <li>{magicSkill.skill} : {magicSkill.level}</li>
+            <li>{magicSkill.skill} : {magicSkill.rankValue}</li>
           </ul>
         {/each}
         <span class="text-emphasis">Evil</span>:
-        {#each classSkills[character.class].magic.evil as magicSkill}
+        {#each classStartingSkills[character.background.class].magic.evil as magicSkill}
           <ul class="ul-diamond">
-            <li>{magicSkill.skill} : {magicSkill.level}</li>
+            <li>{magicSkill.skill} : {magicSkill.rankValue}</li>
           </ul>
         {/each}
       </div>

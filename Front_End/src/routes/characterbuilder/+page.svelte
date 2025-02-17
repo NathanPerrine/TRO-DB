@@ -1,32 +1,26 @@
 <script lang="ts">
-  import { races, classes, alignments, raceClassStats, pvpOptions } from './characterBuilder';
-  import type { Character } from './characterBuilder';
-  import ImportExport from './ImportExport.svelte';
-  import InfoContent from './InfoContent.svelte';
-  import StatContainer from './StatContainer.svelte';
+  import { createCharacter } from './lib/factories';
+  import type { Character } from './lib/types';
 
-  let character: Character = {
-    strength: raceClassStats.human.adventurer.strength,
-    dexterity: raceClassStats.human.adventurer.dexterity,
-    intelligence: raceClassStats.human.adventurer.intelligence,
-    endurance: raceClassStats.human.adventurer.endurance,
-    race: races[0],
-    class: classes[0],
-    alignment: alignments[0],
-    pvp: pvpOptions[0],
-    availablePoints: 8
-  };
+  import ImportExport from './components/ImportExport.svelte';
+  import InfoContent from './components/InfoContent.svelte';
+  import SkillPlanner from './components/SkillPlanner.svelte';
+  import StatContainer from './components/StatContainer.svelte';
+
+  let character: Character = createCharacter({
+    race: 'human',
+    class: 'adventurer',
+    alignment: 'good',
+    pvp: 'off'
+  });
 
   function reset() {
-    character.strength = raceClassStats.human.adventurer.strength;
-    character.dexterity = raceClassStats.human.adventurer.dexterity;
-    character.intelligence = raceClassStats.human.adventurer.intelligence;
-    character.endurance = raceClassStats.human.adventurer.endurance;
-    character.race = races[0];
-    character.class = classes[0];
-    character.alignment = alignments[0];
-    character.pvp = pvpOptions[0];
-    character.availablePoints = 8;
+    character = createCharacter({
+      race: 'human',
+      class: 'adventurer',
+      alignment: 'good',
+      pvp: 'off'
+    });
   }
 
   let activeTab = 'statInfo';
@@ -54,7 +48,7 @@
       <!-- PvP container -->
       <StatContainer stat="pvp" bind:character />
       <!-- Reset Button -->
-      <button on:click={reset}>Reset</button>
+      <button onclick={reset}>Reset</button>
     </div>
 
     <div class="info-column">
@@ -62,17 +56,22 @@
         <button
           class="tab-button"
           class:active={activeTab === 'statInfo'}
-          on:click={() => (activeTab = 'statInfo')}>Stat Info</button
+          onclick={() => (activeTab = 'statInfo')}>Stat Info</button
         >
         <button
           class="tab-button"
           class:active={activeTab === 'classInfo'}
-          on:click={() => (activeTab = 'classInfo')}>Class Info</button
+          onclick={() => (activeTab = 'classInfo')}>Class Info</button
+        >
+        <button
+          class="tab-button"
+          class:active={activeTab === 'skills'}
+          onclick={() => (activeTab = 'skills')}>Skill builder</button
         >
         <button
           class="tab-button"
           class:active={activeTab === 'saveLoad'}
-          on:click={() => (activeTab = 'saveLoad')}>Save / Load</button
+          onclick={() => (activeTab = 'saveLoad')}>Save / Load</button
         >
       </div>
       <div class="info-container" class:hidden={activeTab !== 'statInfo'}>
@@ -93,6 +92,9 @@
       </div>
       <div class="skill-container" class:hidden={activeTab !== 'classInfo'}>
         <InfoContent stat="class" {character} />
+      </div>
+      <div class="skill-container" class:hidden={activeTab !== 'skills'}>
+        <SkillPlanner bind:character />
       </div>
       <div class="saveLoad-container" class:hidden={activeTab !== 'saveLoad'}>
         <ImportExport bind:character />
@@ -130,7 +132,6 @@
       padding: 20px;
       margin: 20px 0;
       height: 80vh;
-      // max-width: 900px;
       z-index: 1;
 
       font-family: 'IM Fell English', serif;
@@ -170,6 +171,9 @@
       width: 110px;
       height: 40px;
       margin-top: 16px;
+
+      display: flex;
+      justify-content: center;
 
       &:not(.active) {
         &::after {
