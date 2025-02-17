@@ -2,18 +2,20 @@
   import type { Character } from '../lib/types';
   import { characterToSaveString, createCharacterFromSave } from '../lib/factories';
 
-  export let character: Character;
+  let { character = $bindable() }: { character: Character } = $props();
 
-  let code: string = '';
+  let code = $state(characterToSaveString(character));
 
-  $: code = characterToSaveString(character);
+  $effect(() => {
+    code = characterToSaveString(character);
+  });
 
   function importBuild() {
     try {
-      character = createCharacterFromSave(code);
+      const newCharacter = createCharacterFromSave(code);
+      character = newCharacter;
     } catch (error) {
       console.error('Failed to import character:', error);
-      // You might want to add some user feedback here
     }
   }
 
@@ -25,15 +27,14 @@
 <div class="saveLoad-container">
   <textarea rows="4" bind:value={code}></textarea>
   <div class="button-container tooltip">
-    <button class="import-button" on:click={importBuild}>Import</button>
-    <button class="export-button" on:click={exportBuild}>
+    <button class="import-button" onclick={importBuild}>Import</button>
+    <button class="export-button" onclick={exportBuild}>
       Export
       <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
     </button>
   </div>
   <p>
-    Note: This currently has no validation. If in doubt reset the character race / class and try to
-    recreate it yourself.
+    Note: This currently has no validation. If in doubt, reset the character race/class and try to recreate it yourself.
   </p>
 </div>
 

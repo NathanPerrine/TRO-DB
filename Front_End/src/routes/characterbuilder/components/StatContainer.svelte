@@ -6,8 +6,7 @@
   type StatType = Stats | 'availablePoints' | 'race' | 'class' | 'alignment' | 'pvp';
   type BackgroundKey = 'race' | 'class' | 'alignment' | 'pvp';
 
-  export let stat: StatType;
-  export let character: Character;
+  let { character = $bindable(), stat }: { character: Character; stat: StatType } = $props();
 
   function updateStat(amount: number) {
     if (isAttributeStat(stat)) {
@@ -59,7 +58,6 @@
     const newIndex = (currentIndex + direction + currentChoices.length) % currentChoices.length;
     const newValue = currentChoices[newIndex];
 
-    // Create new character with updated background
     character = createCharacter({
       ...character.background,
       [attribute]: newValue
@@ -71,9 +69,9 @@
   <div class="stat-container">
     <h3 class="stat capitalize text-center">{stat}</h3>
     <div class="stat-selectors">
-      <button class="stat-minus" on:click={() => updateStat(-1)}>-</button>
+      <button class="stat-minus" onclick={() => updateStat(-1)}>-</button>
       <div class="sphere stat-value">{character.attributes[stat]}</div>
-      <button class="stat-plus" on:click={() => updateStat(1)}>+</button>
+      <button class="stat-plus" onclick={() => updateStat(1)}>+</button>
     </div>
   </div>
 {:else if stat === 'availablePoints'}
@@ -87,11 +85,11 @@
   <div class="stat-container">
     <h3 class="stat capitalize text-center">{stat}</h3>
     <div class="stat-selectors">
-      <button class="stat-minus arrow-left" on:click={() => changeSelection(stat, -1)}>←</button>
+      <button class="stat-minus arrow-left" onclick={() => changeSelection(stat, -1)}>←</button>
       <div class="stat-value capitalize text-md">
         {character.background[stat]}
       </div>
-      <button class="stat-plus arrow-right" on:click={() => changeSelection(stat, 1)}>→</button>
+      <button class="stat-plus arrow-right" onclick={() => changeSelection(stat, 1)}>→</button>
     </div>
   </div>
 {/if}
