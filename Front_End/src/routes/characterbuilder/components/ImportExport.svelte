@@ -5,42 +5,65 @@
   let { character = $bindable() }: { character: Character } = $props();
 
   let code = $state(characterToSaveString(character));
+  let error = $state<string | null>(null);
 
   $effect(() => {
-    code = characterToSaveString(character);
+    try {
+      code = characterToSaveString(character);
+      error = null;
+    } catch (e) {
+      error = 'Failed to generate save code';
+    }
   });
 
   function importBuild() {
     try {
       const newCharacter = createCharacterFromSave(code);
       character = newCharacter;
-    } catch (error) {
-      console.error('Failed to import character:', error);
+
+      error = null;
+      code = characterToSaveString(character);
+    } catch (e) {
+      error = 'Invalid character save code';
+      console.error('Failed to import character:', e);
     }
   }
 
-  function exportBuild() {
-    navigator.clipboard.writeText(code);
+  async function exportBuild() {
+    try {
+      await navigator.clipboard.writeText(code);
+      error = null;
+    } catch (e) {
+      error = 'Failed to copy to clipboard';
+      console.error('Failed to copy to clipboard:', e);
+    }
   }
 </script>
 
 <div class="saveLoad-container">
-  <textarea rows="4" bind:value={code}></textarea>
+  <textarea rows="4" oninput={() => error = null} bind:value={code} class:error={error !== null} aria-label="Character save code"
+  ></textarea>
+
+  {#if error}
+    <div class="error-message">
+      {error}
+    </div>
+  {/if}
+
   <div class="button-container tooltip">
-    <button class="import-button" onclick={importBuild}>Import</button>
-    <button class="export-button" onclick={exportBuild}>
+    <button class="import-button" onclick={importBuild} disabled={error !== null}> Import </button>
+    <button class="export-button" onclick={exportBuild} disabled={error !== null}>
       Export
       <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
     </button>
   </div>
-  <p>
-    Note: This currently has no validation. If in doubt, reset the character race/class and try to recreate it yourself.
+
+  <p class="note">
+    Note: There is currently minimal validation in place. If in doubt hit reset and try to recreate the character from scratch.
   </p>
 </div>
 
 <style lang="scss">
-  @use 'sass:color';
-
   .saveLoad-container {
     display: flex;
     flex-direction: column;
@@ -51,6 +74,25 @@
     display: flex;
     justify-content: space-around;
     margin-top: 20px;
+  }
+
+  textarea.error {
+    border-color: var(--color-rarity-red);
+  }
+
+  .error-message {
+    margin-top: 8px;
+    padding: 8px;
+    color: var(--color-rarity-red);
+    background-color: color-mix(in srgb, var(--color-background) 90%, var(--color-rarity-red));
+    border: 1px solid var(--color-rarity-red);
+    border-radius: 4px;
+  }
+
+  .note {
+    margin-top: 16px;
+    font-size: 0.9em;
+    color: var(--color-inactive);
   }
 
   .tooltip .tooltiptext {
