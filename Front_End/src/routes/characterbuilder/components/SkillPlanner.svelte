@@ -111,7 +111,10 @@
         <div class="points-label">Skill Points:</div>
         <div class="points-value">{remainingPoints} / {character.skills.availableSkillPoints}</div>
       </div>
-      <div class="level-requirement">Required Level: {minimumLevel}</div>
+      <div class="level-requirement">
+        <div class="level-label">Required Level:</div>
+        <div class="level-value">{minimumLevel}</div>
+      </div>
     </div>
     <div class="progress-bar">
       <div
@@ -207,10 +210,19 @@
         gap: 10px;
 
         .points-display {
+          display: flex;
+
           @include mobile {
-            display: flex;
             flex-direction: column;
             align-items: flex-start;
+          }
+
+          .points-value {
+            margin-left: 8px;
+
+            @include mobile {
+              margin-left: 0;
+            }
           }
         }
 
@@ -218,6 +230,16 @@
           color: var(--color-text-accent);
           font-size: 0.9em;
           white-space: nowrap;
+          display: flex;
+
+          @include mobile {
+            flex-direction: column;
+            align-items: flex-end;
+          }
+
+          .level-value {
+            margin-left: 8px;
+          }
         }
       }
 
