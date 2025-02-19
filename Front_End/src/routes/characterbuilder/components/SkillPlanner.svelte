@@ -25,6 +25,26 @@
 
   let remainingPoints = $derived(character.skills.availableSkillPoints - totalPoints);
 
+  let minimumLevel = $derived.by(() => {
+    // Remove starting points (10) and initial free points (3)
+    const pointsToAccount = Math.max(0, totalPoints - 13);
+
+    if (pointsToAccount <= 0) return 1;
+
+    // First handle points up to level 100 (99 points, 1 per level)
+    if (pointsToAccount <= 99) {
+      return pointsToAccount + 1; // Add 1 since you start at level 1
+    }
+
+    // If we're here, we've used all 99 points from levels 2-100
+    const remainingPoints = pointsToAccount - 99;
+
+    // Each 10 points after level 100 represents 25 levels
+    const additionalLevels = Math.ceil(remainingPoints / 10) * 25;
+
+    return Math.min(100 + additionalLevels, 200);
+  });
+
   function increaseSkill(skillName: SkillName) {
     const currentLevel = character.skills[skillName].rank;
     const nextLevel = getNextLevel(currentLevel);
@@ -86,7 +106,13 @@
 
 <div class="skill-planner">
   <div class="points-container">
-    <h3>Skill Points: {remainingPoints} / {character.skills.availableSkillPoints}</h3>
+    <div class="points-header">
+      <div class="points-display">
+        <div class="points-label">Skill Points:</div>
+        <div class="points-value">{remainingPoints} / {character.skills.availableSkillPoints}</div>
+      </div>
+      <div class="level-requirement">Required Level: {minimumLevel}</div>
+    </div>
     <div class="progress-bar">
       <div
         class="progress"
@@ -153,6 +179,8 @@
 </div>
 
 <style lang="scss">
+  @use '$lib/scss/view_mixins' as *;
+
   .skill-planner {
     padding: 20px;
 
@@ -171,8 +199,29 @@
         background-color 0.2s ease,
         border-color 0.2s ease;
 
+      .points-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 10px;
+        gap: 10px;
+
+        .points-display {
+          @include mobile {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+          }
+        }
+
+        .level-requirement {
+          color: var(--color-text-accent);
+          font-size: 0.9em;
+          white-space: nowrap;
+        }
+      }
+
       .progress-bar {
-        margin-top: 10px;
         height: 10px;
         background-color: var(--color-accent);
         border-radius: 5px;

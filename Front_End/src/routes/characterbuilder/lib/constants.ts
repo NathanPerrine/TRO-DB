@@ -36,7 +36,17 @@ export const SKILL_COSTS: Record<SkillLevel, number> = {
   'Supreme-Master': 13
 };
 
-export const MAX_SKILL_POINTS = 152;
+export const MAX_LEVEL = 200;
+export const BASE_SKILL_POINTS = 10;
+export const INITIAL_FREE_POINTS = 3;
+
+export const MAX_SKILL_POINTS = (() => {
+  let total = BASE_SKILL_POINTS + INITIAL_FREE_POINTS;
+  total += 99; // 99 points from levels 2-100
+  const highLevelIntervals = Math.floor((MAX_LEVEL - 100) / 25);
+  total += highLevelIntervals * 10;
+  return total;
+})();
 
 export const AVAILABLE_SKILLS: SkillName[] = [
   'Light Piercing',

@@ -7,7 +7,17 @@ import type {
   SkillName,
   SkillLevel
 } from './types';
-import { AVAILABLE_SKILLS, classStartingSkills, MAX_SKILL_POINTS, raceClassStats } from './constants';
+import {
+  AVAILABLE_SKILLS,
+  classStartingSkills,
+  MAX_SKILL_POINTS,
+  raceClassStats,
+  races,
+  classes,
+  alignments,
+  pvpOptions,
+  SKILL_LEVELS
+} from './constants';
 
 type CharacterCreationParams = {
   race: Races;
@@ -109,19 +119,55 @@ export function createCharacterPreservingSkills(
   return newCharacter;
 }
 
+type SkillEntry = { rank: SkillLevel; rankValue: number };
+type CharacterSkillsEntry = [string, SkillEntry | number];
+
+function isSkillEntry(entry: CharacterSkillsEntry): entry is [SkillName, SkillEntry] {
+  return (
+    entry[0] !== 'availableSkillPoints' &&
+    typeof entry[1] === 'object' &&
+    entry[1] !== null &&
+    'rank' in entry[1]
+  );
+}
+
 /**
- * Converts a character object to a safe string representation
+ * Converts a character object to a compact string representation
  */
 export function characterToSaveString(character: Character): string {
   try {
-    // Convert character to JSON string
-    const jsonString = JSON.stringify(character);
+    // Pack attributes into comma-separated string
+    const attrs = [
+      character.attributes.strength,
+      character.attributes.dexterity,
+      character.attributes.intelligence,
+      character.attributes.endurance,
+      character.attributes.availableStatPoints
+    ].join(',');
 
-    // Convert JSON string to Uint8Array using TextEncoder
+    // Pack skills into compact format, skipping Untrained skills
+    const skills = Object.entries(character.skills)
+      .filter(
+        (entry): entry is [SkillName, SkillEntry] =>
+          isSkillEntry(entry) && entry[1].rank !== 'Untrained'
+      )
+      .map(([skill, info]) => `${skill}:${info.rank}`)
+      .join(',');
+
+    // Combine all parts with delimiter
+    const parts = [
+      'v1',
+      character.background.race,
+      character.background.class,
+      character.background.alignment,
+      character.background.pvp,
+      attrs,
+      skills
+    ].join('|');
+
+    // Convert to base64url for safe transport
     const encoder = new TextEncoder();
-    const binaryData = encoder.encode(jsonString);
-
-    // Convert binary data to base64url string
+    const binaryData = encoder.encode(parts);
     return arrayBufferToBase64url(binaryData);
   } catch (error) {
     console.error('Error serializing character:', error);
@@ -135,19 +181,54 @@ export function characterToSaveString(character: Character): string {
  */
 export function createCharacterFromSave(saveString: string): Character {
   try {
-    // Convert base64url string to Uint8Array
+    // Decode base64url to string
     const binaryData = base64urlToArrayBuffer(saveString);
-
-    // Convert Uint8Array to JSON string using TextDecoder
     const decoder = new TextDecoder();
-    const jsonString = decoder.decode(binaryData);
+    const parts = decoder.decode(binaryData).split('|');
 
-    // Parse JSON string to character object
-    const character = JSON.parse(jsonString);
+    // Validate version
+    if (parts[0] !== 'v1') throw new Error('Unsupported save version');
 
-    // Validate character structure
-    if (!isValidCharacter(character)) {
-      throw new Error('Invalid character data structure');
+    // Extract basic info
+    const [, race, characterClass, alignment, pvp, attrs, skillData] = parts;
+
+    // Validate background data
+    if (!isValidRace(race)) throw new Error(`Invalid race: ${race}`);
+    if (!isValidClass(characterClass)) throw new Error(`Invalid class: ${characterClass}`);
+    if (!isValidAlignment(alignment)) throw new Error(`Invalid alignment: ${alignment}`);
+    if (!isValidPvP(pvp)) throw new Error(`Invalid PvP setting: ${pvp}`);
+
+    // Parse attributes
+    const [str, dex, int, end, points] = attrs.split(',').map(Number);
+
+    // Create base character with background
+    const character = createCharacter({
+      race: race as Races,
+      class: characterClass as Classes,
+      alignment: alignment as Alignments,
+      pvp: pvp as PvPOptions
+    });
+
+    // Update attributes
+    character.attributes = {
+      strength: str,
+      dexterity: dex,
+      intelligence: int,
+      endurance: end,
+      availableStatPoints: points
+    };
+
+    // Parse skill data
+    if (skillData) {
+      skillData.split(',').forEach((pair) => {
+        const [skillName, level] = pair.split(':');
+        if (isValidSkill(skillName) && isValidSkillLevel(level)) {
+          character.skills[skillName as SkillName] = {
+            rank: level as SkillLevel,
+            rankValue: SKILL_LEVELS.indexOf(level as SkillLevel)
+          };
+        }
+      });
     }
 
     return character;
@@ -157,14 +238,36 @@ export function createCharacterFromSave(saveString: string): Character {
   }
 }
 
+// Type guards for validation
+function isValidRace(race: string): race is Races {
+  return races.includes(race as Races);
+}
+
+function isValidClass(characterClass: string): characterClass is Classes {
+  return classes.includes(characterClass as Classes);
+}
+
+function isValidAlignment(alignment: string): alignment is Alignments {
+  return alignments.includes(alignment as Alignments);
+}
+
+function isValidPvP(pvp: string): pvp is PvPOptions {
+  return pvpOptions.includes(pvp as PvPOptions);
+}
+
+function isValidSkill(skill: string): skill is SkillName {
+  return AVAILABLE_SKILLS.includes(skill as SkillName);
+}
+
+function isValidSkillLevel(level: string): level is SkillLevel {
+  return SKILL_LEVELS.includes(level as SkillLevel);
+}
+
 /**
  * Converts an ArrayBuffer to a URL-safe base64 string
  */
 function arrayBufferToBase64url(buffer: Uint8Array): string {
-  // Convert to regular base64
   const base64 = btoa(String.fromCharCode(...buffer));
-
-  // Make URL-safe by replacing non-URL-safe characters
   return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
@@ -172,68 +275,13 @@ function arrayBufferToBase64url(buffer: Uint8Array): string {
  * Converts a URL-safe base64 string to an ArrayBuffer
  */
 function base64urlToArrayBuffer(base64url: string): Uint8Array {
-  // Convert from URL-safe to regular base64
   const base64 = base64url.replace(/-/g, '+').replace(/_/g, '/');
-
-  // Add padding if needed
   const padding = base64.length % 4;
   const paddedBase64 = padding ? base64 + '='.repeat(4 - padding) : base64;
-
-  // Convert to binary
   const binaryString = atob(paddedBase64);
-
-  // Convert to Uint8Array
   const buffer = new Uint8Array(binaryString.length);
   for (let i = 0; i < binaryString.length; i++) {
     buffer[i] = binaryString.charCodeAt(i);
   }
-
   return buffer;
-}
-
-/**
- * Type guard to validate character structure
- */
-// Define a type for the expected shape of raw character data
-type RawCharacterData = {
-  attributes?: {
-    availableStatPoints?: number;
-    strength?: number;
-    dexterity?: number;
-    intelligence?: number;
-    endurance?: number;
-  };
-  background?: {
-    race?: string;
-    class?: string;
-    alignment?: string;
-    pvp?: string;
-  };
-  skills?: {
-    availableSkillPoints?: number;
-    [key: string]: unknown;
-  };
-};
-
-function isValidCharacter(obj: RawCharacterData): obj is Character {
-  return (
-    obj &&
-    typeof obj === 'object' &&
-    'attributes' in obj &&
-    'background' in obj &&
-    'skills' in obj &&
-    typeof obj.attributes === 'object' &&
-    typeof obj.background === 'object' &&
-    typeof obj.skills === 'object' &&
-    'availableStatPoints' in obj.attributes &&
-    'strength' in obj.attributes &&
-    'dexterity' in obj.attributes &&
-    'intelligence' in obj.attributes &&
-    'endurance' in obj.attributes &&
-    'race' in obj.background &&
-    'class' in obj.background &&
-    'alignment' in obj.background &&
-    'pvp' in obj.background &&
-    'availableSkillPoints' in obj.skills
-  );
 }
