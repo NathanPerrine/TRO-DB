@@ -139,7 +139,7 @@ export const armorTypes = [
   { title: 'Chest', value: 'chest' },
   { title: 'Robe', value: 'robe' },
   { title: 'Skirt', value: 'skirt' },
-  { title: 'Wrists', value: 'wrist' },
+  { title: 'Wrists', value: 'wrists' },
   { title: 'Legs', value: 'legs' },
   { title: 'Feet', value: 'feet' },
   { title: 'Shield', value: 'shield' },

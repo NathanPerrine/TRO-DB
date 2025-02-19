@@ -36,7 +36,7 @@ export const SKILL_COSTS: Record<SkillLevel, number> = {
   'Supreme-Master': 13
 };
 
-export const MAX_SKILL_POINTS = 200;
+export const MAX_SKILL_POINTS = 152;
 
 export const AVAILABLE_SKILLS: SkillName[] = [
   'Light Piercing',

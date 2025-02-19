@@ -7,7 +7,7 @@ import type {
   SkillName,
   SkillLevel
 } from './types';
-import { AVAILABLE_SKILLS, classStartingSkills, raceClassStats } from './constants';
+import { AVAILABLE_SKILLS, classStartingSkills, MAX_SKILL_POINTS, raceClassStats } from './constants';
 
 type CharacterCreationParams = {
   race: Races;
@@ -65,7 +65,7 @@ export function createCharacter({
       pvp
     },
     skills: {
-      availableSkillPoints: 200,
+      availableSkillPoints: MAX_SKILL_POINTS,
       ...defaultSkills
     }
   };
