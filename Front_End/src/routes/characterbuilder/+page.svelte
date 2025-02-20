@@ -1,11 +1,13 @@
 <script lang="ts">
   import { createCharacter, createDefaultCharacter } from './lib/factories';
   import type { Character } from './lib/types';
-
   import ImportExport from './components/ImportExport.svelte';
   import InfoContent from './components/InfoContent.svelte';
   import SkillPlanner from './components/SkillPlanner.svelte';
   import StatContainer from './components/StatContainer.svelte';
+  import { characterToUrlString, createCharacterFromUrl } from './lib/urlSave';
+  import { browser } from '$app/environment';
+  import { replaceState } from '$app/navigation';
 
   let character: Character = $state(
     createCharacter({
@@ -46,6 +48,38 @@
 
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
+  });
+
+  // Initial URL load
+  $effect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const saveString = params.get('save');
+    if (saveString) {
+      try {
+        const loadedCharacter = createCharacterFromUrl(saveString);
+        character = loadedCharacter;
+      } catch (e) {
+        console.error('Failed to load character from URL:', e);
+        alert(e instanceof Error ? e.message : 'Failed to load character from URL');
+      }
+    }
+  });
+
+  // Update URL when character changes
+  $effect(() => {
+    if (!browser) return;
+
+    try {
+      const saveString = characterToUrlString(character);
+      const newUrl = `${window.location.pathname}?save=${saveString}`;
+
+      // Only update if the URL actually changed
+      if (window.location.search !== `?save=${saveString}`) {
+        replaceState(newUrl, {});
+      }
+    } catch (e) {
+      console.error('Failed to update URL:', e);
+    }
   });
 
   function reset() {

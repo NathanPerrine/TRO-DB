@@ -48,6 +48,9 @@ export const MAX_SKILL_POINTS = (() => {
   return total;
 })();
 
+// Version 1 skill list - must never change order to maintain compatibility for loading old characters
+// When new skills are added, create a v2 list that includes all v1 skills plus new ones IF the order changes
+// const AVAILABLE_SKILLS_V2: SkillName[] = [];
 export const AVAILABLE_SKILLS: SkillName[] = [
   'Light Piercing',
   'Light One-Handed',

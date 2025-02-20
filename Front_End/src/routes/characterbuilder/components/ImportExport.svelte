@@ -1,101 +1,114 @@
 <script lang="ts">
   import type { Character } from '../lib/types';
-  import { characterToSaveString, createCharacterFromSave } from '../lib/factories';
+  import { characterToUrlString } from '../lib/urlSave';
 
   let { character = $bindable() }: { character: Character } = $props();
-
-  let code = $state(characterToSaveString(character));
   let error = $state<string | null>(null);
+  let success = $state<boolean>(false);
 
-  $effect(() => {
+  async function copyUrl() {
     try {
-      code = characterToSaveString(character);
+      const saveString = characterToUrlString(character);
+      const url = `${window.location.origin}${window.location.pathname}?save=${saveString}`;
+      await navigator.clipboard.writeText(url);
       error = null;
-    } catch (e) {
-      error = 'Failed to generate save code';
-    }
-  });
+      success = true;
 
-  function importBuild() {
-    try {
-      const newCharacter = createCharacterFromSave(code);
-      character = newCharacter;
-
-      error = null;
-      code = characterToSaveString(character);
+      // Reset success message after 3 seconds
+      setTimeout(() => {
+        success = false;
+      }, 3000);
     } catch (e) {
-      error = 'Invalid character save code';
-      console.error('Failed to import character:', e);
-    }
-  }
-
-  async function exportBuild() {
-    try {
-      await navigator.clipboard.writeText(code);
-      error = null;
-    } catch (e) {
-      error = 'Failed to copy to clipboard';
-      console.error('Failed to copy to clipboard:', e);
+      error = 'Failed to copy URL to clipboard';
+      success = false;
+      console.error('Failed to copy URL:', e);
     }
   }
 </script>
 
-<div class="saveLoad-container">
-  <textarea rows="4" oninput={() => error = null} bind:value={code} class:error={error !== null} aria-label="Character save code"
-  ></textarea>
+<div class="share-container">
+  <p class="share-text">
+    Your character build is automatically saved in the URL. Click the button below to copy a
+    shareable link:
+  </p>
 
   {#if error}
-    <div class="error-message">
+    <div class="message error-message" role="alert">
       {error}
     </div>
   {/if}
 
-  <div class="button-container tooltip">
-    <button class="import-button" onclick={importBuild} disabled={error !== null}> Import </button>
-    <button class="export-button" onclick={exportBuild} disabled={error !== null}>
-      Export
-      <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+  {#if success}
+    <div class="message success-message" role="status">URL copied to clipboard!</div>
+  {/if}
+
+  <div class="button-container">
+    <button class="share-button" onclick={copyUrl}>
+      Copy Shareable Link
+      <span class="tooltiptext">Copy URL to clipboard</span>
     </button>
   </div>
 
   <p class="note">
-    Note: There is currently minimal validation in place. If in doubt hit reset and try to recreate the character from scratch.
+    Note: Any changes you make to your character are automatically reflected in the URL. You can
+    bookmark this page or share the URL to save your build.
   </p>
 </div>
 
 <style lang="scss">
-  .saveLoad-container {
+  .share-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 20px;
+  }
+
+  .share-text {
+    color: var(--color-text);
+    text-align: center;
   }
 
   .button-container {
     display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
+    justify-content: center;
   }
 
-  textarea.error {
-    border-color: var(--color-rarity-red);
+  .message {
+    margin-top: 8px;
+    padding: 8px;
+    border-radius: 4px;
+    text-align: center;
   }
 
   .error-message {
-    margin-top: 8px;
-    padding: 8px;
     color: var(--color-rarity-red);
     background-color: color-mix(in srgb, var(--color-background) 90%, var(--color-rarity-red));
     border: 1px solid var(--color-rarity-red);
-    border-radius: 4px;
+  }
+
+  .success-message {
+    color: var(--color-rarity-green);
+    background-color: color-mix(in srgb, var(--color-background) 90%, var(--color-rarity-green));
+    border: 1px solid var(--color-rarity-green);
   }
 
   .note {
-    margin-top: 16px;
     font-size: 0.9em;
     color: var(--color-inactive);
+    text-align: center;
   }
 
-  .tooltip .tooltiptext {
+  .share-button {
+    position: relative;
+    min-width: 200px;
+
+    &:hover .tooltiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+
+  .tooltiptext {
     visibility: hidden;
     width: 140px;
     background-color: color-mix(in srgb, var(--color-background) 95%, black);
@@ -105,26 +118,21 @@
     padding: 5px;
     position: absolute;
     z-index: 1;
-    bottom: 150%;
+    bottom: 125%;
     left: 50%;
-    margin-left: -75px;
+    margin-left: -70px;
     opacity: 0;
     transition: opacity 0.3s;
-  }
 
-  .tooltip .tooltiptext::after {
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: var(--color-border) transparent transparent transparent;
-  }
-
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: var(--color-border) transparent transparent transparent;
+    }
   }
 </style>
