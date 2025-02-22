@@ -1,42 +1,47 @@
 <script lang="ts">
-  import { Shield, Sword, Ribbon } from 'lucide-svelte/icons';
+  import { Swords, Home, Mountain } from 'lucide-svelte/icons';
 
-  const equipmentTypes = [
+  const areaTypes = [
     {
-      title: "Armor",
-      description: "From light cloth to heavy plate, find protective gear for any character build. Browse helmets, chest pieces, boots, and more.",
-      href: "/items/equipment/armor",
-      icon: Shield
+      title: 'Dungeons',
+      description:
+        "Dangerous lairs filled with monsters and treasures. From the beginner-friendly Lesser Hive to the legendary Fuloran's Abode.",
+      href: '/areas/dungeons',
+      icon: Swords
     },
     {
-      title: "Weapons",
-      description: "Discover an arsenal of weapons from claws to clubs. Find the perfect tool for dealing damage.",
-      href: "/items/equipment/weapons",
-      icon: Sword
+      title: 'Towns',
+      description:
+        'Safe havens where adventurers can rest, trade, and take on new quests. Visit merchants, healers, and quest-givers.',
+      href: '/areas/towns',
+      icon: Home
     },
     {
-      title: "Accessories",
-      description: "Enhance your character with magical rings, amulets, backpacks and belts that provide powerful bonuses and unique effects.",
-      href: "/items/equipment/accessories",
-      icon: Ribbon
+      title: 'Zones',
+      description:
+        'Vast outdoor regions ranging from the Havenwoods to the Killing Fields. Perfect for exploration and hunting.',
+      href: '/areas/zones',
+      icon: Mountain
     }
   ];
 </script>
 
-<div class="equipment-container">
+<div class="areas-container">
   <header class="page-header">
-    <h1>Equipment Database</h1>
-    <p>Browse The Realm's vast collection of gear to outfit your character for any adventure.</p>
+    <h1>Areas of the Realm</h1>
+    <p>
+      The world of The Realm is vast and varied, offering countless locations to explore.
+    </p>
   </header>
 
-  <div class="equipment-grid">
-    {#each equipmentTypes as equipment}
-      <a href={equipment.href} class="equipment-card">
+  <div class="area-grid">
+    {#each areaTypes as area}
+      <a href={area.href} class="area-card">
         <div class="card-header">
-          <span class="icon"><equipment.icon size={24} /></span>
-          <h2>{equipment.title}</h2>
+          <span class="icon"><area.icon size={24} /></span>
+          <h2>{area.title}</h2>
         </div>
-        <p>{equipment.description}</p>
+        <p>{area.description}</p>
       </a>
     {/each}
   </div>
@@ -45,7 +50,7 @@
 <style lang="scss">
   @use '$lib/scss/view_mixins' as *;
 
-  .equipment-container {
+  .areas-container {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
@@ -66,16 +71,16 @@
 
     p {
       font-size: 1.25rem;
-      max-width: 42rem;
       margin: 0 auto;
       color: var(--color-text);
     }
   }
 
-  .equipment-grid {
+  .area-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2rem;
+    margin-bottom: 2rem;
 
     @include tablet-and-up {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -86,12 +91,14 @@
     }
   }
 
-  .equipment-card {
+  .area-card {
     background-color: var(--color-background);
     border: 1px solid var(--color-border);
     padding: 1.5rem;
     border-radius: 4px;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease;
     text-decoration: none;
     width: 100%;
     box-sizing: border-box;

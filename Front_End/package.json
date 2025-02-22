@@ -12,7 +12,7 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
-		"@portabletext/svelte": "^2.1.11",
+		"@portabletext/svelte": "^3.0.0",
 		"@sanity/image-url": "^1.1.0",
 		"@sveltejs/adapter-auto": "^3.0.0",
 		"@sveltejs/adapter-vercel": "^5.4.4",
@@ -34,6 +34,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@sanity/client": "^6.21.3"
+		"@sanity/client": "^6.21.3",
+		"lucide-svelte": "^0.475.0"
 	}
 }

@@ -1,42 +1,54 @@
 <script lang="ts">
-  import { Shield, Sword, Ribbon } from 'lucide-svelte/icons';
+  import { BookOpen, Sword, FlaskConical, Trash2, Key } from 'lucide-svelte/icons';
 
-  const equipmentTypes = [
+  const itemCategories = [
     {
-      title: "Armor",
-      description: "From light cloth to heavy plate, find protective gear for any character build. Browse helmets, chest pieces, boots, and more.",
-      href: "/items/equipment/armor",
-      icon: Shield
+      title: "Books",
+      description: "Learn new skills and spells through various tomes and scrolls. Includes skillbooks for combat and crafting, as well as magical spellbooks.",
+      href: "/items/books",
+      icon: BookOpen
     },
     {
-      title: "Weapons",
-      description: "Discover an arsenal of weapons from claws to clubs. Find the perfect tool for dealing damage.",
-      href: "/items/equipment/weapons",
+      title: "Equipment",
+      description: "Find weapons, armor, and accessories to outfit your character. Browse a wide range of combat and defensive gear.",
+      href: "/items/equipment",
       icon: Sword
     },
     {
-      title: "Accessories",
-      description: "Enhance your character with magical rings, amulets, backpacks and belts that provide powerful bonuses and unique effects.",
-      href: "/items/equipment/accessories",
-      icon: Ribbon
+      title: "Consumables",
+      description: "Single-use items including potions, scrolls, wands, orbs, and baubles. Restore health, cast spells, or gain temporary effects.",
+      href: "/items/consumables",
+      icon: FlaskConical
+    },
+    {
+      title: "Junk",
+      description: "Miscellaneous items that can be sold to vendors. Some may be more valuable than they appear.",
+      href: "/items/junk",
+      icon: Trash2
+    },
+    {
+      title: "Dungeon Items",
+      description: "Special items found in dungeons including keys, quest items, and unique treasures.",
+      href: "/items/dungeon-items",
+      icon: Key
     }
   ];
 </script>
 
-<div class="equipment-container">
+<div class="items-container">
   <header class="page-header">
-    <h1>Equipment Database</h1>
-    <p>Browse The Realm's vast collection of gear to outfit your character for any adventure.</p>
+    <h1>Items Database</h1>
+    <p>Browse the complete collection of items found throughout The Realm.</p>
   </header>
 
-  <div class="equipment-grid">
-    {#each equipmentTypes as equipment}
-      <a href={equipment.href} class="equipment-card">
+  <div class="items-grid">
+    {#each itemCategories as category}
+      <a href={category.href} class="item-card">
         <div class="card-header">
-          <span class="icon"><equipment.icon size={24} /></span>
-          <h2>{equipment.title}</h2>
+          <span class="icon"><category.icon size={24} /></span>
+          <h2>{category.title}</h2>
         </div>
-        <p>{equipment.description}</p>
+        <p>{category.description}</p>
       </a>
     {/each}
   </div>
@@ -45,7 +57,7 @@
 <style lang="scss">
   @use '$lib/scss/view_mixins' as *;
 
-  .equipment-container {
+  .items-container {
     width: 100%;
     max-width: 1400px;
     margin: 0 auto;
@@ -72,7 +84,7 @@
     }
   }
 
-  .equipment-grid {
+  .items-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 2rem;
@@ -86,7 +98,7 @@
     }
   }
 
-  .equipment-card {
+  .item-card {
     background-color: var(--color-background);
     border: 1px solid var(--color-border);
     padding: 1.5rem;
