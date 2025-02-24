@@ -4,7 +4,7 @@ import type { PageServerLoad } from './$types';
 
 interface Data {
   description: Description;
-  mobs: Pick<Mob, 'name' | 'slug' | 'levelRange' | 'hpRange' | 'inhabitedAreas'>;
+  mobs: Pick<Mob, 'name' | 'slug' | 'boss' | 'levelRange' | 'hpRange' | 'inhabitedAreas'>[];
 }
 
 export const load = (async () => {
@@ -16,9 +16,10 @@ export const load = (async () => {
       extras,
       },
 
-      'mobs': *[_type == 'mob'] | order(name) {
+      'mobs': *[_type == 'mob'] | order(inhabitedAreas[0]->name asc, name) {
         name,
         slug,
+        boss,
         levelRange,
         hpRange,
         inhabitedAreas[] -> {

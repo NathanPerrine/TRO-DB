@@ -203,7 +203,6 @@
         margin: 0;
         border: none;
         white-space: normal;
-        word-break: break-word;
       }
     }
 

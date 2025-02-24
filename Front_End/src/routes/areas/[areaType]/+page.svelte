@@ -24,6 +24,7 @@
           <tr>
             <th style="width: 45%">Name</th>
             <th style="">Directions</th>
+            <th>Level Range</th>
           </tr>
         </thead>
         <tbody>
@@ -45,6 +46,7 @@
                   {/if}
                 </ul>
               </td>
+              <td>{area.levelRange?.min} - {area.levelRange?.max}</td>
             </tr>
           {/each}
         </tbody>

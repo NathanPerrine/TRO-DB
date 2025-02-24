@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
+  import { Skull } from 'lucide-svelte';
 
   export let data: PageData;
 </script>
@@ -23,7 +24,14 @@
         <tbody>
           {#each data.mobs as mob}
             <tr>
-              <td><a href="/mobs/{mob.slug.current}">{mob.name}</a></td>
+              <td>
+                <div class="name-cell">
+                  <a href="/mobs/{mob.slug.current}">{mob.name}</a>
+                  {#if mob.boss}
+                    <span class="icon"><Skull size={24} /></span>
+                  {/if}
+                </div>
+              </td>
               <td>{mob.levelRange?.min} - {mob.levelRange?.max}</td>
               <td>{mob.hpRange?.min} - {mob.hpRange?.max}</td>
               <td>
@@ -44,3 +52,17 @@
     </div>
   </section>
 </main>
+
+<style lang="scss">
+  .name-cell {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .icon {
+      color: var(--color-text-accent);
+      display: flex;
+      align-items: center;
+    }
+  }
+</style>
