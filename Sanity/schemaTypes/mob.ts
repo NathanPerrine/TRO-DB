@@ -38,22 +38,10 @@ export const mobs = defineType({
       title: 'Level Range',
       description: 'The level range of this mob',
       type: 'object',
-      options: {
-        collapsible: true,
-        collapsed: false,
-        columns: 2,
-      },
+      options: { collapsible: true, collapsed: false, columns: 2 },
       fields: [
-        defineField({
-          name: 'min',
-          title: 'Level Minimum',
-          type: 'number',
-        }),
-        defineField({
-          name: 'max',
-          title: 'Level Maximum',
-          type: 'number',
-        }),
+        defineField({ name: 'min', title: 'Level Minimum', type: 'number' }),
+        defineField({ name: 'max', title: 'Level Maximum', type: 'number' }),
       ],
     }),
 
@@ -62,22 +50,10 @@ export const mobs = defineType({
       title: 'HP Range',
       description: 'The HP range of this mob',
       type: 'object',
-      options: {
-        collapsible: true,
-        collapsed: false,
-        columns: 2,
-      },
+      options: { collapsible: true, collapsed: false, columns: 2 },
       fields: [
-        defineField({
-          name: 'min',
-          title: 'HP Minimum',
-          type: 'number',
-        }),
-        defineField({
-          name: 'max',
-          title: 'HP Maximum',
-          type: 'number',
-        }),
+        defineField({ name: 'min', title: 'HP Minimum', type: 'number' }),
+        defineField({ name: 'max', title: 'HP Maximum', type: 'number' }),
       ],
     }),
 
@@ -86,9 +62,7 @@ export const mobs = defineType({
       title: 'Alignment',
       description: "Mob's alignment (e.g., good, evil, neutral)",
       type: 'string',
-      options: {
-        list: ['Good', 'Evil', 'Neutral'],
-      },
+      options: { list: ['Good', 'Evil', 'Neutral'] },
     }),
 
     defineField({
@@ -104,11 +78,7 @@ export const mobs = defineType({
       title: 'Melee Defenses',
       description: 'Min and max melee defense of this mob.',
       type: 'object',
-      options: {
-        collapsible: true,
-        collapsed: false,
-        columns: 2,
-      },
+      options: { collapsible: true, collapsed: false, columns: 2 },
       fields: [
         defineField({
           name: 'min',
@@ -130,11 +100,7 @@ export const mobs = defineType({
       title: 'Melee Attributes',
       description: 'Melee attributes of this mob.',
       type: 'object',
-      options: {
-        collapsible: true,
-        collapsed: false,
-        columns: 4,
-      },
+      options: { collapsible: true, collapsed: false, columns: 4 },
       fields: [
         defineField({
           name: 'mdm',
@@ -168,11 +134,7 @@ export const mobs = defineType({
       title: 'Spell Resistances',
       description: 'Spell Resistance Modifiers of this mob.',
       type: 'object',
-      options: {
-        collapsible: true,
-        collapsed: false,
-        columns: 5,
-      },
+      options: { collapsible: true, collapsed: false, columns: 5 },
       fields: [
         defineField({
           name: 'sorcery',
@@ -212,11 +174,7 @@ export const mobs = defineType({
       title: 'Spell Damage Modifiers',
       description: 'Spell Damage Modifiers of this mob.',
       type: 'object',
-      options: {
-        collapsible: true,
-        collapsed: false,
-        columns: 5,
-      },
+      options: { collapsible: true, collapsed: false, columns: 5 },
       fields: [
         defineField({
           name: 'sorcery',
@@ -282,5 +240,29 @@ export const mobs = defineType({
       type: 'array',
       of: [{ type: 'block' }],
     }),
+  ],
+  preview: {
+    select: {
+      title: 'name',
+      area: 'inhabitedAreas.0.name',
+      boss: 'boss',
+    },
+    prepare(selection) {
+      const { title, area, boss } = selection
+      return {
+        title: `${boss ? '💀 ' : ''}${title}`,
+        subtitle: area ? area : 'No known area',
+      }
+    },
+  },
+  orderings: [
+    {
+      title: 'Inhabited area',
+      name: 'inhabitedAreaAsc',
+      by: [
+        { field: 'inhabitedAreas', direction: 'asc' },
+        { field: 'name', direction: 'asc' },
+      ],
+    },
   ],
 })

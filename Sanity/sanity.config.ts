@@ -13,14 +13,9 @@ export default defineConfig({
   dataset: 'production',
 
   plugins: [
-    structureTool({
-      structure: structure,
-    }),
+    structureTool({ structure: structure }),
     visionTool(),
   ],
 
-  schema: {
-    types: schemaTypes,
-    templates: templates,
-  },
+  schema: { types: schemaTypes, templates: templates },
 })

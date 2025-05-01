@@ -144,6 +144,23 @@ export const books = defineType({
       to: [{ type: 'spell' }],
       hidden: ({ parent }) => parent?.bookType !== 'spellbook',
     }),
+
+    defineField({
+      name: 'dropArea',
+      title: 'Drop Area',
+      description: 'The area where this equipment can be found or obtained.',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'area' }],
+          options: {
+            filter: `areaType == 'dungeon' || areaType == 'zone'`,
+            sort: [{ field: 'name', direction: 'asc' }],
+          },
+        },
+      ],
+    }),
   ],
   preview: {
     select: {

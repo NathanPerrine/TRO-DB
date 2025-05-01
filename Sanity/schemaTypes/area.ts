@@ -125,44 +125,6 @@ export const areas = defineType({
     }),
 
     defineField({
-      name: 'notableDrops',
-      title: 'Notable Drops from This Area',
-      type: 'object',
-      options: {
-        collapsible: true,
-      },
-      fields: [
-        defineField({
-          name: 'books',
-          title: 'Books',
-          type: 'array',
-          of: [
-            {
-              type: 'reference',
-              to: [{ type: 'book' }],
-              options: {
-                filter: 'linkedSpell->dropOnly == true',
-              },
-            },
-          ],
-        }),
-        defineField({
-          name: 'equipment',
-          title: 'Equipment',
-          type: 'array',
-          of: [{ type: 'reference', to: [{ type: 'equipment' }] }],
-        }),
-        defineField({
-          name: 'accessories',
-          title: 'Accessories',
-          type: 'array',
-          of: [{ type: 'reference', to: [{ type: 'accessory' }] }],
-        }),
-      ],
-      hidden: ({ parent }) => !['dungeon', 'zone'].includes(parent?.areaType),
-    }),
-
-    defineField({
       name: 'mobs',
       title: 'Mobs in this area',
       type: 'array',
