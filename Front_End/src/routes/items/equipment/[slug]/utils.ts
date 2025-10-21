@@ -1,10 +1,13 @@
-import type { PickedArmor, PickedWeapon } from '$lib';
+import type { ArmorListItem, WeaponListItem, AccessoryListItem } from '$lib/schemas/equipment';
 import type { PlayerClassType } from './types';
+
+// Union type for all equipment list items
+type EquipmentListItem = ArmorListItem | WeaponListItem | AccessoryListItem;
 
 // Class attribute mappings - equipment must match ANY of these (OR logic)
 // Uses partial matching: e.g., '+ SR' matches '+ SR Thaum', 'Immo' matches '+ Fire Immo'
 export const CLASS_ATTRIBUTES: Record<Exclude<PlayerClassType, null>, string[]> = {
-  Melee:        ['+ MDM', '+ STR', '+ DEX', 'Immo'],
+  Melee:        ['+ MDM', 'STR', 'DEX', 'Dodge', 'Immo'],
   Tank:         ['+ SR', 'Immo', 'Resist', '+ Regen', 'DMP'],
   Thaumaturge:  ['+ MP', '+ SDM Thaum', '+ SR Thaum'],
   Sorcerer:     ['+ MP', '+ SDM Sorc', '+ SR Sorc'],
@@ -33,9 +36,9 @@ export function normalizeAttributes(attr: string): string {
  * Uses partial matching to support patterns like '+ SR' matching '+ SR Thaum'
  */
 export function filterByClass(
-  equipmentList: (PickedArmor | PickedWeapon)[],
+  equipmentList: EquipmentListItem[],
   playerClass: PlayerClassType
-): (PickedArmor | PickedWeapon)[] {
+): EquipmentListItem[] {
   if (!playerClass) return equipmentList;
 
   const classAttributes = CLASS_ATTRIBUTES[playerClass];
@@ -56,7 +59,7 @@ export function filterByClass(
  * Extract unique normalized attribute tags from equipment list
  */
 export function extractAttributeTags(
-  equipmentList: (PickedArmor | PickedWeapon)[]
+  equipmentList: EquipmentListItem[]
 ): string[] {
   const tags = new Set<string>();
 
@@ -75,10 +78,10 @@ export function extractAttributeTags(
  * Sort equipment by field and direction
  */
 export function sortEquipment(
-  equipmentList: (PickedArmor | PickedWeapon)[],
+  equipmentList: EquipmentListItem[],
   field: 'rarity' | 'identifiedName' | 'levelRequirement',
   direction: 'asc' | 'desc'
-): (PickedArmor | PickedWeapon)[] {
+): EquipmentListItem[] {
   return [...equipmentList].sort((a, b) => {
     const fieldA = a[field] ?? '';
     const fieldB = b[field] ?? '';

@@ -36,6 +36,7 @@
 		"@sanity/client": "^6.21.3",
 		"dart-sass": "^1.25.0",
 		"lucide-svelte": "^0.475.0",
-		"sass-embedded": "^1.87.0"
+		"sass-embedded": "^1.87.0",
+		"zod": "^4.1.12"
 	}
 }

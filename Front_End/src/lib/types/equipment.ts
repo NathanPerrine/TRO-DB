@@ -43,21 +43,7 @@ export type Weapon = Equipment & {
   weaponAttributes: WeaponAttributes;
 };
 
+// Legacy GroupedEquipment interface - consider migrating to schema-based types
 export interface GroupedEquipment {
-  [key: string]: PickedArmor[] | PickedWeapon[];
+  [key: string]: unknown[];
 }
-
-type PickedEquipment = Pick<
-  Armor,
-  'identifiedName' | 'slug' | 'rarity' | 'levelRequirement' | 'armorWeapon' | 'attributes'
->;
-
-export type PickedArmor = PickedEquipment & {
-  armorType: string;
-  dropArea: Pick<Area, 'name' | 'slug' | 'areaType'>[];
-};
-
-export type PickedWeapon = PickedEquipment & {
-  weaponType: string;
-  dropArea: Pick<Area, 'name' | 'slug' | 'areaType'>[];
-};

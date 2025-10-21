@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { PickedArmor, PickedWeapon } from '$lib';
+  import type { ArmorListItem, WeaponListItem, AccessoryListItem } from '$lib/schemas/equipment';
   import type { PlayerClassType } from './types';
   import { flip } from 'svelte/animate';
   import { fade } from 'svelte/transition';
@@ -11,7 +11,7 @@
     header,
     playerClass = null
   }: {
-    equipmentList: PickedArmor[] | PickedWeapon[];
+    equipmentList: (ArmorListItem | WeaponListItem | AccessoryListItem)[];
     header: string;
     playerClass?: PlayerClassType;
   } = $props();
@@ -134,7 +134,7 @@
         {#each filteredEquipmentList as equipmentPiece (equipmentPiece)}
           <tr animate:flip={{ duration: DEFAULT_DURATION }} transition:fade={{ duration: 300 }}>
             <td>
-              {#if equipmentPiece.armorWeapon}
+              {#if 'armorWeapon' in equipmentPiece}
                 <a
                   href="/items/equipment/{equipmentPiece.armorWeapon}/{equipmentPiece.slug.current}"
                 >

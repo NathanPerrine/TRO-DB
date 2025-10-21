@@ -93,6 +93,13 @@ export const equipment = defineType({
       title: 'Weapon Attributes',
       description: 'Weapon specific attributes',
       type: 'object',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as { armorWeapon?: string }
+            return parent?.armorWeapon === 'weapon' && !value?.weaponType
+              ? 'Weapon Type is required.'
+              : true;
+        }),
       options: {
         collapsible: true,
         collapsed: false,
@@ -136,6 +143,13 @@ export const equipment = defineType({
       title: 'Armor Attributes',
       description: 'Armor specific attributes',
       type: 'object',
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as { armorWeapon?: string }
+            return parent?.armorWeapon === 'armor' && !value?.armorType
+              ? 'Armor Type is required.'
+              : true;
+        }),
       options: {
         collapsible: true,
         collapsed: false,

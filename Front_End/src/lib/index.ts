@@ -7,7 +7,7 @@ import type { Book } from './types/book';
 import type { Mob } from './types/mob';
 import type { Area } from './types/area';
 import type { Accessory } from './types/accessory';
-import type { Armor, PickedArmor, GroupedEquipment, Weapon, PickedWeapon } from './types/equipment';
+import type { Armor, GroupedEquipment, Weapon } from './types/equipment';
 import type { WeaponType } from './types/weaponType';
 import type { Guide } from './types/guide';
 import type { SkillLevel } from './types/skillLevels';
@@ -24,11 +24,9 @@ export type {
   Area,
   Accessory,
   Armor,
-  PickedArmor,
   GroupedEquipment,
   Weapon,
   WeaponType,
-  PickedWeapon,
   Guide,
   SkillLevel,
   SanityDocumentProps

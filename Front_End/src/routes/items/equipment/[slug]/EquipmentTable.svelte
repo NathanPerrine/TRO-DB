@@ -1,14 +1,18 @@
 <script lang="ts">
-  import type { GroupedEquipment } from '$lib';
+  import type {
+    GroupedArmor,
+    GroupedWeapons,
+    GroupedAccessories
+  } from '$lib/schemas/equipment';
   import type { PlayerClassType } from './types';
   import EquipmentTableComponent from './EquipmentTableComponent.svelte';
 
   let {
-    equipmentList = {},
+    equipmentList,
     equipmentType,
     playerClass = null
   }: {
-    equipmentList?: GroupedEquipment;
+    equipmentList: GroupedArmor | GroupedWeapons | GroupedAccessories;
     equipmentType: string;
     playerClass?: PlayerClassType;
   } = $props();
@@ -16,116 +20,119 @@
 
 <section>
   {#if equipmentType.toLowerCase() === 'armor'}
+    {@const armor = equipmentList as GroupedArmor}
     <!-- helms -->
-    {#if equipmentList['helm'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['helm']} header="Helmets" {playerClass} />
+    {#if armor.helm.length > 0}
+      <EquipmentTableComponent equipmentList={armor.helm} header="Helmets" {playerClass} />
     {/if}
     <!-- cowls -->
-    {#if equipmentList['cowl'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['cowl']} header="Cowls" {playerClass} />
+    {#if armor.cowl.length > 0}
+      <EquipmentTableComponent equipmentList={armor.cowl} header="Cowls" {playerClass} />
     {/if}
     <!-- chests -->
-    {#if equipmentList['chest'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['chest']} header="Chests" {playerClass} />
+    {#if armor.chest.length > 0}
+      <EquipmentTableComponent equipmentList={armor.chest} header="Chests" {playerClass} />
     {/if}
     <!-- robes / skirts -->
-    {#if equipmentList['robe'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['robe']} header="Robes" {playerClass} />
+    {#if armor.robe.length > 0}
+      <EquipmentTableComponent equipmentList={armor.robe} header="Robes" {playerClass} />
     {/if}
-    {#if equipmentList['skirt'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['skirt']} header="Skirts" {playerClass} />
+    {#if armor.skirt.length > 0}
+      <EquipmentTableComponent equipmentList={armor.skirt} header="Skirts" {playerClass} />
     {/if}
     <!-- wrists -->
-    {#if equipmentList['wrists'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['wrists']} header="Wrists" {playerClass} />
+    {#if armor.wrists.length > 0}
+      <EquipmentTableComponent equipmentList={armor.wrists} header="Wrists" {playerClass} />
     {/if}
     <!-- legs -->
-    {#if equipmentList['legs'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['legs']} header="Legs" {playerClass} />
+    {#if armor.legs.length > 0}
+      <EquipmentTableComponent equipmentList={armor.legs} header="Legs" {playerClass} />
     {/if}
     <!-- feets -->
-    {#if equipmentList['feet'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['feet']} header="Feet" {playerClass} />
+    {#if armor.feet.length > 0}
+      <EquipmentTableComponent equipmentList={armor.feet} header="Feet" {playerClass} />
     {/if}
     <!-- shields -->
-    {#if equipmentList['shield'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['shield']} header="Shields" {playerClass} />
+    {#if armor.shield.length > 0}
+      <EquipmentTableComponent equipmentList={armor.shield} header="Shields" {playerClass} />
     {/if}
   {/if}
 
   {#if equipmentType.toLowerCase() === 'weapons'}
+    {@const weapons = equipmentList as GroupedWeapons}
     <h1 class="equipment-header">Light Piercing</h1>
-    {#if equipmentList['dagger'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['dagger']} header="Daggers" {playerClass} />
+    {#if weapons.dagger.length > 0}
+      <EquipmentTableComponent equipmentList={weapons.dagger} header="Daggers" {playerClass} />
     {/if}
 
-    {#if equipmentList['throwing dagger'].length > 0}
+    {#if weapons['throwing dagger'].length > 0}
       <EquipmentTableComponent
-        equipmentList={equipmentList['throwing dagger']}
+        equipmentList={weapons['throwing dagger']}
         header="Throwing Daggers"
         {playerClass}
       />
     {/if}
 
     <h1 class="equipment-header">Light One Handed</h1>
-    {#if equipmentList['long sword'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['long sword']} header="Long Swords" {playerClass} />
+    {#if weapons['long sword'].length > 0}
+      <EquipmentTableComponent equipmentList={weapons['long sword']} header="Long Swords" {playerClass} />
     {/if}
 
-    {#if equipmentList['short sword'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['short sword']} header="Short Swords" {playerClass} />
+    {#if weapons['short sword'].length > 0}
+      <EquipmentTableComponent equipmentList={weapons['short sword']} header="Short Swords" {playerClass} />
     {/if}
 
-    {#if equipmentList['fist'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['fist']} header="Fists" {playerClass} />
+    {#if weapons.fist.length > 0}
+      <EquipmentTableComponent equipmentList={weapons.fist} header="Fists" {playerClass} />
     {/if}
 
     <h1 class="equipment-header">Light Two Handed</h1>
-    {#if equipmentList['axe'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['axe']} header="Axes" {playerClass} />
+    {#if weapons.axe.length > 0}
+      <EquipmentTableComponent equipmentList={weapons.axe} header="Axes" {playerClass} />
     {/if}
 
-    {#if equipmentList['two handed sword'].length > 0}
+    {#if weapons['two handed sword'].length > 0}
       <EquipmentTableComponent
-        equipmentList={equipmentList['two handed sword']}
+        equipmentList={weapons['two handed sword']}
         header="Two Handed Swords"
         {playerClass}
       />
     {/if}
 
-    {#if equipmentList['mace'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['mace']} header="Maces" {playerClass} />
+    {#if weapons.mace.length > 0}
+      <EquipmentTableComponent equipmentList={weapons.mace} header="Maces" {playerClass} />
     {/if}
 
     <h1 class="equipment-header">Heavy Two Handed</h1>
-    {#if equipmentList['club'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['club']} header="Clubs" {playerClass} />
+    {#if weapons.club.length > 0}
+      <EquipmentTableComponent equipmentList={weapons.club} header="Clubs" {playerClass} />
     {/if}
 
-    {#if equipmentList['maul'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['maul']} header="Mauls" {playerClass} />
+    {#if weapons.maul.length > 0}
+      <EquipmentTableComponent equipmentList={weapons.maul} header="Mauls" {playerClass} />
     {/if}
   {/if}
 
   {#if equipmentType.toLowerCase() === 'accessories'}
-    {#if equipmentList['amulet'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['amulet']} header="Amulets" {playerClass} />
+    {@const accessories = equipmentList as GroupedAccessories}
+    {#if accessories.amulet.length > 0}
+      <EquipmentTableComponent equipmentList={accessories.amulet} header="Amulets" {playerClass} />
     {/if}
 
-    {#if equipmentList['belt'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['belt']} header="Belts" {playerClass} />
+    {#if accessories.belt.length > 0}
+      <EquipmentTableComponent equipmentList={accessories.belt} header="Belts" {playerClass} />
     {/if}
 
-    {#if equipmentList['baldric'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['baldric']} header="Baldrics" {playerClass} />
+    {#if accessories.baldric.length > 0}
+      <EquipmentTableComponent equipmentList={accessories.baldric} header="Baldrics" {playerClass} />
     {/if}
 
-    {#if equipmentList['backpack'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['backpack']} header="Backpacks" {playerClass} />
-    {/if}
+    <!-- {#if accessories.backpack.length > 0}
+      <EquipmentTableComponent equipmentList={accessories.backpack} header="Backpacks" {playerClass} />
+    {/if} -->
 
-    {#if equipmentList['ring'].length > 0}
-      <EquipmentTableComponent equipmentList={equipmentList['ring']} header="Rings" {playerClass} />
+    {#if accessories.ring.length > 0}
+      <EquipmentTableComponent equipmentList={accessories.ring} header="Rings" {playerClass} />
     {/if}
   {/if}
 </section>

@@ -1,12 +1,30 @@
 import type { PageServerLoad } from './$types';
-import type { Description, GroupedEquipment } from '$lib';
 import { client } from '$lib/utils/sanity/client';
 import { error } from '@sveltejs/kit';
+import {
+  groupedArmorSchema,
+  groupedWeaponsSchema,
+  groupedAccessoriesSchema
+} from '$lib/schemas/equipment';
+import { descriptionSchema } from '$lib/schemas/common';
+import { z } from 'zod';
 
-interface Data {
-  description: Description;
-  equipment: GroupedEquipment;
-}
+
+
+const armorPageDataSchema = z.object({
+  description: descriptionSchema,
+  equipment: groupedArmorSchema
+});
+
+const weaponsPageDataSchema = z.object({
+  description: descriptionSchema,
+  equipment: groupedWeaponsSchema
+});
+
+const accessoriesPageDataSchema = z.object({
+  description: descriptionSchema,
+  equipment: groupedAccessoriesSchema
+});
 
 const VALID_SLUGS = ['weapons', 'armor', 'accessories'] as const;
 type ValidSlug = (typeof VALID_SLUGS)[number];
@@ -47,7 +65,8 @@ export const load = (async ({ params }) => {
   }
 
   if (params.slug === 'armor') {
-    const data = await client.fetch<Data>(
+    // Fetch raw data from Sanity (no type assertion)
+    const rawData = await client.fetch(
       `{
       'description': *[_type == 'description' && name match $slug][0] {
         name,
@@ -77,6 +96,9 @@ export const load = (async ({ params }) => {
       { slug: params.slug }
     );
 
+    // Validate and parse the data - this will throw if validation fails
+    const data = armorPageDataSchema.parse(rawData);
+
     return {
       description: data.description,
       equipment: data.equipment
@@ -84,7 +106,8 @@ export const load = (async ({ params }) => {
   }
 
   if (params.slug === 'weapons') {
-    const data = await client.fetch<Data>(
+    // Fetch raw data from Sanity (no type assertion)
+    const rawData = await client.fetch(
       `{
         'description': *[_type == 'description' && name match $slug][0] {
           name,
@@ -116,6 +139,9 @@ export const load = (async ({ params }) => {
       { slug: params.slug }
     );
 
+    // Validate and parse the data - this will throw if validation fails
+    const data = weaponsPageDataSchema.parse(rawData);
+
     return {
       description: data.description,
       equipment: data.equipment
@@ -123,7 +149,8 @@ export const load = (async ({ params }) => {
   }
 
   if (params.slug === 'accessories') {
-    const data = await client.fetch<Data>(
+    // Fetch raw data from Sanity (no type assertion)
+    const rawData = await client.fetch(
       `{
         'description': *[_type == 'description' && name match $slug][0]
         {
@@ -143,6 +170,9 @@ export const load = (async ({ params }) => {
       }`,
       { slug: params.slug }
     );
+
+    // Validate and parse the data - this will throw if validation fails
+    const data = accessoriesPageDataSchema.parse(rawData);
 
     return {
       description: data.description,
