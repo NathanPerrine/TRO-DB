@@ -180,6 +180,11 @@
       background-color 0.2s ease;
     text-decoration: none;
     min-height: 180px;
+    text-align: center;
+
+    @include mobile {
+      text-align: left;
+    }
 
     &:hover {
       transform: translateY(-2px);
@@ -188,10 +193,15 @@
 
     .card-header {
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.75rem;
       margin-bottom: 1rem;
-      min-height: 48px;
+
+      @include mobile {
+        flex-direction: row;
+        gap: 0.5rem;
+      }
 
       .icon {
         font-size: 1.5rem;
