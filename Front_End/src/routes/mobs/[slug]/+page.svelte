@@ -1,16 +1,15 @@
 <script lang="ts">
   import Notes from '$lib/components/Notes/Notes.svelte';
   import type { PageData } from './$types';
-
-  export let data: PageData;
+  let { data }: { data: PageData } = $props();
 </script>
 
 <main>
   <header>
-    <h1>{data.mob.name}</h1>
+    <h1>{data.name}</h1>
     <p>
-      {#if data.mob.description}
-        {data.mob.description}
+      {#if data.description}
+        {data.description}
       {:else}
         Coming soon...
       {/if}
@@ -20,19 +19,19 @@
   <section>
     <h2>Level & HP Range</h2>
     <ul class="ul-sword">
-      <li>Level: {data.mob.levelRange?.min} - {data.mob.levelRange?.max}</li>
-      <li>HP: {data.mob.hpRange?.min} - {data.mob.hpRange?.max}</li>
+      <li>Level: {data.levelRange?.min} - {data.levelRange?.max}</li>
+      <li>HP: {data.hpRange?.min} - {data.hpRange?.max}</li>
     </ul>
 
     <h2>Alignment</h2>
     <ul class="ul-diamond">
-      <li>{data.mob.alignment}</li>
+      <li>{data.alignment}</li>
     </ul>
 
     <h2>Dungeon Boss</h2>
     <ul class="ul-none">
       <li>
-        {#if data.mob.boss}
+        {#if data.boss}
           <span class="check">&#10003</span>
         {:else}
           <span class="cross">&#10007</span>
@@ -42,35 +41,35 @@
 
     <h2>Melee Attributes</h2>
     <ul class="ul-diamond">
-      <li>Melee Defense: {data.mob.meleeDefense?.min} - {data.mob.meleeDefense?.max}</li>
-      <li>Melee Damage Modifier: {data.mob.meleeAttributes?.mdm}</li>
-      <li>Good MDM: {data.mob.meleeAttributes?.goodMDM}</li>
-      <li>Evil MDM: {data.mob.meleeAttributes?.evilMDM}</li>
-      <li>Melee Phase: {data.mob.meleeAttributes?.meleePhase}</li>
+      <li>Melee Defense: {data.meleeDefense?.min} - {data.meleeDefense?.max}</li>
+      <li>Melee Damage Modifier: {data.meleeAttributes?.mdm}</li>
+      <li>Good MDM: {data.meleeAttributes?.goodMDM}</li>
+      <li>Evil MDM: {data.meleeAttributes?.evilMDM}</li>
+      <li>Melee Phase: {data.meleeAttributes?.meleePhase}</li>
     </ul>
 
     <h2>Spell Resistances</h2>
     <ul class="ul-diamond">
-      <li>Sorcery: {data.mob.spellResistances.sorcery}</li>
-      <li>Elementalism: {data.mob.spellResistances.elementalism}</li>
-      <li>Mysticism: {data.mob.spellResistances.mysticism}</li>
-      <li>Thaumaturgy: {data.mob.spellResistances.thaumaturgy}</li>
-      <li>Necromancy: {data.mob.spellResistances.necromancy}</li>
+      <li>Sorcery: {data.spellResistances.sorcery}</li>
+      <li>Elementalism: {data.spellResistances.elementalism}</li>
+      <li>Mysticism: {data.spellResistances.mysticism}</li>
+      <li>Thaumaturgy: {data.spellResistances.thaumaturgy}</li>
+      <li>Necromancy: {data.spellResistances.necromancy}</li>
     </ul>
 
     <h2>Spell Damage Modifiers</h2>
     <ul class="ul-diamond">
-      <li>Sorcery: {data.mob.spellDamageModifiers.sorcery}</li>
-      <li>Elementalism: {data.mob.spellDamageModifiers.elementalism}</li>
-      <li>Mysticism: {data.mob.spellDamageModifiers.mysticism}</li>
-      <li>Thaumaturgy: {data.mob.spellDamageModifiers.thaumaturgy}</li>
-      <li>Necromancy: {data.mob.spellDamageModifiers.necromancy}</li>
+      <li>Sorcery: {data.spellDamageModifiers.sorcery}</li>
+      <li>Elementalism: {data.spellDamageModifiers.elementalism}</li>
+      <li>Mysticism: {data.spellDamageModifiers.mysticism}</li>
+      <li>Thaumaturgy: {data.spellDamageModifiers.thaumaturgy}</li>
+      <li>Necromancy: {data.spellDamageModifiers.necromancy}</li>
     </ul>
 
     <h2>Known Spells</h2>
-    {#if data.mob.knownSpells}
+    {#if data.knownSpells}
       <ul class="ul-diamond">
-        {#each data.mob.knownSpells as spell}
+        {#each data.knownSpells as spell}
           <li><a href={`/magic/${spell.spellSchool}/${spell.slug.current}`}>{spell.title}</a></li>
         {/each}
       </ul>
@@ -79,9 +78,9 @@
     {/if}
 
     <h2>Inhabited Areas</h2>
-    {#if data.mob.inhabitedAreas}
+    {#if data.inhabitedAreas}
       <ul class="ul-diamond">
-        {#each data.mob.inhabitedAreas as area}
+        {#each data.inhabitedAreas as area}
           <li><a href="/areas/{area.areaType}/{area.slug.current}">{area.name}</a></li>
         {/each}
       </ul>
@@ -90,9 +89,9 @@
     {/if}
 
     <h2>Emotes</h2>
-    {#if data.mob.emotes}
+    {#if data.emotes}
       <ul class="ul-diamond">
-        {#each data.mob.emotes as emote}
+        {#each data.emotes as emote}
           <li>{emote}</li>
         {/each}
       </ul>
@@ -100,6 +99,6 @@
       <p>This mob performs no emotes.</p>
     {/if}
 
-    <Notes notes={data.mob.notes} />
+    <Notes notes={data.notes} />
   </section>
 </main>

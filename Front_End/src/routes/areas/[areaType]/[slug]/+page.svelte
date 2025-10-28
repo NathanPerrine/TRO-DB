@@ -30,9 +30,9 @@
       {/if}
     </ul>
 
-    {#if data.area.areaType === 'dungeon'}
+    {#if data.area.areaType === 'dungeon' && data.area.walkthrough}
       <h2>Walkthrough</h2>
-      <PortableText value={data.area.walkthrough} components={{}} />
+      <PortableText value={data.area.walkthrough as any} components={{}} />
     {/if}
 
     <Notes notes={data.area.notes} />
@@ -83,9 +83,9 @@
                         </div>
                       </td>
                       <td>{armor.levelRequirement}</td>
-                      <td class="capitalize">{armor.armorAttributes.armorType}</td>
-                      <td class="capitalize">{armor.armorAttributes.material || '-'}</td>
-                      <td>{armor.armorAttributes.armorRating} AC</td>
+                      <td class="capitalize">{armor.armorAttributes?.armorType ?? '-'}</td>
+                      <td class="capitalize">{armor.armorAttributes?.material ?? '-'}</td>
+                      <td>{armor.armorAttributes?.armorRating ?? '-'} AC</td>
                       <td>
                         {#if armor.attributes}
                           <ul class="attribute-list">
@@ -134,9 +134,9 @@
                         </div>
                       </td>
                       <td>{weapon.levelRequirement}</td>
-                      <td class="capitalize">{weapon.weaponAttributes.weaponType?.name}</td>
+                      <td class="capitalize">{weapon.weaponAttributes?.weaponType?.name ?? '-'}</td>
                       <td>
-                        {weapon.weaponAttributes.damage?.min}-{weapon.weaponAttributes.damage?.max}
+                        {weapon.weaponAttributes?.damage?.min ?? '-'}-{weapon.weaponAttributes?.damage?.max ?? '-'}
                       </td>
                       <td>
                         {#if weapon.attributes}
@@ -223,11 +223,13 @@
     <ul class="ul-diamond">
       {#if data.area.connectedAreas}
         {#each data.area.connectedAreas as connectedArea}
-          <li>
-            <a href="/areas/{connectedArea.areaType}/{connectedArea.slug.current}">
-              {connectedArea.name}
-            </a>
-          </li>
+          {#if connectedArea.areaType}
+            <li>
+              <a href="/areas/{connectedArea.areaType}/{connectedArea.slug.current}">
+                {connectedArea.name}
+              </a>
+            </li>
+          {/if}
         {/each}
       {/if}
     </ul>

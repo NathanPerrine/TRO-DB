@@ -3,7 +3,7 @@
   import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
   import { Skull } from 'lucide-svelte';
 
-  export let data: PageData;
+  let { data }: { data: PageData } = $props();
 </script>
 
 <main>

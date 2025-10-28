@@ -1,7 +1,9 @@
 import type { PageServerLoad } from './$types';
 import { client } from '$lib/utils/sanity/client';
-import type { Description, Spell } from '$lib';
 import { error } from '@sveltejs/kit';
+import { z } from 'zod';
+import { descriptionSchema } from '$lib/schemas/common.server';
+import { spellListItemSchema } from '$lib/schemas/spell.server';
 
 const VALID_SLUGS = ['thaumaturgy', 'mysticism', 'elementalism', 'sorcery', 'necromancy'];
 type ValidSlug = (typeof VALID_SLUGS)[number];
@@ -10,19 +12,21 @@ function isValidSlug(slug: string): slug is ValidSlug {
   return VALID_SLUGS.includes(slug as ValidSlug);
 }
 
-interface SpellLevels {
-  familiar: Spell[];
-  proficient: Spell[];
-  expert: Spell[];
-  master: Spell[];
-  grandmaster: Spell[];
-  'supreme-master': Spell[];
-}
 
-interface Data {
-  description: Description;
-  spells: SpellLevels;
-}
+
+const spellLevelsSchema = z.object({
+  familiar: z.array(spellListItemSchema),
+  proficient: z.array(spellListItemSchema),
+  expert: z.array(spellListItemSchema),
+  master: z.array(spellListItemSchema),
+  grandmaster: z.array(spellListItemSchema),
+  'supreme-master': z.array(spellListItemSchema),
+});
+
+const spellPageDataSchema = z.object({
+  description: descriptionSchema,
+  spells: spellLevelsSchema
+});
 
 const spellProjection = `{
   title,
@@ -39,7 +43,7 @@ export const load = (async ({ params }) => {
     throw error(404, 'Page not Found.');
   }
 
-  const data = await client.fetch<Data>(
+  const rawData = await client.fetch(
     `{
       'description': *[_type == 'description' && name match $school][0]{
         name,
@@ -62,6 +66,8 @@ export const load = (async ({ params }) => {
     }`,
     { school: params.school }
   );
+
+  const data = spellPageDataSchema.parse(rawData);
 
   return {
     description: data.description,

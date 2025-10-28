@@ -129,7 +129,12 @@ export const classStartingSkills: ClassSkills = {
       { skill: 'Healing', rank: 'Familiar', rankValue: 1 },
       { skill: 'Acrobatics', rank: 'Familiar', rankValue: 1 },
       { skill: 'Shield Usage', rank: 'Familiar', rankValue: 1 }
-    ]
+    ],
+    magic: {
+      good: [],
+      neutral: [],
+      evil: []
+    }
   },
   wizard: {
     skills: [
@@ -163,7 +168,12 @@ export const classStartingSkills: ClassSkills = {
       { skill: 'Acrobatics', rank: 'Proficient', rankValue: 2 },
       { skill: 'Disarm Traps', rank: 'Familiar', rankValue: 1 },
       { skill: 'Critical Strikes', rank: 'Proficient', rankValue: 2 }
-    ]
+    ],
+    magic: {
+      good: [],
+      neutral: [],
+      evil: []
+    }
   }
 };
 

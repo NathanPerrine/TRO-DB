@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PortableText } from '@portabletext/svelte';
 	import UnorderedList from '$lib/utils/sanity/UnorderedList.svelte';
-  export let notes: [] | undefined
+  export let notes: any[] | undefined | null;
 
   const bulletContext = 'note'
 </script>

@@ -1,11 +1,11 @@
-import type { Item } from '$lib';
 import { client } from '$lib/utils/sanity/client';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { itemDetailSchema } from '$lib/schemas/item.server';
 
 export const load = (async ({ params }) => {
-  const data = await client.fetch<Item[]>(
-    `*[_type == "item" && slug.current == $slug] {
+  const rawData = await client.fetch(
+    `*[_type == "item" && slug.current == $slug][0] {
     name,
     slug,
     type,
@@ -21,11 +21,13 @@ export const load = (async ({ params }) => {
     { slug: params.slug }
   );
 
-  if (!data[0]) {
+  if (!rawData) {
     error(404, {
       message: 'Sorry, that page has not been found. Please try again later.'
     });
   }
 
-  return { item: data[0] };
+  const data = itemDetailSchema.parse(rawData);
+
+  return { item: data };
 }) satisfies PageServerLoad;

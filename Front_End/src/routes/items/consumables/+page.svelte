@@ -12,7 +12,7 @@
     {
       title: 'Orbs',
       description:
-        'Magical spheres that store a single spell, allowing multiple uses before depletion. Rechargeable but shatter when fully drained.',
+        'Magical spheres that store copies of a single spell, allowing multiple uses before depletion. Rechargeable but shatter when fully drained.',
       href: '/items/consumables/orbs',
       icon: Globe
     },

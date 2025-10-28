@@ -2,17 +2,19 @@
   import type { PageData } from './$types';
   import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
 
-  export let data: PageData;
+  let { data }: { data: PageData } = $props();
 
   // Create ordered map of spells
-  $: spellsMap = new Map([
-    ['familiar', data.spells.familiar],
-    ['proficient', data.spells.proficient],
-    ['expert', data.spells.expert],
-    ['master', data.spells.master],
-    ['grandmaster', data.spells.grandmaster],
-    ['supreme-master', data.spells['supreme-master']]
-  ]);
+  const spellsMap = $derived(
+    new Map([
+      ['familiar', data.spells.familiar],
+      ['proficient', data.spells.proficient],
+      ['expert', data.spells.expert],
+      ['master', data.spells.master],
+      ['grandmaster', data.spells.grandmaster],
+      ['supreme-master', data.spells['supreme-master']]
+    ])
+  );
 </script>
 
 <main>

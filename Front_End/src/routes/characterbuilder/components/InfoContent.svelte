@@ -11,12 +11,19 @@
   import { getScoreDescription } from '../lib/utils';
   import TextWithEmphasis from '$lib/components/Text/TextWithEmphasis.svelte';
 
-  export let stat: string;
-  export let character: Character;
+  let { stat, character }: { stat: string; character: Character } = $props();
 
   function getBaseStat(stat: Stats) {
     return raceClassStats[character.background.race][character.background.class][stat];
   }
+
+  // Get magic skills for the current class
+  const magicSkills = $derived(classStartingSkills[character.background.class].magic);
+
+  // Check if the class has any magic skills (for display purposes)
+  const hasMagicSkills = $derived(
+    magicSkills.good.length > 0 || magicSkills.neutral.length > 0 || magicSkills.evil.length > 0
+  );
 </script>
 
 <section>
@@ -91,26 +98,26 @@
         {/each}
       </ul>
     </div>
-    {#if character.background.class === 'adventurer' || character.background.class === 'wizard'}
+    {#if hasMagicSkills}
       <div class="info-content">
         <p>
           <span class="capitalize">{character.background.class}s</span> additionally start with the
           following magic skills, depending on their alignment. <br />
           <span class="text-emphasis">Good</span>:
         </p>
-        {#each classStartingSkills[character.background.class].magic.good as magicSkill}
+        {#each magicSkills.good as magicSkill}
           <ul class="ul-diamond">
             <li>{magicSkill.skill} : {magicSkill.rankValue}</li>
           </ul>
         {/each}
         <span class="text-emphasis">Neutral</span>:
-        {#each classStartingSkills[character.background.class].magic.neutral as magicSkill}
+        {#each magicSkills.neutral as magicSkill}
           <ul class="ul-diamond">
             <li>{magicSkill.skill} : {magicSkill.rankValue}</li>
           </ul>
         {/each}
         <span class="text-emphasis">Evil</span>:
-        {#each classStartingSkills[character.background.class].magic.evil as magicSkill}
+        {#each magicSkills.evil as magicSkill}
           <ul class="ul-diamond">
             <li>{magicSkill.skill} : {magicSkill.rankValue}</li>
           </ul>

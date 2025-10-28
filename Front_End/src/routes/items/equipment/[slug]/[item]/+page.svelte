@@ -1,27 +1,20 @@
 <script lang="ts">
-  import type { Accessory, Armor, Weapon } from '$lib';
   import Notes from '$lib/components/Notes/Notes.svelte';
   import type { PageData } from './$types';
-  import type { Equipment } from '$lib/types/equipment';
 
   export let data: PageData;
 
-  function isArmor(equipment: Armor | Equipment | Accessory | undefined): equipment is Armor {
-    if (equipment) {
-      return 'armorWeapon' in equipment && equipment.armorWeapon === 'armor';
-    }
-    return false;
+  // Type guards for discriminated union
+  function isArmor(equipment: PageData['equipment']) {
+    return equipment && 'armorWeapon' in equipment && equipment.armorWeapon === 'armor';
   }
 
-  function isWeapon(equipment: Armor | Equipment | Accessory | undefined): equipment is Weapon {
-    if (equipment) {
-      return 'armorWeapon' in equipment && equipment.armorWeapon === 'weapon';
-    }
-    return false;
+  function isWeapon(equipment: PageData['equipment']) {
+    return equipment && 'armorWeapon' in equipment && equipment.armorWeapon === 'weapon';
   }
 
-  function isAccessory(equipment: Armor | Equipment | Accessory | undefined): equipment is Accessory {
-    return equipment ? !('armorWeapon' in equipment) : false;
+  function isAccessory(equipment: PageData['equipment']) {
+    return equipment && 'slot' in equipment;
   }
 </script>
 
@@ -50,39 +43,43 @@
       {/if}
     </ul>
 
-    {#if isArmor(data.equipment)}
+    {#if isArmor(data.equipment) && data.equipment.armorAttributes}
       <h2>Armor Information</h2>
       <ul class="ul-diamond">
-        <li>Slot: {data.equipment.armorAttributes.armorType}</li>
-        <li>Material: {data.equipment.armorAttributes.material}</li>
-        <li>Armor Rating: {data.equipment.armorAttributes.armorRating}</li>
+        <li>Slot: {data.equipment.armorAttributes.armorType ?? 'Unknown'}</li>
+        <li>Material: {data.equipment.armorAttributes.material ?? 'Unknown'}</li>
+        <li>Armor Rating: {data.equipment.armorAttributes.armorRating ?? 'Unknown'}</li>
       </ul>
     {/if}
 
-    {#if isWeapon(data.equipment)}
+    {#if isWeapon(data.equipment) && data.equipment.weaponAttributes}
       <h2>Weapon Information</h2>
       <ul class="ul-sword">
         <li>
           Damage:
           {#if data.equipment.weaponAttributes.damage}
-            {data.equipment.weaponAttributes.damage.min}
+            {data.equipment.weaponAttributes.damage.min ?? '?'}
             -
-            {data.equipment.weaponAttributes.damage.max}
+            {data.equipment.weaponAttributes.damage.max ?? '?'}
+          {:else}
+            Unknown
           {/if}
         </li>
-        <li>Weapon Type: {data.equipment.weaponAttributes.weaponType?.name}</li>
-        <li>Governing Skill: {data.equipment.weaponAttributes.weaponType?.skill}</li>
-        <li>Range: {data.equipment.weaponAttributes.weaponType?.range}</li>
+        <li>Weapon Type: {data.equipment.weaponAttributes.weaponType?.name ?? 'Unknown'}</li>
+        <li>Governing Skill: {data.equipment.weaponAttributes.weaponType?.skill ?? 'Unknown'}</li>
+        <li>Range: {data.equipment.weaponAttributes.weaponType?.range ?? 'Unknown'}</li>
         <li>
           Scaling Attributes:
           {#if data.equipment.weaponAttributes.weaponType?.attributeScaling}
             <ul class="ul-sword">
-              {#each data.equipment.weaponAttributes.weaponType?.attributeScaling as attribute}
+              {#each data.equipment.weaponAttributes.weaponType.attributeScaling as attribute}
                 <li>
                   <span class="capitalize">{attribute.attribute}</span>: {attribute.scalingType}
                 </li>
               {/each}
             </ul>
+          {:else}
+            Unknown
           {/if}
         </li>
       </ul>

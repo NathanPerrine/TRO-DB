@@ -1,36 +1,40 @@
 import type { PageServerLoad } from './$types';
 import { client } from '$lib/utils/sanity/client';
 import { error } from '@sveltejs/kit';
-import type { FullSpell } from '$lib'
+import { spellDetailSchema } from '$lib/schemas/spell.server';
 
 export const load = (async ({ params }) => {
-  const data = await client.fetch<FullSpell[]>(`*[_type == 'spell' && slug.current == '${params.spell}'] {
-    _id,
-    title,
-    spellSchool,
-    level,
-    slug,
-    spellEffect,
-    mpCost,
-    description,
-    spellDelay,
-    duration,
-    chant,
-    extendable,
-    enchantable,
-    dropOnly,
-    notes,
-    "spellbook": *[_type == 'book' && linkedSpell._ref == ^._id][0]{
+  const rawData = await client.fetch(`
+    *[_type == 'spell' && slug.current == $slug][0] {
+      title,
+      spellSchool,
+      level,
       slug,
-      bookType,
-    }
-  }`)
+      spellEffect,
+      mpCost,
+      description,
+      spellDelay,
+      duration,
+      chant,
+      extendable,
+      enchantable,
+      dropOnly,
+      notes,
+      "spellbook": *[_type == 'book' && linkedSpell._ref == ^._id][0]{
+        slug,
+        bookType,
+      }
+    }`,
+    {slug: params.spell}
+  );
 
-    if (!data){
+    if (!rawData){
       error(404, {
         message: "Sorry, that spell has not been found. Please try again later."
       })
     }
 
-    return {spell: data[0]};
+    const data = spellDetailSchema.parse(rawData);
+
+    return {spell: data};
 }) satisfies PageServerLoad;

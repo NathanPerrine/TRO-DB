@@ -1,12 +1,23 @@
 import type { PageServerLoad } from './$types';
-import type { Accessory, Armor, Weapon } from '$lib';
+import { error } from '@sveltejs/kit';
 import { client } from '$lib/utils/sanity/client';
+import {
+  armorDetailSchema,
+  weaponDetailSchema,
+  accessoryDetailSchema
+} from '$lib/schemas/equipment.server';
+import { z } from 'zod';
+
+// Discriminated union for armor/weapon
+const equipmentSchema = z.discriminatedUnion('armorWeapon', [
+  armorDetailSchema,
+  weaponDetailSchema
+]);
 
 export const load = (async ({ params }) => {
   if (params.slug === 'weapon' || params.slug === 'armor') {
-    const equipment = await client.fetch<Armor | Weapon>(
-      `
-      *[_type == 'equipment' && slug.current == $item][0]{
+    const rawData = await client.fetch(
+      `*[_type == 'equipment' && slug.current == $item][0]{
         name,
         identifiedName,
         slug,
@@ -23,33 +34,31 @@ export const load = (async ({ params }) => {
         dropArea[]->{name, slug, areaType},
         notes,
         armorWeapon == 'armor' => {armorAttributes},
-        armorWeapon == 'weapon' => {
-          weaponAttributes{
-            damage,
-            weaponType->{
-              name,
-              range,
-              attributeScaling,
-              skill
-            }
+        armorWeapon == 'weapon' => weaponAttributes{
+          damage,
+          weaponType->{
+            name,
+            range,
+            attributeScaling,
+            skill
           }
         }
       }`,
       { item: params.item }
     );
 
-    if (equipment.armorWeapon === 'armor') {
-      return { equipment: equipment as Armor };
+    if (!rawData) {
+      throw error(404, 'Equipment not found');
     }
-    if (equipment.armorWeapon === 'weapon') {
-      return { equipment: equipment as Weapon };
-    }
+
+    // Zod automatically validates and narrows the type
+    const equipment = equipmentSchema.parse(rawData);
+    return { equipment };
   }
 
   if (params.slug === 'accessories') {
-    const equipment = await client.fetch<Accessory>(
-      `
-      *[_type == 'accessory' && slug.current == $item][0]{
+    const rawData = await client.fetch(
+      `*[_type == 'accessory' && slug.current == $item][0]{
         name,
         identifiedName,
         slug,
@@ -69,6 +78,13 @@ export const load = (async ({ params }) => {
       { item: params.item }
     );
 
-    return { equipment: equipment };
+    if (!rawData) {
+      throw error(404, 'Accessory not found');
+    }
+
+    const equipment = accessoryDetailSchema.parse(rawData);
+    return { equipment };
   }
+
+  throw error(404, 'Invalid equipment type');
 }) satisfies PageServerLoad;

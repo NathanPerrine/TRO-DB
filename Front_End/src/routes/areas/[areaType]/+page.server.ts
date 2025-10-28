@@ -1,7 +1,9 @@
-import type { Description, Area } from '$lib';
 import { client } from '$lib/utils/sanity/client';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
+import { z } from 'zod';
+import { descriptionSchema } from '$lib/schemas/common.server';
+import { areaListItemSchema } from '$lib/schemas/area.server';
 
 const VALID_SLUGS = ['towns', 'zones', 'dungeons'];
 type ValidSlug = (typeof VALID_SLUGS)[number];
@@ -10,17 +12,17 @@ function isValidSlug(slug: string): slug is ValidSlug {
   return VALID_SLUGS.includes(slug as ValidSlug);
 }
 
-interface Data {
-  description: Description;
-  areas: Area[];
-}
+const areaPageSchema = z.object({
+  description: descriptionSchema,
+  areas: areaListItemSchema.array()
+});
 
 export const load = (async ({ params }) => {
   if (!isValidSlug(params.areaType)) {
     throw error(404, 'Page not Found.');
   }
 
-  const data = await client.fetch<Data>(
+  const rawData = await client.fetch(
     `{
       'description': *[_type == 'description' && name match $areaType][0]{
         name,
@@ -50,6 +52,8 @@ export const load = (async ({ params }) => {
     }`,
     { areaType: params.areaType }
   );
+
+  const data = areaPageSchema.parse(rawData);
 
   return {
     description: data.description,

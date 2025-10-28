@@ -1,12 +1,12 @@
 import type { PageServerLoad } from './$types';
-import { client } from '$lib/utils/sanity/client'
-import type { Book } from '$lib';
-
+import { error } from '@sveltejs/kit';
+import { client } from '$lib/utils/sanity/client';
+import { bookSchema } from '$lib/schemas/book.server';
 
 export const load = (async ({ params }) => {
-
   if (params.bookType == 'spellbook') {
-    const data = await client.fetch<Book[]>(`*[_type == 'book' && slug.current == '${params.slug}']{
+    const rawData = await client.fetch(
+      `*[_type == 'book' && slug.current == $slug]{
       ...,
       linkedSpell->{
         title,
@@ -14,12 +14,31 @@ export const load = (async ({ params }) => {
         slug,
         dropOnly,
       }
-    }`)
-    return {book: data[0]};
+    }`,
+      { slug: params.slug }
+    );
+
+    if (!rawData || rawData.length === 0) {
+      throw error(404, 'Book not found');
+    }
+
+    const book = bookSchema.parse(rawData[0]);
+    return { book };
   } else if (params.bookType == 'skillbook') {
-    const data = await client.fetch<Book[]>(`*[_type == 'book' && slug.current == '${params.slug}']{
+    const rawData = await client.fetch(
+      `*[_type == 'book' && slug.current == $slug]{
       ...,
-    }`)
-    return {book: data[0]};
+    }`,
+      { slug: params.slug }
+    );
+
+    if (!rawData || rawData.length === 0) {
+      throw error(404, 'Book not found');
+    }
+
+    const book = bookSchema.parse(rawData[0]);
+    return { book };
   }
+
+  throw error(404, 'Invalid book type');
 }) satisfies PageServerLoad;

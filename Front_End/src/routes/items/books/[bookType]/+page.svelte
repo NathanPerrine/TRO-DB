@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { PageData } from './$types';
   import PageHeader from '$lib/components/PageHeader/PageHeader.svelte';
-  import type { SkillLevel } from '$lib';
-  export let data: PageData;
 
-  let expandedSections: { [key: string]: boolean } = {};
+  let { data }: { data: PageData } = $props();
+
+  let expandedSections = $state<{ [key: string]: boolean }>({});
 
   function toggleSection(skill: string) {
     expandedSections[skill] = !expandedSections[skill];
@@ -20,7 +20,7 @@
         <button
           class="header-button"
           class:expanded={expandedSections[skill]}
-          on:click={() => toggleSection(skill)}
+          onclick={() => toggleSection(skill)}
           aria-expanded={expandedSections[skill]}
         >
           <span>{skill}</span>
@@ -29,7 +29,7 @@
       </h2>
 
       {#if expandedSections[skill]}
-        {#each Object.keys(data.books[skill]) as skillLevel}
+        {#each Object.entries(data.books[skill]) as [skillLevel, books]}
           <h3>{skillLevel.charAt(0).toUpperCase() + skillLevel.slice(1)}</h3>
           <div class="table-container">
             <table>
@@ -41,7 +41,7 @@
                 </tr>
               </thead>
               <tbody>
-                {#each data.books[skill][skillLevel as SkillLevel] as book}
+                {#each books as book}
                   <tr>
                     <td><a href="{book.bookType}/{book.slug.current}">{book.name}</a></td>
                     <td class="wrap">{book.description}</td>
@@ -65,9 +65,9 @@
   {:else if data.description.name === 'Skillbooks'}
     {#each Object.keys(data.books) as skill}
       <h2>{skill}</h2>
-      {#each Object.keys(data.books[skill]) as skillLevel}
+      {#each Object.entries(data.books[skill]) as [skillLevel, books]}
         <ul>
-          {#each data.books[skill][skillLevel as SkillLevel] as book}
+          {#each books as book}
             <li><a href="{book.bookType}/{book.slug.current}">{book.name}</a></li>
           {/each}
         </ul>

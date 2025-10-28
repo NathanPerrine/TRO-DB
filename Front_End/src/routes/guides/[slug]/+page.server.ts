@@ -1,9 +1,9 @@
-import type { Guide } from '$lib';
 import { client } from '$lib/utils/sanity/client';
 import { error } from '@sveltejs/kit';
+import { guidePageDataSchema } from '$lib/schemas/guide.server.js';
 
 export const load = async ({ params }) => {
-  const guide = await client.fetch<Guide>(
+  const rawData = await client.fetch(
     `*[_type == "guide" && slug.current == $slug][0]{
       title,
       author,
@@ -22,9 +22,11 @@ export const load = async ({ params }) => {
     { slug: params.slug }
   );
 
-  if (!guide) {
+  if (!rawData) {
     throw error(404, 'Guide not found :(');
   }
+
+  const guide = guidePageDataSchema.parse(rawData);
 
   return guide;
 };

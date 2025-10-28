@@ -174,7 +174,7 @@ export function characterToUrlString(character: Character): string {
       character.background.race.charAt(0),
       character.background.class.slice(0, 2),
       character.background.alignment.charAt(0),
-      character.background.pvp === 'on' ? 'n' : 'f'
+      character.background.pvp === 'on' ? 'o' : 'f'
     ].join(',');
 
     // Version 1 format: "1|attributes|skills|background"

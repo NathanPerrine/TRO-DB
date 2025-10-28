@@ -3,7 +3,7 @@
     GroupedArmor,
     GroupedWeapons,
     GroupedAccessories
-  } from '$lib/schemas/equipment';
+  } from '$lib/schemas/equipment.server';
   import type { PlayerClassType } from './types';
   import EquipmentTableComponent from './EquipmentTableComponent.svelte';
 

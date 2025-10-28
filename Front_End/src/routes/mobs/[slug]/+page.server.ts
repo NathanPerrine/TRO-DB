@@ -1,10 +1,10 @@
-import type { Mob } from '$lib';
 import { client } from '$lib/utils/sanity/client';
 import type { PageServerLoad } from './$types';
+import { mobDetailSchema } from '$lib/schemas/mob.server';
 
 export const load = (async ({ params }) => {
-  const mob = await client.fetch<Mob[]>(`
-    *[_type == 'mob' && slug.current == '${params.slug}'] {
+  const rawData = await client.fetch(`
+    *[_type == 'mob' && slug.current == '${params.slug}'][0] {
       name,
       slug,
       description,
@@ -29,5 +29,7 @@ export const load = (async ({ params }) => {
       notes,
     }
   `)
-    return {mob: mob[0]};
+
+  const mob = mobDetailSchema.parse(rawData);
+    return mob;
 }) satisfies PageServerLoad;

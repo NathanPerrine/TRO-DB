@@ -1,6 +1,8 @@
-import type { Description, Guide } from '$lib';
+import { descriptionSchema } from '$lib/schemas/common.server';
+import { guideListItemSchema } from '$lib/schemas/guide.server';
 import { client } from '$lib/utils/sanity/client';
 import type { PageServerLoad } from './$types';
+import { z } from 'zod';
 
 const guideProjection = `{
   title,
@@ -11,23 +13,19 @@ const guideProjection = `{
   _updatedAt,
 }`;
 
-type GuideProjection = Pick<Guide, 'title' | 'slug' | 'summary' | '_createdAt' | '_updatedAt'>;
-
-interface Guides {
-  newPlayer: GuideProjection[];
-  leveling: GuideProjection[];
-  moneyMaking: GuideProjection[];
-  crafting: GuideProjection[];
-  other: GuideProjection[];
-}
-
-interface Data {
-  description: Description;
-  guides: Guides;
-}
+const guidePageDataSchema = z.object({
+  description: descriptionSchema,
+  guides: z.object({
+    'New Player': z.array(guideListItemSchema).nullish().default([]),
+    'Leveling': z.array(guideListItemSchema).nullish().default([]),
+    'Money Making': z.array(guideListItemSchema).nullish().default([]),
+    'Crafting': z.array(guideListItemSchema).nullish().default([]),
+    'Other': z.array(guideListItemSchema).nullish().default([]),
+  })
+});
 
 export const load = (async () => {
-  const data = await client.fetch<Data>(
+  const rawData = await client.fetch(
     `{
     'description': *[_type == 'description' && name match 'guides'][0] {
         name,
@@ -44,6 +42,8 @@ export const load = (async () => {
     }
   }`
   );
+
+  const data = guidePageDataSchema.parse(rawData);
 
   return {
     description: data.description,

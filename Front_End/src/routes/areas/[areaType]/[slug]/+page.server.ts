@@ -1,6 +1,7 @@
-import type { Area } from '$lib';
+import { error } from '@sveltejs/kit';
 import { client } from '$lib/utils/sanity/client';
 import type { PageServerLoad } from './$types';
+import { areaDetailSchema } from '$lib/schemas/area.server';
 
 const mobProjection = `{
   name,
@@ -53,32 +54,40 @@ const accessoryProjection = `{
 }`
 
 export const load = (async ({ params }) => {
-  const area = await client.fetch<Area>(`
-    *[_type == "area" && slug.current == "${params.slug}"][0]{
-    name,
-    slug,
-    description,
-    map,
-    directions[]{
-      town->{name, slug},
-      directions,
-    },
-    walkthrough,
-    notes,
-    "drops": {
-      "books": *[_type == 'book' && references(^._id)] | order(name) ${bookProjection},
-      "armors": *[_type == 'equipment' && armorWeapon == 'armor' && references(^._id)] | order(identifiedName) ${armorProjection},
-      "weapons": *[_type == 'equipment' && armorWeapon == 'weapon' && references(^._id)] | order(identifiedName) ${weaponProjection},
-      "accessories": *[_type == 'accessory' && references(^._id)] ${accessoryProjection},
-    },
-    'mobs': *[_type == 'mob' && references(^._id)] | order(boss desc, name) ${mobProjection},
-    connectedAreas[] -> {
+  const rawData = await client.fetch(
+    `*[_type == "area" && slug.current == $slug][0]{
       name,
       slug,
       areaType,
-    },
-  }
-  `);
+      description,
+      map,
+      directions[]{
+        town->{name, slug},
+        directions,
+      },
+      walkthrough,
+      notes,
+      "drops": {
+        "books": *[_type == 'book' && references(^._id)] | order(name) ${bookProjection},
+        "armors": *[_type == 'equipment' && armorWeapon == 'armor' && references(^._id)] | order(identifiedName) ${armorProjection},
+        "weapons": *[_type == 'equipment' && armorWeapon == 'weapon' && references(^._id)] | order(identifiedName) ${weaponProjection},
+        "accessories": *[_type == 'accessory' && references(^._id)] ${accessoryProjection},
+      },
+      'mobs': *[_type == 'mob' && references(^._id)] | order(boss desc, name) ${mobProjection},
+      connectedAreas[] -> {
+        name,
+        slug,
+        areaType,
+      },
+    }`,
+    { slug: params.slug }
+  );
 
-  return { area: area };
+  if (!rawData) {
+    throw error(404, 'Area not found');
+  }
+
+  const area = areaDetailSchema.parse(rawData);
+
+  return { area };
 }) satisfies PageServerLoad;

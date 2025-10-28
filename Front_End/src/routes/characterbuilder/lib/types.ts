@@ -111,6 +111,7 @@ export type ClassSkills = {
   };
   warrior: {
     skills: StartingSkill[];
+    magic: MagicStartingSkill;
   };
   wizard: {
     skills: StartingSkill[];
@@ -118,6 +119,7 @@ export type ClassSkills = {
   };
   thief: {
     skills: StartingSkill[];
+    magic: MagicStartingSkill;
   };
 };
 

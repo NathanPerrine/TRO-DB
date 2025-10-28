@@ -1,4 +1,4 @@
-import type { ArmorListItem, WeaponListItem, AccessoryListItem } from '$lib/schemas/equipment';
+import type { ArmorListItem, WeaponListItem, AccessoryListItem } from '$lib/schemas/equipment.server';
 import type { PlayerClassType } from './types';
 
 // Union type for all equipment list items

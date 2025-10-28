@@ -1,14 +1,17 @@
-import type { Description, Mob } from '$lib';
 import { client } from '$lib/utils/sanity/client';
 import type { PageServerLoad } from './$types';
+import { z } from 'zod';
+import { descriptionSchema } from '$lib/schemas/common.server';
+import { mobAreaListItemSchema } from '$lib/schemas/mob.server';
 
-interface Data {
-  description: Description;
-  mobs: Pick<Mob, 'name' | 'slug' | 'boss' | 'levelRange' | 'hpRange' | 'inhabitedAreas'>[];
-}
+const mobPageDataSchema = z.object({
+  description: descriptionSchema,
+  mobs: z.array(mobAreaListItemSchema)
+});
 
 export const load = (async () => {
-  const data = await client.fetch<Data>(
+  // Retrieve mob list and description content from Sanity
+  const rawData = await client.fetch(
     `{
       'description': *[_type == 'description' && name match 'mobs'][0] {
       name,
@@ -31,8 +34,8 @@ export const load = (async () => {
     }`
   );
 
-  return {
-    description: data.description,
-    mobs: data.mobs
-  };
+  // Validate and parse the fetched data
+  const data = mobPageDataSchema.parse(rawData);
+
+  return data;
 }) satisfies PageServerLoad;

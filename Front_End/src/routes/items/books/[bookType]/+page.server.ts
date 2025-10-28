@@ -1,26 +1,18 @@
 import type { PageServerLoad } from './$types';
-import type { Book, Description } from '$lib';
 import { client } from '$lib/utils/sanity/client';
+import { bookSchema } from '$lib/schemas/book.server';
+import { descriptionSchema, type SkillLevel } from '$lib/schemas/common.server';
+import { z } from 'zod';
 
-const skillLevels = [
-  'familiar',
-  'proficient',
-  'expert',
-  'master',
-  'grandmaster',
-  'supreme-master'
-] as const;
+type SkillLevels = Record<SkillLevel, z.infer<typeof bookSchema>[]>;
 
-type SkillLevel = (typeof skillLevels)[number];
-type SkillLevels = Record<SkillLevel, Book[]>;
-
-interface Data {
-  description: Description;
-  books: Book[];
-}
+const booksPageDataSchema = z.object({
+  description: descriptionSchema,
+  books: z.array(bookSchema)
+});
 
 export const load = (async ({ params }) => {
-  const data = await client.fetch<Data>(
+  const rawData = await client.fetch(
     `
     {
       "description": *[_type == 'description' && name match $bookType + "*"][0] {
@@ -35,27 +27,40 @@ export const load = (async ({ params }) => {
         skillLevel,
         description,
         linkedSpell->{
+          title,
+          slug,
+          spellSchool,
           dropOnly
         }
-      } | order(skill asc, name asc)
+      } | order(skill asc, skillLevel asc, name asc)
     }
   `,
     { bookType: params.bookType }
   );
 
-  const organizedBooks = data.books.reduce<Record<string, SkillLevels>>((acc, book) => {
-    const { skill, skillLevel } = book;
-    acc[skill] ||= skillLevels.reduce<SkillLevels>((levels, level) => {
-      levels[level] = [];
-      return levels;
-    }, {} as SkillLevels);
+  const data = booksPageDataSchema.parse(rawData);
 
-    if (skillLevels.includes(skillLevel as SkillLevel)) {
-      acc[skill][skillLevel as SkillLevel].push(book);
+  // Group books by skill, then by skill level
+  const organizedBooks: Record<string, SkillLevels> = {};
+
+  for (const book of data.books) {
+    const { skill, skillLevel } = book;
+
+    // Initialize skill if not exists
+    if (!organizedBooks[skill]) {
+      organizedBooks[skill] = {
+        familiar: [],
+        proficient: [],
+        expert: [],
+        master: [],
+        grandmaster: [],
+        'supreme-master': []
+      };
     }
 
-    return acc;
-  }, {});
+    // Add book to its skill level array
+    organizedBooks[skill][skillLevel].push(book);
+  }
 
   return {
     description: data.description,

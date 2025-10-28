@@ -5,8 +5,8 @@ import {
   groupedArmorSchema,
   groupedWeaponsSchema,
   groupedAccessoriesSchema
-} from '$lib/schemas/equipment';
-import { descriptionSchema } from '$lib/schemas/common';
+} from '$lib/schemas/equipment.server';
+import { descriptionSchema } from '$lib/schemas/common.server';
 import { z } from 'zod';
 
 

@@ -2,7 +2,7 @@
 	import Notes from '$lib/components/Notes/Notes.svelte';
   import type { PageData } from './$types';
 
-  export let data: PageData;
+  let { data }: { data: PageData } = $props();
 </script>
 
 <main>

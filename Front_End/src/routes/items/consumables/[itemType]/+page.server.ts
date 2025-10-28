@@ -1,7 +1,9 @@
 import type { PageServerLoad } from './$types';
-import type { Description, Item } from '$lib';
 import { client } from '$lib/utils/sanity/client';
 import { error } from '@sveltejs/kit';
+import { z } from 'zod';
+import { descriptionSchema } from '$lib/schemas/common.server';
+import { itemListItemSchema } from '$lib/schemas/item.server';
 
 const VALID_SLUGS = [
   'junk',
@@ -19,17 +21,17 @@ function isValidSlug(slug: string): slug is ValidSlug {
   return VALID_SLUGS.includes(slug as ValidSlug);
 }
 
-interface Data {
-  description: Description;
-  items: Item[];
-}
+const itemPageDataSchema = {
+  description: descriptionSchema,
+  items: z.array(itemListItemSchema),
+};
 
 export const load = (async ({ params }) => {
   if (!isValidSlug(params.itemType)) {
     throw error(404, 'Page not found');
   }
 
-  const data = await client.fetch<Data>(
+  const rawData = await client.fetch(
     `{
       'description': *[_type == 'description' && name match $itemType][0]{
         name,
@@ -45,6 +47,8 @@ export const load = (async ({ params }) => {
     }`,
     { itemType: params.itemType }
   );
+
+  const data = z.object(itemPageDataSchema).parse(rawData);
 
   return {
     description: data.description,
