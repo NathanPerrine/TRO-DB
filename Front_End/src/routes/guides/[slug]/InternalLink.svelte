@@ -15,13 +15,16 @@
   let { portableText, children } = $props<{
     portableText: {
       value: {
-        reference: ReferenceData;
+        reference: ReferenceData | null;
       };
     };
     children: Snippet;
   }>();
 
   const reference = portableText.value.reference;
+
+  // Check if reference is null (unpublished document)
+  const isUnpublished = reference === null;
 
   // Helper to pluralize item types for consumables URLs
   function pluralizeItemType(type: string): string {
@@ -98,12 +101,18 @@
     }
   }
 
-  const href = $derived(buildUrl(reference));
+  const href = $derived(reference ? buildUrl(reference) : '#');
 </script>
 
-<a {href} class="internal-link" data-sveltekit-preload-data>
-  {@render children()}
-</a>
+{#if isUnpublished}
+  <span class="unpublished-link">
+    {@render children()}
+  </span>
+{:else}
+  <a {href} class="internal-link" data-sveltekit-preload-data>
+    {@render children()}
+  </a>
+{/if}
 
 <style lang="scss">
   .internal-link {
@@ -116,5 +125,10 @@
       color: var(--color-header);
       border-bottom-color: var(--color-header);
     }
+  }
+
+  .unpublished-link {
+    color: var(--color-inactive);
+    font-style: italic;
   }
 </style>

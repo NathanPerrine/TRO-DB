@@ -37,6 +37,7 @@ export const internalLinkAnnotation = {
       type: 'reference',
       title: 'Reference',
       description: 'Link to another document in the database',
+      weak: true,
       to: [
         { type: 'guide', title: 'Guides' },
         { type: 'equipment', title: 'Equipment' },

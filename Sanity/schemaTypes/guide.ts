@@ -217,6 +217,7 @@ export const guides = defineType({
         {
           type: 'reference',
           to: [{ type: 'guide' }],
+          weak: true,
           options: {
             filter: ({ document }) => {
               return {

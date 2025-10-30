@@ -36,7 +36,9 @@ export const guideDetailSchema = sanityDocumentSchema.extend({
   summary: z.string(),
   category: z.enum(['leveling', 'money making', 'new player', 'crafting', 'other']),
   sections: z.array(sectionSchema),
-  relatedGuides: z.array(relatedGuideRefSchema).nullable().transform(val => val ?? [])
+  relatedGuides: z.array(relatedGuideRefSchema.nullable())
+    .nullable()
+    .transform(val => val?.filter(item => item !== null) ?? [])
 });
 
 // List item
