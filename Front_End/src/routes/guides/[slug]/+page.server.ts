@@ -9,12 +9,91 @@ export const load = async ({ params }) => {
       author,
       summary,
       category,
-      content[] {
-        ...,
-        _type == "image" => {
-          "asset": asset->,
-          alt,
+      sections[] {
+        sectionTitle,
+        sectionSlug,
+        content[] {
+          ...,
+          _type == "image" => {
+            "asset": asset->,
+            alt,
+            alignment,
+            width
+          },
+          _type == "table" => {
+            ...,
+            rows[] {
+              cells[] {
+                content
+              }
+            }
+          },
+          _type == "block" => {
+            ...,
+            markDefs[] {
+              ...,
+              _type == "internalLink" => {
+                ...,
+                "reference": reference-> {
+                  _type,
+                  slug,
+                  title,
+                  _type == "spell" => { "school": spellSchool },
+                  _type == "equipment" => { "armorWeapon": armorWeapon },
+                  _type == "item" => { "type": type },
+                  _type == "area" => { "areaType": areaType },
+                  _type == "book" => { "bookType": bookType }
+                }
+              }
+            }
+          }
+        },
+        subsections[] {
+          subsectionTitle,
+          subsectionSlug,
+          content[] {
+            ...,
+            _type == "image" => {
+              "asset": asset->,
+              alt,
+              alignment,
+              width
+            },
+            _type == "table" => {
+              ...,
+              rows[] {
+                cells[] {
+                  content
+                }
+              }
+            },
+            _type == "block" => {
+              ...,
+              markDefs[] {
+                ...,
+                _type == "internalLink" => {
+                  ...,
+                  "reference": reference-> {
+                    _type,
+                    slug,
+                    title,
+                    _type == "spell" => { "school": spellSchool },
+                    _type == "equipment" => { "armorWeapon": armorWeapon },
+                    _type == "item" => { "type": type },
+                    _type == "area" => { "areaType": areaType },
+                    _type == "book" => { "bookType": bookType }
+                  }
+                }
+              }
+            }
+          }
         }
+      },
+      relatedGuides[]-> {
+        _id,
+        title,
+        slug,
+        summary
       },
       _createdAt,
       _updatedAt,

@@ -45,6 +45,7 @@ export const equipmentList = (S: StructureBuilder) => {
                   .child(
                     S.documentTypeList('equipment')
                       .title(weaponType.title)
+                      .apiVersion('2024-10-15')
                       .filter(
                         `_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType._ref == '${weaponType.refId}'`,
                       )
@@ -79,6 +80,7 @@ export const equipmentList = (S: StructureBuilder) => {
                   .child(
                     S.documentTypeList('equipment')
                       .title(armorType.title)
+                      .apiVersion('2024-10-15')
                       .filter(
                         `_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == '${armorType.value}'`,
                       )

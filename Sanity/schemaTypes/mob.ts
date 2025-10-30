@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { portableTextBlock } from './portableTextConfig'
 
 export const mobs = defineType({
   name: 'mob',
@@ -238,7 +239,7 @@ export const mobs = defineType({
       title: 'Notes',
       description: 'Any additional information required.',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [portableTextBlock],
     }),
   ],
   preview: {

@@ -1,5 +1,6 @@
 import { defineField, defineType } from 'sanity'
 import { CharacterCountInput } from './GuideHelperComponent'
+import { portableTextBlock, imageConfig, tableConfig } from './portableTextConfig'
 
 export const guides = defineType({
   name: 'guide',
@@ -20,7 +21,13 @@ export const guides = defineType({
       options: {
         source: 'title',
         slugify: (input) =>
-          input.toLowerCase().replace(/\s+/g, '-').slice(0, 200),
+          input
+            .toLowerCase()
+            .replace(/[^\w\s-]/g, '') // Remove all non-word chars except spaces and hyphens
+            .replace(/\s+/g, '-') // Replace spaces with hyphens
+            .replace(/-+/g, '-') // Collapse multiple hyphens to single hyphen
+            .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
+            .slice(0, 200),
       },
       validation: (Rule) =>
         Rule.required().error('Must generate a slug for navigation.'),
@@ -64,44 +71,162 @@ export const guides = defineType({
     }),
 
     defineField({
-      name: 'content',
-      title: 'Content',
+      name: 'sections',
+      title: 'Sections',
+      description: 'Add chapters/sections to organize your guide content',
       type: 'array',
+      options: {
+        modal: {
+          type: 'dialog',
+          width: 'auto',
+        },
+      },
       of: [
-        { type: 'block' },
         {
-          type: 'image',
+          type: 'object',
+          name: 'section',
+          title: 'Section',
           fields: [
             {
-              name: 'alt',
+              name: 'sectionTitle',
+              title: 'Section Title',
               type: 'string',
-              title: 'Alternative Text',
-              description: 'Important for SEO and accessibilty.',
+              validation: (Rule) => Rule.required(),
             },
             {
-              name: 'alignment',
-              type: 'string',
-              title: 'Image Alignment',
+              name: 'sectionSlug',
+              title: 'Section Slug',
+              type: 'slug',
+              description:
+                'Used for anchor links and navigation within the guide',
               options: {
-                list: [
-                  { title: 'Center', value: 'center' },
-                  { title: 'Left', value: 'left' },
-                  { title: 'Right', value: 'right' },
-                ],
+                source: (doc, context) => (context.parent as any)?.sectionTitle,
+                slugify: (input) =>
+                  input
+                    .toLowerCase()
+                    .replace(/[^\w\s-]/g, '')
+                    .replace(/\s+/g, '-')
+                    .replace(/-+/g, '-')
+                    .replace(/^-+|-+$/g, '')
+                    .slice(0, 200),
+                disableArrayWarning: true,
               },
-              initialValue: 'center',
+              validation: (Rule) => Rule.required(),
             },
             {
-              name: 'width',
-              type: 'number',
-              title: 'Width (in pixels)',
-              validation: (Rule) => Rule.min(100).max(800),
-              initialValue: 400,
+              name: 'content',
+              title: 'Content',
+              description:
+                'Main content for this section. Add subsections below for deeper organization.',
+              type: 'array',
+              of: [portableTextBlock, imageConfig, tableConfig],
+            },
+            {
+              name: 'subsections',
+              title: 'Subsections',
+              description:
+                'Optional subsections for deeper content organization',
+              type: 'array',
+              options: {
+                modal: { type: 'dialog', width: 'auto' },
+              },
+              of: [
+                {
+                  type: 'object',
+                  name: 'subsection',
+                  title: 'Subsection',
+                  fields: [
+                    {
+                      name: 'subsectionTitle',
+                      title: 'Subsection Title',
+                      type: 'string',
+                      validation: (Rule) => Rule.required(),
+                    },
+                    {
+                      name: 'subsectionSlug',
+                      title: 'Subsection Slug',
+                      type: 'slug',
+                      description:
+                        'Used for anchor links within this subsection',
+                      options: {
+                        source: (doc, context) =>
+                          (context.parent as any)?.subsectionTitle,
+                        slugify: (input) =>
+                          input
+                            .toLowerCase()
+                            .replace(/[^\w\s-]/g, '')
+                            .replace(/\s+/g, '-')
+                            .replace(/-+/g, '-')
+                            .replace(/^-+|-+$/g, '')
+                            .slice(0, 200),
+                        disableArrayWarning: true,
+                      },
+                      validation: (Rule) => Rule.required(),
+                    },
+                    {
+                      name: 'content',
+                      title: 'Content',
+                      type: 'array',
+                      of: [portableTextBlock, imageConfig, tableConfig],
+                      validation: (Rule) => Rule.required(),
+                    },
+                  ],
+                  preview: {
+                    select: {
+                      title: 'subsectionTitle',
+                    },
+                    prepare({ title }) {
+                      return {
+                        title: title || 'Untitled Subsection',
+                        subtitle: 'Subsection',
+                      }
+                    },
+                  },
+                },
+              ],
             },
           ],
+          preview: {
+            select: {
+              title: 'sectionTitle',
+              subsectionCount: 'subsections',
+            },
+            prepare({ title, subsectionCount }) {
+              const count = subsectionCount?.length || 0
+              return {
+                title: title || 'Untitled Section',
+                subtitle:
+                  count > 0
+                    ? `${count} subsection${count !== 1 ? 's' : ''}`
+                    : '',
+              }
+            },
+          },
         },
       ],
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) =>
+        Rule.required().min(1).error('At least one section is required.'),
+    }),
+
+    defineField({
+      name: 'relatedGuides',
+      title: 'Related Guides',
+      description: 'Related guides that might be helpful to the reader.',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'guide' }],
+          options: {
+            filter: ({ document }) => {
+              return {
+                filter: '_id != $id',
+                params: { id: document._id },
+              }
+            },
+          },
+        },
+      ],
     }),
   ],
 })

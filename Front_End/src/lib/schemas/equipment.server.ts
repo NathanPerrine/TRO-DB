@@ -36,7 +36,7 @@ const baseEquipmentDetailSchema = z.object({
   weight: z.number().nullish(),
   condition: z.number().nullish(),
   sellPrice: z.number().nullish(),
-  excludes: z.enum(['male', 'female']).nullish(),
+  excludes: z.enum(['Males', 'Females']).nullish(),
   levelRequirement: z.number().nullish(),
   dropArea: z.array(linkedAreaSchema).nullable().transform(val => val ?? []),
   notes: z.any().nullable() // PortableText
