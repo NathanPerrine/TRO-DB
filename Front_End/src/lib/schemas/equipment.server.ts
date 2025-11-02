@@ -38,7 +38,9 @@ const baseEquipmentDetailSchema = z.object({
   sellPrice: z.number().nullish(),
   excludes: z.enum(['Males', 'Females']).nullish(),
   levelRequirement: z.number().nullish(),
-  dropArea: z.array(linkedAreaSchema).nullable().transform(val => val ?? []),
+  dropArea: z.array(linkedAreaSchema.nullable())
+    .nullable()
+    .transform(val => val?.filter(item => item !== null) ?? []),
   notes: z.any().nullable() // PortableText
 });
 
@@ -82,7 +84,9 @@ export const accessoryDetailSchema = z.object({
   condition: z.number().nullish(),
   sellPrice: z.number().nullish(),
   levelRequirement: z.number().nullish(),
-  dropArea: z.array(linkedAreaSchema).nullable().transform(val => val ?? []),
+  dropArea: z.array(linkedAreaSchema.nullable())
+    .nullable()
+    .transform(val => val?.filter(item => item !== null) ?? []),
   notes: z.any().nullable()
 });
 

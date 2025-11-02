@@ -40,7 +40,7 @@ const dropsSchema = z.object({
 })
 
 const directionSchema = z.object({
-  town: linkedAreaSchema,
+  town: linkedAreaSchema.nullable(),
   directions: z.string()
 });
 
@@ -50,13 +50,17 @@ export const areaDetailSchema = z.object({
   areaType: areaTypeSchema,
   description: z.string().nullish(),
   map: z.string().nullish(),
-  directions: z.array(directionSchema).nullish(),
+  directions: z.array(directionSchema)
+    .nullable()
+    .transform(val => val?.filter(d => d.town !== null) ?? []),
   levelRange: rangeSchema.nullish(),
   walkthrough: z.any().nullish(), // PortableText
   notes: z.any().nullish(), // PortableText
   drops: dropsSchema.nullish(),
   mobs: z.array(mobListItemSchema).nullish(),
-  connectedAreas: z.array(linkedAreaSchema).nullish()
+  connectedAreas: z.array(linkedAreaSchema.nullable())
+    .nullable()
+    .transform(val => val?.filter(item => item !== null) ?? [])
 });
 
 export const areaListItemSchema = areaDetailSchema.pick({

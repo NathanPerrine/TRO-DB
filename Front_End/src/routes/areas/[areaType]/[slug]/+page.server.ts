@@ -2,6 +2,7 @@ import { error } from '@sveltejs/kit';
 import { client } from '$lib/utils/sanity/client';
 import type { PageServerLoad } from './$types';
 import { areaDetailSchema } from '$lib/schemas/area.server';
+import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
 
 const mobProjection = `{
   name,
@@ -65,8 +66,8 @@ export const load = (async ({ params }) => {
         town->{name, slug},
         directions,
       },
-      walkthrough,
-      notes,
+      walkthrough${portableTextProjection},
+      notes${portableTextProjection},
       "drops": {
         "books": *[_type == 'book' && references(^._id)] | order(name) ${bookProjection},
         "armors": *[_type == 'equipment' && armorWeapon == 'armor' && references(^._id)] | order(identifiedName) ${armorProjection},

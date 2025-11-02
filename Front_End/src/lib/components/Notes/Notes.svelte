@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { PortableText } from '@portabletext/svelte';
 	import UnorderedList from '$lib/utils/sanity/UnorderedList.svelte';
+	import { portableTextComponents } from '$lib/components/PortableText';
   export let notes: any[] | undefined | null;
 
   const bulletContext = 'note'
@@ -12,6 +13,7 @@
     value={notes}
     context={{ bulletContext }}
     components={{
+      ...portableTextComponents,
       listItem: {
         normal: UnorderedList
       },

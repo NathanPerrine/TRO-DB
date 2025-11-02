@@ -3,6 +3,7 @@ import { guideListItemSchema } from '$lib/schemas/guide.server';
 import { client } from '$lib/utils/sanity/client';
 import type { PageServerLoad } from './$types';
 import { z } from 'zod';
+import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
 
 const guideProjection = `{
   title,
@@ -29,8 +30,8 @@ export const load = (async () => {
     `{
     'description': *[_type == 'description' && name match 'guides'][0] {
         name,
-        description,
-        extras
+        description${portableTextProjection},
+        extras${portableTextProjection}
       },
 
     'guides': {

@@ -3,6 +3,7 @@ import type { PageServerLoad } from './$types';
 import { z } from 'zod';
 import { descriptionSchema } from '$lib/schemas/common.server';
 import { mobAreaListItemSchema } from '$lib/schemas/mob.server';
+import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
 
 const mobPageDataSchema = z.object({
   description: descriptionSchema,
@@ -15,11 +16,11 @@ export const load = (async () => {
     `{
       'description': *[_type == 'description' && name match 'mobs'][0] {
       name,
-      description,
-      extras,
+      description${portableTextProjection},
+      extras${portableTextProjection},
       },
 
-      'mobs': *[_type == 'mob'] | order(inhabitedAreas[0]->name asc, name) {
+      'mobs': *[_type == 'mob'] | order(name asc) {
         name,
         slug,
         boss,

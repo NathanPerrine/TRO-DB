@@ -8,6 +8,7 @@ import {
 } from '$lib/schemas/equipment.server';
 import { descriptionSchema } from '$lib/schemas/common.server';
 import { z } from 'zod';
+import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
 
 
 
@@ -70,8 +71,8 @@ export const load = (async ({ params }) => {
       `{
       'description': *[_type == 'description' && name match $slug][0] {
         name,
-        description,
-        extras
+        description${portableTextProjection},
+        extras${portableTextProjection}
       },
       'equipment': {
         'helm': *[_type == 'equipment' && armorWeapon == 'armor' && armorAttributes.armorType == 'helm'] | order(levelRequirement) ${armorProjection},
@@ -111,8 +112,8 @@ export const load = (async ({ params }) => {
       `{
         'description': *[_type == 'description' && name match $slug][0] {
           name,
-          description,
-          extras
+          description${portableTextProjection},
+          extras${portableTextProjection}
         },
         'equipment': {
           'axe': *[_type == 'equipment' && armorWeapon == 'weapon' && weaponAttributes.weaponType->name == 'axe'] | order(levelRequirement) ${weaponProjection},
@@ -155,8 +156,8 @@ export const load = (async ({ params }) => {
         'description': *[_type == 'description' && name match $slug][0]
         {
           name,
-          description,
-          extras
+          description${portableTextProjection},
+          extras${portableTextProjection}
         },
 
         'equipment':

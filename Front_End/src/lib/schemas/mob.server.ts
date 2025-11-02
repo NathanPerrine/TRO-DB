@@ -21,8 +21,12 @@ export const mobDetailSchema = z.object({
   meleeAttributes: meleeAttributesSchema.nullish(),
   spellResistances: spellSchoolValueSchema,
   spellDamageModifiers: spellSchoolValueSchema,
-  knownSpells: knownSpellSchema.array().nullish(),
-  inhabitedAreas: z.array(linkedAreaSchema).nullable().transform(val => val ?? []),
+  knownSpells: z.array(knownSpellSchema.nullable())
+    .nullable()
+    .transform(val => val?.filter(item => item !== null) ?? []),
+  inhabitedAreas: z.array(linkedAreaSchema.nullable())
+    .nullable()
+    .transform(val => val?.filter(item => item !== null) ?? []),
   emotes: z.array(z.string()).nullish(),
   notes: z.array(z.any()).nullish() // PortableText
 })

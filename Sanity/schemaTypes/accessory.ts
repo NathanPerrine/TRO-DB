@@ -4,6 +4,7 @@ import {
   DescriptionHelper,
   WeightHelper,
 } from './AccessoryHelperComponent'
+import { portableTextBlock } from './portableTextConfig'
 
 export const accessories = defineType({
   name: 'accessory',
@@ -151,6 +152,7 @@ export const accessories = defineType({
         {
           type: 'reference',
           to: [{ type: 'area' }],
+          weak: true,
           options: {
             filter: 'areaType == $type1 || areaType == $type2',
             filterParams: {
@@ -166,7 +168,7 @@ export const accessories = defineType({
       name: 'notes',
       title: 'Notes',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [portableTextBlock],
     }),
   ],
   preview: {

@@ -35,11 +35,13 @@
                 <ul class="ul-diamond">
                   {#if area.directions}
                     {#each area.directions as direction}
-                      <li>
-                        <a href="/areas/towns/{direction.town.slug.current}"
-                          >{direction.town.name}</a
-                        >: {direction.directions}
-                      </li>
+                      {#if direction.town}
+                        <li>
+                          <a href="/areas/towns/{direction.town.slug.current}"
+                            >{direction.town.name}</a
+                          >: {direction.directions}
+                        </li>
+                      {/if}
                     {/each}
                   {:else}
                     <p>???</p>

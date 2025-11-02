@@ -4,6 +4,7 @@ import { error } from '@sveltejs/kit';
 import { z } from 'zod';
 import { descriptionSchema } from '$lib/schemas/common.server';
 import { itemListItemSchema } from '$lib/schemas/item.server';
+import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
 
 const VALID_SLUGS = [
   'junk',
@@ -35,8 +36,8 @@ export const load = (async ({ params }) => {
     `{
       'description': *[_type == 'description' && name match $itemType][0]{
         name,
-        description,
-        extras,
+        description${portableTextProjection},
+        extras${portableTextProjection},
       },
 
       'items': *[_type == 'item' && $itemType match type + "*"] | order(name) {

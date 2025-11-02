@@ -2,6 +2,7 @@
   import { PortableText } from '@portabletext/svelte';
   import type { Description } from '$lib/types';
   import UnorderedList from '$lib/utils/sanity/UnorderedList.svelte';
+  import PortableTextRenderer, { portableTextComponents } from '$lib/components/PortableText';
 
   export let description: Description;
   const bulletContext = 'diamond';
@@ -10,7 +11,7 @@
 <header>
   <h1>{description.name}</h1>
   {#if description.description}
-    <PortableText value={description.description as any} components={{}} />
+    <PortableTextRenderer value={description.description} />
   {/if}
   {#if description.extras}
     <h3>Extra Info:</h3>
@@ -18,6 +19,7 @@
       value={description.extras as any}
       context={{ bulletContext }}
       components={{
+        ...portableTextComponents,
         listItem: {
           normal: UnorderedList
         }

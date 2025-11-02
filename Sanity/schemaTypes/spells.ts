@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { portableTextBlock } from './portableTextConfig'
 
 export const spells = defineType({
   name: 'spell',
@@ -169,7 +170,7 @@ export const spells = defineType({
       name: 'notes',
       title: 'Notes',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [portableTextBlock],
     }),
   ],
 })

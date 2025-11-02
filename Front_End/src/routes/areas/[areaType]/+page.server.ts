@@ -4,6 +4,7 @@ import type { PageServerLoad } from './$types';
 import { z } from 'zod';
 import { descriptionSchema } from '$lib/schemas/common.server';
 import { areaListItemSchema } from '$lib/schemas/area.server';
+import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
 
 const VALID_SLUGS = ['towns', 'zones', 'dungeons'];
 type ValidSlug = (typeof VALID_SLUGS)[number];
@@ -26,8 +27,8 @@ export const load = (async ({ params }) => {
     `{
       'description': *[_type == 'description' && name match $areaType][0]{
         name,
-        description,
-        extras,
+        description${portableTextProjection},
+        extras${portableTextProjection},
       },
 
       'areas': *[_type == 'area' && $areaType match areaType + "*"] | order(name) {

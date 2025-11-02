@@ -1,14 +1,9 @@
 <script lang="ts">
   import { formatDate } from '$lib/utils/formatDate';
   import { PortableText } from '@portabletext/svelte';
-  import type { PortableTextComponents } from '@portabletext/svelte';
+  import { portableTextComponents } from '$lib/components/PortableText';
   import { fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
-  import ImageComponent from './ImageComponent.svelte';
-  import TableComponent from './TableComponent.svelte';
-  import ExternalLink from './ExternalLink.svelte';
-  import InternalLink from './InternalLink.svelte';
-  import PageLink from './PageLink.svelte';
   import TableOfContents from './TableOfContents.svelte';
 
   let { data: guide } = $props();
@@ -19,18 +14,6 @@
   let direction = $state<'forward' | 'backward'>('forward');
   let activeSubsection = $state<string | null>(null);
   let tabsContainer: HTMLElement | null = $state(null);
-
-  const components: PortableTextComponents = {
-    types: {
-      image: ImageComponent as any,
-      table: TableComponent as any
-    },
-    marks: {
-      link: ExternalLink as any,
-      internalLink: InternalLink as any,
-      pageLink: PageLink as any
-    }
-  };
 
   // Generate anchor ID from slug
   function getAnchorId(slug: { current: string }): string {
@@ -182,7 +165,7 @@
           >
             <h2>{section.sectionTitle}</h2>
             <div class="content">
-              <PortableText value={section.content} components={components} />
+              <PortableText value={section.content} components={portableTextComponents} />
             </div>
 
             <!-- Subsections -->
@@ -191,7 +174,7 @@
                 <div id={getAnchorId(subsection.subsectionSlug)} class="subsection">
                   <h3>{subsection.subsectionTitle}</h3>
                   <div class="content">
-                    <PortableText value={subsection.content} components={components} />
+                    <PortableText value={subsection.content} components={portableTextComponents} />
                   </div>
                 </div>
               {/each}
@@ -503,6 +486,7 @@
       font-size: 0.9rem;
       line-height: 1.4;
       display: -webkit-box;
+      line-clamp: 2;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;

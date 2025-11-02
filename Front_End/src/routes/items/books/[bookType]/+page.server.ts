@@ -3,6 +3,7 @@ import { client } from '$lib/utils/sanity/client';
 import { bookSchema } from '$lib/schemas/book.server';
 import { descriptionSchema, type SkillLevel } from '$lib/schemas/common.server';
 import { z } from 'zod';
+import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
 
 type SkillLevels = Record<SkillLevel, z.infer<typeof bookSchema>[]>;
 
@@ -17,7 +18,7 @@ export const load = (async ({ params }) => {
     {
       "description": *[_type == 'description' && name match $bookType + "*"][0] {
         name,
-        description
+        description${portableTextProjection}
       },
       "books": *[_type == 'book' && $bookType match bookType + "*"] {
         name,

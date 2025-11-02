@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { portableTextBlock } from './portableTextConfig'
 
 export const items = defineType({
   name: 'item',
@@ -69,6 +70,7 @@ export const items = defineType({
       description: 'What dungeon is this item from?',
       type: 'reference',
       to: [{ type: 'area' }],
+      weak: true,
       hidden: ({ parent }) => parent?.type !== 'dungeon',
     }),
 
@@ -114,7 +116,7 @@ export const items = defineType({
       name: 'notes',
       title: 'Notes',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [portableTextBlock],
     }),
   ],
 })

@@ -1,4 +1,5 @@
 import { defineType, defineField } from 'sanity'
+import { portableTextBlock } from './portableTextConfig'
 
 export const equipment = defineType({
   name: 'equipment',
@@ -248,6 +249,7 @@ export const equipment = defineType({
         {
           type: 'reference',
           to: [{ type: 'area' }],
+          weak: true,
           options: {
             filter: `areaType == 'dungeon' || areaType == 'zone'`,
             sort: [{ field: 'name', direction: 'asc' }],
@@ -260,7 +262,7 @@ export const equipment = defineType({
       name: 'notes',
       title: 'Notes',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [portableTextBlock],
     }),
   ],
   preview: {

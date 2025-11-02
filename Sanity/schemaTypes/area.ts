@@ -1,4 +1,5 @@
 import { defineField, defineType } from 'sanity'
+import { portableTextBlock } from './portableTextConfig'
 
 export const areas = defineType({
   name: 'area',
@@ -74,6 +75,7 @@ export const areas = defineType({
               title: 'Nearest Town Teleporter',
               type: 'reference',
               to: [{ type: 'area' }],
+              weak: true,
               options: {
                 filter: `areaType == 'town'`,
                 sort: [{ field: 'name', direction: 'asc' }],
@@ -113,7 +115,7 @@ export const areas = defineType({
       title: 'Walkthrough',
       description: 'Walkthrough of the dungeon.',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [portableTextBlock],
       hidden: ({ parent }) => parent?.areaType !== 'dungeon',
     }),
 
@@ -121,7 +123,7 @@ export const areas = defineType({
       name: 'notes',
       title: 'Notes',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [portableTextBlock],
     }),
 
     defineField({

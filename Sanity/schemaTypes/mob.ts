@@ -215,7 +215,11 @@ export const mobs = defineType({
       title: 'Known Spells',
       description: 'Spells that this mob can cast.',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'spell' }] }],
+      of: [{
+        type: 'reference',
+        to: [{ type: 'spell' }],
+        weak: true,
+      }],
     }),
 
     defineField({
@@ -223,7 +227,11 @@ export const mobs = defineType({
       title: 'Inhabited Areas',
       description: 'All known areas this mob inhabits.',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'area' }] }],
+      of: [{
+        type: 'reference',
+        to: [{ type: 'area' }],
+        weak: true,
+      }],
     }),
 
     defineField({

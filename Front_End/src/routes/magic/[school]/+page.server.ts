@@ -4,6 +4,7 @@ import { error } from '@sveltejs/kit';
 import { z } from 'zod';
 import { descriptionSchema } from '$lib/schemas/common.server';
 import { spellListItemSchema } from '$lib/schemas/spell.server';
+import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
 
 const VALID_SLUGS = ['thaumaturgy', 'mysticism', 'elementalism', 'sorcery', 'necromancy'];
 type ValidSlug = (typeof VALID_SLUGS)[number];
@@ -47,8 +48,8 @@ export const load = (async ({ params }) => {
     `{
       'description': *[_type == 'description' && name match $school][0]{
         name,
-        description,
-        extras,
+        description${portableTextProjection},
+        extras${portableTextProjection},
       },
       'spells': {
         'familiar': *[_type == 'spell' && spellSchool match $school && level == 'familiar'] | order(title asc) ${spellProjection},

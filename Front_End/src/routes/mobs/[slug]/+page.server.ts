@@ -1,6 +1,7 @@
 import { client } from '$lib/utils/sanity/client';
 import type { PageServerLoad } from './$types';
 import { mobDetailSchema } from '$lib/schemas/mob.server';
+import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
 
 export const load = (async ({ params }) => {
   const rawData = await client.fetch(`
@@ -26,7 +27,7 @@ export const load = (async ({ params }) => {
         spellSchool,
       },
       emotes,
-      notes,
+      notes${portableTextProjection},
     }
   `)
 

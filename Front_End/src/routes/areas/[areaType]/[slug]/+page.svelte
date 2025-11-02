@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { PortableText } from '@portabletext/svelte';
+  import PortableTextRenderer from '$lib/components/PortableText';
   import type { PageData } from './$types';
   import Notes from '$lib/components/Notes/Notes.svelte';
   import { Skull } from 'lucide-svelte';
@@ -21,9 +21,11 @@
     <ul class="ul-diamond">
       {#if data.area.directions}
         {#each data.area.directions as direction}
-          <li>
-            <a href="/areas/towns/{direction.town.slug.current}">{direction.town.name}</a>: {direction.directions}
-          </li>
+          {#if direction.town}
+            <li>
+              <a href="/areas/towns/{direction.town.slug.current}">{direction.town.name}</a>: {direction.directions}
+            </li>
+          {/if}
         {/each}
       {:else}
         <p>???</p>
@@ -32,7 +34,7 @@
 
     {#if data.area.areaType === 'dungeon' && data.area.walkthrough}
       <h2>Walkthrough</h2>
-      <PortableText value={data.area.walkthrough as any} components={{}} />
+      <PortableTextRenderer value={data.area.walkthrough} />
     {/if}
 
     <Notes notes={data.area.notes} />
@@ -136,7 +138,8 @@
                       <td>{weapon.levelRequirement}</td>
                       <td class="capitalize">{weapon.weaponAttributes?.weaponType?.name ?? '-'}</td>
                       <td>
-                        {weapon.weaponAttributes?.damage?.min ?? '-'}-{weapon.weaponAttributes?.damage?.max ?? '-'}
+                        {weapon.weaponAttributes?.damage?.min ?? '-'}-{weapon.weaponAttributes
+                          ?.damage?.max ?? '-'}
                       </td>
                       <td>
                         {#if weapon.attributes}
