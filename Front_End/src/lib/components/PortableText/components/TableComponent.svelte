@@ -1,6 +1,10 @@
 <script lang="ts">
+  import { PortableText } from '@portabletext/svelte';
+  import { portableTextComponents } from '../index';
+  import type { PortableTextBlock } from '@portabletext/types';
+
   type TableRow = {
-    cells: { content: string }[];
+    cells: { content: PortableTextBlock[] | string }[];
   };
 
   type TableValue = {
@@ -14,6 +18,11 @@
   }>();
 
   const table = portableText.value;
+
+  // Helper to check if content is portable text blocks
+  function isPortableText(content: PortableTextBlock[] | string): content is PortableTextBlock[] {
+    return Array.isArray(content);
+  }
 </script>
 
 <div class="table-wrapper">
@@ -23,9 +32,13 @@
         <tr>
           {#each row.cells as cell}
             <td>
-              {#each cell.content?.split('\n') || [] as line}
-                {line}<br />
-              {/each}
+              {#if isPortableText(cell.content)}
+                <PortableText value={cell.content} components={portableTextComponents} />
+              {:else}
+                {#each cell.content?.split('\n') || [] as line}
+                  {line}<br />
+                {/each}
+              {/if}
             </td>
           {/each}
         </tr>
