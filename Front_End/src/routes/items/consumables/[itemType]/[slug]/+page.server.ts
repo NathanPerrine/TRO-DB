@@ -2,6 +2,7 @@ import { client } from '$lib/utils/sanity/client';
 import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { itemDetailSchema } from '$lib/schemas/item.server';
+import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
 
 export const load = (async ({ params }) => {
   const rawData = await client.fetch(
@@ -16,7 +17,7 @@ export const load = (async ({ params }) => {
     buyPrice,
     sellPrice,
     charges,
-    notes,
+    notes${portableTextProjection},
   }`,
     { slug: params.slug }
   );

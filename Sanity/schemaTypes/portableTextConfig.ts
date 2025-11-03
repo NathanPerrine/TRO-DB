@@ -144,7 +144,7 @@ export const portableTextBlock = {
   },
 }
 
-// Custom table configuration with multi-line cell support
+// Custom table configuration with rich text cell support (including links)
 export const tableConfig = {
   type: 'object',
   name: 'table',
@@ -172,23 +172,35 @@ export const tableConfig = {
                   fields: [
                     {
                       name: 'content',
-                      type: 'text',
+                      type: 'array',
                       title: 'Content',
-                      rows: 3,
+                      of: [portableTextBlock],
                     },
                   ],
                   preview: {
                     select: {
                       content: 'content',
                     },
-                    prepare({ content }: { content?: string }) {
+                    prepare({ content }: { content?: any[] }) {
+                      // Extract text from portable text blocks
+                      const textContent = content
+                        ?.map((block) => {
+                          if (block._type === 'block' && block.children) {
+                            return block.children
+                              .map((child: any) => child.text)
+                              .join('')
+                          }
+                          return ''
+                        })
+                        .filter(Boolean)
+                        .join(' ')
+
                       const truncated =
-                        content && content.length > 100
-                          ? content.substring(0, 100) + '...'
-                          : content
-                      const previewText = truncated?.replace(/\n/g, ' ↵ ')
+                        textContent && textContent.length > 100
+                          ? textContent.substring(0, 100) + '...'
+                          : textContent
                       return {
-                        title: previewText || 'Empty cell',
+                        title: truncated || 'Empty cell',
                       }
                     },
                   },
@@ -203,7 +215,21 @@ export const tableConfig = {
             prepare({ cells }: { cells?: any[] }) {
               const cellCount = cells?.length || 0
               const cellContents = cells
-                ?.map((cell) => cell?.content?.replace(/\n/g, ' ↵ '))
+                ?.map((cell) => {
+                  // Extract text from portable text blocks in each cell
+                  if (!cell?.content) return ''
+                  return cell.content
+                    .map((block: any) => {
+                      if (block._type === 'block' && block.children) {
+                        return block.children
+                          .map((child: any) => child.text)
+                          .join('')
+                      }
+                      return ''
+                    })
+                    .filter(Boolean)
+                    .join(' ')
+                })
                 .filter(Boolean)
                 .join(' | ')
               const truncated =
@@ -228,7 +254,19 @@ export const tableConfig = {
       const rowCount = rows?.length || 0
       const cellCount = rows?.[0]?.cells?.length || 0
       const firstRowContents = rows?.[0]?.cells
-        ?.map((cell: any) => cell?.content?.replace(/\n/g, ' ↵ '))
+        ?.map((cell: any) => {
+          // Extract text from portable text blocks in first row
+          if (!cell?.content) return ''
+          return cell.content
+            .map((block: any) => {
+              if (block._type === 'block' && block.children) {
+                return block.children.map((child: any) => child.text).join('')
+              }
+              return ''
+            })
+            .filter(Boolean)
+            .join(' ')
+        })
         .filter(Boolean)
         .join(' | ')
       const truncated =
