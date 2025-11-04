@@ -4,6 +4,8 @@
  * This projection expands internal link references to include all necessary fields
  * for building proper URLs in the InternalLink component.
  *
+ * This handles both top-level links and links nested inside table cells.
+ *
  * Usage:
  * ```typescript
  * import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
@@ -16,6 +18,36 @@
  */
 export const portableTextProjection = `[]{
   ...,
+  rows[]{
+    ...,
+    cells[]{
+      ...,
+      content[]{
+        _key,
+        _type,
+        children,
+        style,
+        level,
+        listItem,
+        markDefs[]{
+          _key,
+          _type,
+          blank,
+          href,
+          "reference": *[_id == ^.reference._ref][0]{
+            _type,
+            slug,
+            title,
+            spellSchool,
+            armorWeapon,
+            type,
+            areaType,
+            bookType
+          }
+        }
+      }
+    }
+  },
   markDefs[]{
     ...,
     _type == "internalLink" => {

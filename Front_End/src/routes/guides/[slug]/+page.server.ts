@@ -1,6 +1,7 @@
 import { client } from '$lib/utils/sanity/client';
 import { error } from '@sveltejs/kit';
 import { guidePageDataSchema } from '$lib/schemas/guide.server.js';
+import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
 
 export const load = async ({ params }) => {
   const rawData = await client.fetch(
@@ -12,81 +13,11 @@ export const load = async ({ params }) => {
       sections[] {
         sectionTitle,
         sectionSlug,
-        content[] {
-          ...,
-          _type == "image" => {
-            "asset": asset->,
-            alt,
-            alignment,
-            width
-          },
-          _type == "table" => {
-            ...,
-            rows[] {
-              cells[] {
-                content
-              }
-            }
-          },
-          _type == "block" => {
-            ...,
-            markDefs[] {
-              ...,
-              _type == "internalLink" => {
-                ...,
-                "reference": reference-> {
-                  _type,
-                  slug,
-                  title,
-                  _type == "spell" => { "school": spellSchool },
-                  _type == "equipment" => { "armorWeapon": armorWeapon },
-                  _type == "item" => { "type": type },
-                  _type == "area" => { "areaType": areaType },
-                  _type == "book" => { "bookType": bookType }
-                }
-              }
-            }
-          }
-        },
+        content${portableTextProjection},
         subsections[] {
           subsectionTitle,
           subsectionSlug,
-          content[] {
-            ...,
-            _type == "image" => {
-              "asset": asset->,
-              alt,
-              alignment,
-              width
-            },
-            _type == "table" => {
-              ...,
-              rows[] {
-                cells[] {
-                  content
-                }
-              }
-            },
-            _type == "block" => {
-              ...,
-              markDefs[] {
-                ...,
-                _type == "internalLink" => {
-                  ...,
-                  "reference": reference-> {
-                    _type,
-                    slug,
-                    title,
-                    _type == "spell" => { "school": spellSchool },
-                    _type == "equipment" => { "armorWeapon": armorWeapon },
-                    _type == "item" => { "type": type },
-                    _type == "area" => { "areaType": areaType },
-                    _type == "book" => { "bookType": bookType }
-                  }
-                }
-              }
-            }
-          }
+          content${portableTextProjection}
         }
       },
       relatedGuides[]-> {

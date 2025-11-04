@@ -5,7 +5,8 @@
     _type: string;
     slug: { current: string };
     title?: string;
-    school?: string;
+    school?: string; // From top-level links (aliased)
+    spellSchool?: string; // From table cell links (not aliased)
     armorWeapon?: 'armor' | 'weapon';
     type?: string;
     areaType?: 'dungeon' | 'town' | 'zone';
@@ -65,11 +66,12 @@
         return `/items/equipment/accessories/${slug}`;
 
       case 'spell':
-        if (!ref.school) {
+        const school = ref.school || ref.spellSchool;
+        if (!school) {
           console.warn('InternalLink: Spell missing school field');
           return '#';
         }
-        return `/magic/${ref.school}/${slug}`;
+        return `/magic/${school}/${slug}`;
 
       case 'item':
         if (!ref.type) {
