@@ -24,7 +24,8 @@
         "color-rarity-blue": "#99bcf2",
         "color-rarity-purple": "#b462e1",
         "color-rarity-orange": "#ffa500",
-        "color-rarity-red": "#ff2e2e"
+        "color-rarity-red": "#ff2e2e",
+        "color-rarity-pink": "#ff69b4"
       }
     },
     {
@@ -51,7 +52,8 @@
         "color-rarity-blue": "#99bcf2",
         "color-rarity-purple": "#b462e1",
         "color-rarity-orange": "#ffa500",
-        "color-rarity-red": "#ff2e2e"
+        "color-rarity-red": "#ff2e2e",
+        "color-rarity-pink": "#ff69b4"
       }
     },
     {
@@ -78,7 +80,8 @@
         "color-rarity-blue": "#145ac6",
         "color-rarity-purple": "#813fa6",
         "color-rarity-orange": "#91521b",
-        "color-rarity-red": "#ca1b1b"
+        "color-rarity-red": "#ca1b1b",
+        "color-rarity-pink": "#b71665"
       }
     }
   ]

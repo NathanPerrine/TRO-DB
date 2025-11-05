@@ -24,6 +24,7 @@
   --color-rarity-purple: #b462e1;
   --color-rarity-orange: #ffa500;
   --color-rarity-red: #ff0000;
+  --color-rarity-pink: #ff69b4;
 }
 
 /* General Layout */
@@ -306,4 +307,7 @@ textarea {
 }
 .rarity-red {
   color: var(--color-rarity-red);
+}
+.rarity-pink {
+  color: var(--color-rarity-pink);
 }

@@ -60,6 +60,7 @@ export const equipment = defineType({
           { title: 'Purple', value: 'purple' },
           { title: 'Orange', value: 'orange' },
           { title: 'Red', value: 'red' },
+          { title: 'Pink', value: 'pink' },
         ],
       },
     }),

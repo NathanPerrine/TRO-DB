@@ -9,7 +9,7 @@ export const slugSchema = z.object({
   current: z.string()
 });
 
-export const raritySchema = z.enum(['white', 'green', 'blue', 'purple', 'orange', 'red']);
+export const raritySchema = z.enum(['white', 'green', 'blue', 'purple', 'orange', 'red', 'pink']);
 
 export const areaTypeSchema = z.enum(['dungeon', 'town', 'zone']);
 
