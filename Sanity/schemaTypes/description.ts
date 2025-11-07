@@ -1,5 +1,5 @@
 import { defineField, defineType } from "sanity";
-import { portableTextBlock } from './portableTextConfig'
+import { portableTextBlock, tableConfig, imageConfig } from './portableTextConfig'
 
 export const descriptions = defineType({
   name: 'description',
@@ -18,7 +18,7 @@ export const descriptions = defineType({
       title: 'Description',
       description: 'Short, 1 paragraph description.',
       type: 'array',
-      of: [portableTextBlock],
+      of: [portableTextBlock, imageConfig, tableConfig],
     }),
 
     defineField({
@@ -26,7 +26,7 @@ export const descriptions = defineType({
       title: 'Extras',
       description: 'Any additional information required.',
       type: 'array',
-      of: [portableTextBlock],
+      of: [portableTextBlock, imageConfig, tableConfig],
     }),
   ]
 })
