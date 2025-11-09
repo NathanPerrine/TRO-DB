@@ -64,7 +64,7 @@
   }
 </script>
 
-<h2>
+<h2 id="{header.toLowerCase().split(' ').join('-')}">
   <button
     class="header-button"
     class:expanded

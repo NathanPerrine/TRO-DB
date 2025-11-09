@@ -69,6 +69,7 @@ export const accessories = defineType({
           { title: 'Purple', value: 'purple' },
           { title: 'Orange', value: 'orange' },
           { title: 'Red', value: 'red' },
+          { title: 'Pink', value: 'pink' },
         ],
       },
       validation: (Rule) => Rule.required(),

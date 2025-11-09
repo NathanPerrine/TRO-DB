@@ -60,7 +60,7 @@
 
   {#if equipmentType.toLowerCase() === 'weapons'}
     {@const weapons = equipmentList as GroupedWeapons}
-    <h1 class="equipment-header">Light Piercing</h1>
+    <h1 id="light-piercing" class="equipment-header">Light Piercing</h1>
     {#if weapons.dagger.length > 0}
       <EquipmentTableComponent equipmentList={weapons.dagger} header="Daggers" {playerClass} />
     {/if}
@@ -73,7 +73,7 @@
       />
     {/if}
 
-    <h1 class="equipment-header">Light One Handed</h1>
+    <h1 id="light-one-handed" class="equipment-header">Light One Handed</h1>
     {#if weapons['long sword'].length > 0}
       <EquipmentTableComponent equipmentList={weapons['long sword']} header="Long Swords" {playerClass} />
     {/if}
@@ -86,7 +86,7 @@
       <EquipmentTableComponent equipmentList={weapons.fist} header="Fists" {playerClass} />
     {/if}
 
-    <h1 class="equipment-header">Light Two Handed</h1>
+    <h1 id="light-two-handed" class="equipment-header">Light Two Handed</h1>
     {#if weapons.axe.length > 0}
       <EquipmentTableComponent equipmentList={weapons.axe} header="Axes" {playerClass} />
     {/if}
@@ -103,7 +103,7 @@
       <EquipmentTableComponent equipmentList={weapons.mace} header="Maces" {playerClass} />
     {/if}
 
-    <h1 class="equipment-header">Heavy Two Handed</h1>
+    <h1 id="heavy-two-handed" class="equipment-header">Heavy Two Handed</h1>
     {#if weapons.club.length > 0}
       <EquipmentTableComponent equipmentList={weapons.club} header="Clubs" {playerClass} />
     {/if}

@@ -4,7 +4,7 @@ import { FiLink, FiExternalLink, FiCompass } from 'react-icons/fi'
 export const externalLinkAnnotation = {
   name: 'link',
   type: 'object',
-  title: 'External Link',
+  title: 'Link',
   icon: FiExternalLink,
   fields: [
     {
@@ -14,13 +14,14 @@ export const externalLinkAnnotation = {
       validation: (Rule: any) =>
         Rule.uri({
           scheme: ['http', 'https', 'mailto', 'tel'],
+          allowRelative: true,
         }),
     },
     {
       name: 'blank',
       type: 'boolean',
       title: 'Open in new tab',
-      initialValue: true,
+      initialValue: false,
     },
   ],
 }
