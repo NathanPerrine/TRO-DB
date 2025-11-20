@@ -104,7 +104,7 @@
         today!
       </p>
       <p>
-        Want to contribute? Reach out via email at [email] or join our discussions on [Discord].
+        Want to contribute? Mail Soa in game via magic mail with any suggestions or requests.
       </p>
     </div>
 
