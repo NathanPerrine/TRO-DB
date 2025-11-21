@@ -119,8 +119,6 @@
 <style lang="scss">
   .internal-link {
     color: var(--color-text-accent);
-    text-decoration: none;
-    border-bottom: 1px solid var(--color-text-accent);
     transition: all 0.2s ease;
 
     &:hover {

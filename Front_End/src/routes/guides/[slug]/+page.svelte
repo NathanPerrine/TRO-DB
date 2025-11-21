@@ -211,19 +211,18 @@
 
 <style lang="scss">
   .guide-container {
-    display: grid;
-    grid-template-columns: 1fr 280px;
+    display: flex;
     gap: 1rem;
     max-width: 1400px;
-    // margin: 0 auto;
-    // padding: 0 1rem;
     padding: 0 0 0 45px;
+    overflow-y: visible;
   }
 
   .guide-article {
+    flex: 1;
     max-width: 900px;
-    min-width: 0; // Prevent grid overflow
-    padding-bottom: 3rem; // Bottom spacing for article content
+    min-width: 0;
+    padding-bottom: 3rem;
   }
 
   h1 {

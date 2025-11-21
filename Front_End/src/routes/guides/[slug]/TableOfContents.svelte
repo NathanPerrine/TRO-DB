@@ -59,13 +59,18 @@
 
 <style lang="scss">
   .table-of-contents {
+    flex: 0 0 280px;
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: 2rem;
+    align-self: flex-start;
     display: flex;
     flex-direction: column;
     background: var(--color-accent);
-    border-left: 1px solid var(--color-border);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    max-height: calc(100vh - 4rem);
+    overflow: hidden;
   }
 
   .toc-header {

@@ -23,14 +23,15 @@
   ];
 </script>
 
-<div class="equipment-container">
-  <header class="page-header">
-    <h1>Equipment Database</h1>
-    <p>Browse The Realm's vast collection of gear to outfit your character for any adventure.</p>
-  </header>
+<main>
+  <div class="equipment-container">
+    <header class="page-header">
+      <h1>Equipment Database</h1>
+      <p>Browse The Realm's vast collection of gear to outfit your character for any adventure.</p>
+    </header>
 
-  <div class="equipment-grid">
-    {#each equipmentTypes as equipment}
+    <div class="equipment-grid">
+      {#each equipmentTypes as equipment}
       <a href={equipment.href} class="equipment-card">
         <div class="card-header">
           <span class="icon"><equipment.icon size={24} /></span>
@@ -38,9 +39,10 @@
         </div>
         <p>{equipment.description}</p>
       </a>
-    {/each}
+      {/each}
+    </div>
   </div>
-</div>
+</main>
 
 <style lang="scss">
   @use '$lib/scss/view_mixins' as *;

@@ -136,7 +136,7 @@
             <td>
               {#if 'armorWeapon' in equipmentPiece}
                 <a
-                  href="/items/equipment/{equipmentPiece.armorWeapon}/{equipmentPiece.slug.current}"
+                  href="/items/equipment/{equipmentPiece.armorWeapon == "armor" ? 'armor' : 'weapons'}/{equipmentPiece.slug.current}"
                 >
                   {equipmentPiece.identifiedName}
                 </a>

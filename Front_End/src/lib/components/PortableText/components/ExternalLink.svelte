@@ -27,20 +27,11 @@
 <style lang="scss">
   .external-link {
     color: var(--color-text-accent);
-    text-decoration: none;
-    border-bottom: 1px solid transparent;
     transition: all 0.2s ease;
 
     &:hover {
       color: var(--color-header);
       border-bottom-color: var(--color-header);
-    }
-
-    &:after {
-      content: '↗';
-      font-size: 0.85em;
-      margin-left: 0.2em;
-      opacity: 0.7;
     }
   }
 </style>

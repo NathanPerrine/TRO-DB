@@ -15,7 +15,7 @@ const equipmentSchema = z.discriminatedUnion('armorWeapon', [
 ]);
 
 export const load = (async ({ params }) => {
-  if (params.slug === 'weapon' || params.slug === 'armor') {
+  if (params.slug === 'weapons' || params.slug === 'armor') {
     const rawData = await client.fetch(
       `*[_type == 'equipment' && slug.current == $item][0]{
         name,
@@ -53,7 +53,14 @@ export const load = (async ({ params }) => {
 
     // Zod automatically validates and narrows the type
     const equipment = equipmentSchema.parse(rawData);
-    return { equipment };
+    const seo = {
+      title: equipment.identifiedName || equipment.name,
+      description:
+        equipment.identifiedDescription ||
+        equipment.description ||
+        `${equipment.identifiedName || equipment.name} - ${equipment.armorWeapon} in The Realm Online. View stats, requirements, and drop locations.`
+    };
+    return { equipment, seo };
   }
 
   if (params.slug === 'accessories') {
@@ -83,7 +90,14 @@ export const load = (async ({ params }) => {
     }
 
     const equipment = accessoryDetailSchema.parse(rawData);
-    return { equipment };
+    const seo = {
+      title: equipment.identifiedName || equipment.name,
+      description:
+        equipment.identifiedDescription ||
+        equipment.description ||
+        `${equipment.identifiedName || equipment.name} - accessory in The Realm Online. View stats, requirements, and drop locations.`
+    };
+    return { equipment, seo };
   }
 
   throw error(404, 'Invalid equipment type');

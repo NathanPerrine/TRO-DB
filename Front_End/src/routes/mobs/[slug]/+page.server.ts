@@ -32,5 +32,13 @@ export const load = (async ({ params }) => {
   `)
 
   const mob = mobDetailSchema.parse(rawData);
-    return mob;
+
+  const seo = {
+    title: mob.name,
+    description: mob.description
+      ? mob.description
+      : `${mob.name} - Level ${mob.levelRange?.min}-${mob.levelRange?.max} ${mob.alignment} mob in The Realm Online. View stats, spells, and locations.`
+  };
+
+  return { ...mob, seo };
 }) satisfies PageServerLoad;

@@ -21,7 +21,7 @@
         <tbody>
           {#each data.items as scroll}
             <tr>
-              <td><a href="{data.description.name}/{scroll.slug.current}">{scroll.name}</a></td>
+              <td><a href="{data.description.name.toLowerCase()}/{scroll.slug.current}">{scroll.name}</a></td>
               <td>{scroll.descriptionIdentified}</td>
             </tr>
           {/each}
