@@ -11,6 +11,7 @@ export const load = (async ({ params }) => {
       description,
       levelRange,
       hpRange,
+      boss,
       alignment,
       meleeDefense,
       meleeAttributes,
