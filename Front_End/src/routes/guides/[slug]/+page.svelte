@@ -5,8 +5,15 @@
   import { fly } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
   import TableOfContents from './TableOfContents.svelte';
+  import { Link } from 'lucide-svelte';
 
   let { data: guide } = $props();
+
+  // Copy anchor link to clipboard
+  function copyAnchorLink(slug: string) {
+    const url = `${window.location.origin}${window.location.pathname}#${slug}`;
+    navigator.clipboard.writeText(url);
+  }
 
   // Active section for chapter tabs with transition tracking
   let activeSection = $state(0);
@@ -163,7 +170,16 @@
               opacity: 0
             }}
           >
-            <h2>{section.sectionTitle}</h2>
+            <h2 class="section-heading">
+              {section.sectionTitle}
+              <button
+                class="anchor-link"
+                onclick={() => copyAnchorLink(section.sectionSlug.current)}
+                title="Copy link to section"
+              >
+                <Link size={18} />
+              </button>
+            </h2>
             <div class="content">
               <PortableText value={section.content} components={portableTextComponents} />
             </div>
@@ -172,7 +188,16 @@
             {#if section.subsections && section.subsections.length > 0}
               {#each section.subsections as subsection}
                 <div id={getAnchorId(subsection.subsectionSlug)} class="subsection">
-                  <h3>{subsection.subsectionTitle}</h3>
+                  <h3 class="subsection-heading">
+                    {subsection.subsectionTitle}
+                    <button
+                      class="anchor-link"
+                      onclick={() => copyAnchorLink(subsection.subsectionSlug.current)}
+                      title="Copy link to subsection"
+                    >
+                      <Link size={16} />
+                    </button>
+                  </h3>
                   <div class="content">
                     <PortableText value={subsection.content} components={portableTextComponents} />
                   </div>
@@ -372,6 +397,23 @@
       padding-bottom: 0.5rem;
       border-bottom: 2px solid var(--color-text-accent);
     }
+  }
+
+  .section-heading,
+  .subsection-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .anchor-link {
+    background: none;
+    border: none;
+    color: var(--color-text-accent);
+    cursor: pointer;
+    padding: 0.25rem;
+    display: inline-flex;
+    align-items: center;
   }
 
   .subsection {

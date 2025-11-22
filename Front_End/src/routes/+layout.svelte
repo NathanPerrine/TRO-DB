@@ -5,7 +5,9 @@
   import Breadcrumbs from '$lib/components/Breadcrumbs/Breadcrumbs.svelte';
   import { page } from '$app/stores';
   import { getDefaultTitleFromPath, getDefaultDescriptionFromPath } from '$lib/utils/seoDefaults';
-  import { injectAnalytics } from '@vercel/analytics/sveltekit'
+  import { injectAnalytics } from '@vercel/analytics/sveltekit';
+
+  injectAnalytics();
 
   const { children } = $props();
 
