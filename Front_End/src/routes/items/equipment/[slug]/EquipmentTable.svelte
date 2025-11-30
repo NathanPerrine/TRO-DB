@@ -77,7 +77,7 @@
         <button
           class="tag"
           onclick={() => {
-            const element = document.getElementById(button.toLowerCase().replace(' ', '-'));
+            const element = document.getElementById(button.toLowerCase().split(' ').join('-'));
             element?.scrollIntoView({ behavior: 'smooth' });
           }}>{button}</button>
       {/each}
@@ -127,7 +127,7 @@
         <button
           class="tag"
           onclick={() => {
-            const element = document.getElementById(button.toLowerCase().replace(' ', '-'));
+            const element = document.getElementById(button.toLowerCase().split(' ').join('-'));
             element?.scrollIntoView({ behavior: 'smooth' });
           }}>{button}</button>
       {/each}
@@ -201,7 +201,7 @@
         <button
           class="tag"
           onclick={() => {
-            const element = document.getElementById(button.toLowerCase().replace(' ', '-'));
+            const element = document.getElementById(button.toLowerCase().split(' ').join('-'));
             element?.scrollIntoView({ behavior: 'smooth' });
           }}>{button}</button>
       {/each}
