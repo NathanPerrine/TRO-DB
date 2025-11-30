@@ -43,6 +43,29 @@ export const areas = defineType({
     }),
 
     defineField({
+      name: 'levelRange',
+      title: 'Level Range',
+      description: 'Recommended level range for this area.',
+      type: 'object',
+      options: {
+        columns: 2,
+      },
+      fields: [
+        defineField({
+          name: 'min',
+          title: 'Min',
+          type: 'number',
+        }),
+        defineField({
+          name: 'max',
+          title: 'Max',
+          type: 'number',
+        }),
+      ],
+      hidden: ({ parent }) => !['dungeon', 'zone'].includes(parent?.areaType),
+    }),
+
+    defineField({
       name: 'description',
       title: 'Description',
       description: 'Brief description of the area.',
