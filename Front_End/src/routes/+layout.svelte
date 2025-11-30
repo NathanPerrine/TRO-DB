@@ -30,7 +30,9 @@
 <div class="main-div">
   <Sidebar />
   <div class="content-wrapper">
-    <Breadcrumbs />
+    {#if $page.url.pathname !== '/'}
+      <Breadcrumbs />
+    {/if}
     {@render children()}
   </div>
 </div>
