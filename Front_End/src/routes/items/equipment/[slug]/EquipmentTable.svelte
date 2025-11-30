@@ -54,7 +54,7 @@
     'Feet',
     'Shields'
   ];
-  let weaponbuttosn = [
+  let weaponButtons = [
     'Daggers',
     'Throwing Daggers',
     'Long Swords',
@@ -66,6 +66,7 @@
     'Clubs',
     'Mauls'
   ];
+  let accessoryButtons = ['Amulets', 'Belts', 'Baldrics', 'Rings'];
 </script>
 
 <section>
@@ -120,6 +121,17 @@
   {/if}
 
   {#if equipmentType.toLowerCase() === 'weapons'}
+    <h2>Weapon Types</h2>
+    <div class="tag-container">
+      {#each weaponButtons as button}
+        <button
+          class="tag"
+          onclick={() => {
+            const element = document.getElementById(button.toLowerCase().replace(' ', '-'));
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}>{button}</button>
+      {/each}
+    </div>
     {@const weapons = equipmentList as GroupedWeapons}
     <h1 id="light-piercing" class="equipment-header">Light Piercing</h1>
     {#if weapons.dagger.length > 0}
@@ -183,6 +195,17 @@
   {/if}
 
   {#if equipmentType.toLowerCase() === 'accessories'}
+    <h2>Accessory Types</h2>
+    <div class="tag-container">
+      {#each accessoryButtons as button}
+        <button
+          class="tag"
+          onclick={() => {
+            const element = document.getElementById(button.toLowerCase().replace(' ', '-'));
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}>{button}</button>
+      {/each}
+    </div>
     {@const accessories = equipmentList as GroupedAccessories}
     {#if accessories.amulet.length > 0}
       <EquipmentTableComponent equipmentList={accessories.amulet} header="Amulets" {playerClass} />
