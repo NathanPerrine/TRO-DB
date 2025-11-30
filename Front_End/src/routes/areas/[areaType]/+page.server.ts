@@ -39,16 +39,17 @@ export const load = (async ({ params }) => {
           town->{name, slug},
           directions,
         },
-        'levelRange': select(
-          areaType != 'town' => {
-            'min': math::min(
-              *[_type == 'mob' && references(^._id)].levelRange.min
-            ),
-            'max': math::max(
-              *[_type == 'mob' && references(^._id)].levelRange.max
-            )
-          }
-        ),
+        //'levelRange': select(
+        //  areaType != 'town' => {
+        //    'min': math::min(
+        //      *[_type == 'mob' && references(^._id)].levelRange.min
+        //    ),
+        //    'max': math::max(
+        //      *[_type == 'mob' && references(^._id)].levelRange.max
+        //    )
+        //  }
+        //),
+        levelRange{min, max},
       }
     }`,
     { areaType: params.areaType }
