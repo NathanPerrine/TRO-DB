@@ -6,6 +6,7 @@
   } from '$lib/schemas/equipment.server';
   import type { PlayerClassType } from './types';
   import EquipmentTableComponent from './EquipmentTableComponent.svelte';
+  import { ArrowUp } from 'lucide-svelte';
 
   let {
     equipmentList,
@@ -16,10 +17,70 @@
     equipmentType: string;
     playerClass?: PlayerClassType;
   } = $props();
+
+  let showBackToTop = $state(false);
+
+  $effect(() => {
+    const contentWrapper = document.querySelector('.content-wrapper');
+    if (!contentWrapper) return;
+
+    const handleScroll = () => {
+      showBackToTop = contentWrapper.scrollTop > 300;
+    };
+
+    contentWrapper.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Initial check
+    handleScroll();
+
+    return () => {
+      contentWrapper.removeEventListener('scroll', handleScroll);
+    };
+  });
+
+  function scrollToTop() {
+    const contentWrapper = document.querySelector('.content-wrapper');
+    contentWrapper?.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  let armorButtons = [
+    'Helmets',
+    'Cowls',
+    'Chests',
+    'Robes',
+    'Skirts',
+    'Wrists',
+    'Legs',
+    'Feet',
+    'Shields'
+  ];
+  let weaponbuttosn = [
+    'Daggers',
+    'Throwing Daggers',
+    'Long Swords',
+    'Short Swords',
+    'Fists',
+    'Axes',
+    'Two Handed Swords',
+    'Maces',
+    'Clubs',
+    'Mauls'
+  ];
 </script>
 
 <section>
   {#if equipmentType.toLowerCase() === 'armor'}
+    <h2>Armor Types</h2>
+    <div class="tag-container">
+      {#each armorButtons as button}
+        <button
+          class="tag"
+          onclick={() => {
+            const element = document.getElementById(button.toLowerCase().replace(' ', '-'));
+            element?.scrollIntoView({ behavior: 'smooth' });
+          }}>{button}</button>
+      {/each}
+    </div>
     {@const armor = equipmentList as GroupedArmor}
     <!-- helms -->
     {#if armor.helm.length > 0}
@@ -75,11 +136,19 @@
 
     <h1 id="light-one-handed" class="equipment-header">Light One Handed</h1>
     {#if weapons['long sword'].length > 0}
-      <EquipmentTableComponent equipmentList={weapons['long sword']} header="Long Swords" {playerClass} />
+      <EquipmentTableComponent
+        equipmentList={weapons['long sword']}
+        header="Long Swords"
+        {playerClass}
+      />
     {/if}
 
     {#if weapons['short sword'].length > 0}
-      <EquipmentTableComponent equipmentList={weapons['short sword']} header="Short Swords" {playerClass} />
+      <EquipmentTableComponent
+        equipmentList={weapons['short sword']}
+        header="Short Swords"
+        {playerClass}
+      />
     {/if}
 
     {#if weapons.fist.length > 0}
@@ -124,7 +193,11 @@
     {/if}
 
     {#if accessories.baldric.length > 0}
-      <EquipmentTableComponent equipmentList={accessories.baldric} header="Baldrics" {playerClass} />
+      <EquipmentTableComponent
+        equipmentList={accessories.baldric}
+        header="Baldrics"
+        {playerClass}
+      />
     {/if}
 
     <!-- {#if accessories.backpack.length > 0}
@@ -137,8 +210,44 @@
   {/if}
 </section>
 
+{#if showBackToTop}
+  <button class="back-to-top" onclick={scrollToTop} aria-label="Back to top">
+    <ArrowUp size={24} />
+  </button>
+{/if}
+
 <style lang="scss">
   .equipment-header {
     color: var(--color-text-accent);
+  }
+
+  .back-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    width: 3rem;
+    height: 3rem;
+    padding: 0;
+    border-radius: 50%;
+    background-color: var(--color-button-bg);
+    border: 1px solid var(--color-text-accent);
+    color: var(--color-text-accent);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+
+    &:hover {
+      background-color: var(--color-button-hover);
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+
+    &:active {
+      transform: translateY(-2px);
+    }
   }
 </style>
