@@ -63,7 +63,7 @@ export const guides = defineType({
           { title: 'Leveling', value: 'leveling' },
           { title: 'Money Making', value: 'money making' },
           { title: 'New Player', value: 'new player' },
-          { title: 'Crafting', value: 'crafting' },
+          { title: 'Enchanting and Crafting', value: 'enchanting and crafting' },
           { title: 'Other', value: 'other' },
         ],
       },
