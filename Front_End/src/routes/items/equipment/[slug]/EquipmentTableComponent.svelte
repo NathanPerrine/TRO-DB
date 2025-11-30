@@ -1,10 +1,22 @@
 <script lang="ts">
-  import type { ArmorListItem, WeaponListItem, AccessoryListItem } from '$lib/schemas/equipment.server';
+  import type {
+    ArmorListItem,
+    WeaponListItem,
+    AccessoryListItem
+  } from '$lib/schemas/equipment.server';
   import type { PlayerClassType } from './types';
   import { flip } from 'svelte/animate';
   import { fade } from 'svelte/transition';
   import './equipment.scss';
-  import { normalizeAttributes, extractAttributeTags, sortEquipment, filterByClass } from './utils';
+  import {
+    normalizeAttributes,
+    extractAttributeTags,
+    sortEquipment,
+    filterByClass,
+    isWeapon,
+    isArmor,
+    isAccessory
+  } from './utils';
 
   let {
     equipmentList,
@@ -64,7 +76,7 @@
   }
 </script>
 
-<h2 id="{header.toLowerCase().split(' ').join('-')}">
+<h2 id={header.toLowerCase().split(' ').join('-')}>
   <button
     class="header-button"
     class:expanded
@@ -126,6 +138,11 @@
               >
             </button>
           </th>
+          {#if isWeapon(filteredEquipmentList[0])}
+            <th>Damage</th>
+          {:else if isArmor(filteredEquipmentList[0])}
+            <th>Armor Rating</th>
+          {/if}
           <th>Attributes</th>
           <th>Drop Area</th>
         </tr>
@@ -134,13 +151,15 @@
         {#each filteredEquipmentList as equipmentPiece (equipmentPiece)}
           <tr animate:flip={{ duration: DEFAULT_DURATION }} transition:fade={{ duration: 300 }}>
             <td>
-              {#if 'armorWeapon' in equipmentPiece}
-                <a
-                  href="/items/equipment/{equipmentPiece.armorWeapon == "armor" ? 'armor' : 'weapons'}/{equipmentPiece.slug.current}"
-                >
+              {#if isWeapon(equipmentPiece)}
+                <a href="/items/equipment/weapons/{equipmentPiece.slug.current}">
                   {equipmentPiece.identifiedName}
                 </a>
-              {:else}
+              {:else if isArmor(equipmentPiece)}
+                <a href="/items/equipment/armor/{equipmentPiece.slug.current}">
+                  {equipmentPiece.identifiedName}
+                </a>
+              {:else if isAccessory(equipmentPiece)}
                 <a href="/items/equipment/accessories/{equipmentPiece.slug.current}">
                   {equipmentPiece.identifiedName}
                 </a>
@@ -158,6 +177,23 @@
                 {equipmentPiece.levelRequirement}
               {/if}
             </td>
+            {#if isWeapon(equipmentPiece)}
+              <td>
+                {#if equipmentPiece.weaponAttributes?.damage}
+                  {equipmentPiece.weaponAttributes.damage.min} - {equipmentPiece.weaponAttributes.damage.max}
+                {:else}
+                  ? - ?
+                {/if}
+              </td>
+            {:else if isArmor(equipmentPiece)}
+              <td>
+                {#if equipmentPiece.armorAttributes?.armorRating}
+                  {equipmentPiece.armorAttributes?.armorRating}
+                {:else}
+                  ?
+                {/if}
+              </td>
+            {/if}
             <td>
               <ul class="ul-diamond">
                 {#if equipmentPiece.attributes}

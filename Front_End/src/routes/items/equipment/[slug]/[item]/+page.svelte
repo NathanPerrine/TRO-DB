@@ -1,21 +1,9 @@
 <script lang="ts">
   import Notes from '$lib/components/Notes/Notes.svelte';
   import type { PageData } from './$types';
+  import { isArmor, isWeapon, isAccessory } from '../utils';
 
   export let data: PageData;
-
-  // Type guards for discriminated union
-  function isArmor(equipment: PageData['equipment']) {
-    return equipment && 'armorWeapon' in equipment && equipment.armorWeapon === 'armor';
-  }
-
-  function isWeapon(equipment: PageData['equipment']) {
-    return equipment && 'armorWeapon' in equipment && equipment.armorWeapon === 'weapon';
-  }
-
-  function isAccessory(equipment: PageData['equipment']) {
-    return equipment && 'slot' in equipment;
-  }
 </script>
 
 <main>

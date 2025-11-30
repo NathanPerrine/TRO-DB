@@ -42,12 +42,14 @@ const baseProjection = `{
 const armorProjection = `{
   ...${baseProjection},
   armorWeapon,
+  armorAttributes {armorRating},
   'armorType': armorAttributes.armorType,
 }`;
 
 const weaponProjection = `{
   ...${baseProjection},
   armorWeapon,
+  weaponAttributes {damage},
   'weaponType': weaponAttributes.weaponType->name,
 }`;
 

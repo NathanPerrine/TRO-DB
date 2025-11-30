@@ -1,8 +1,21 @@
-import type { ArmorListItem, WeaponListItem, AccessoryListItem } from '$lib/schemas/equipment.server';
+import type {
+  ArmorListItem,
+  WeaponListItem,
+  AccessoryListItem,
+  ArmorDetail,
+  WeaponDetail,
+  AccessoryDetail
+} from '$lib/schemas/equipment.server';
 import type { PlayerClassType } from './types';
 
 // Union type for all equipment list items
 type EquipmentListItem = ArmorListItem | WeaponListItem | AccessoryListItem;
+
+// Union type for all equipment detail items
+type EquipmentDetail = ArmorDetail | WeaponDetail | AccessoryDetail;
+
+// Union type for both list items and detail items
+type Equipment = EquipmentListItem | EquipmentDetail;
 
 // Class attribute mappings - equipment must match ANY of these (OR logic)
 // Uses partial matching: e.g., '+ SR' matches '+ SR Thaum', 'Immo' matches '+ Fire Immo'
@@ -95,4 +108,34 @@ export function sortEquipment(
 
     return direction === 'asc' ? comparison : -comparison;
   });
+}
+
+/**
+ * Type guard to check if equipment is armor
+ * Works with both list items and detail items
+ */
+export function isArmor<T extends Equipment>(
+  equipment: T
+): equipment is Extract<T, { armorWeapon: 'armor' }> {
+  return equipment != null && 'armorWeapon' in equipment && equipment.armorWeapon === 'armor';
+}
+
+/**
+ * Type guard to check if equipment is a weapon
+ * Works with both list items and detail items
+ */
+export function isWeapon<T extends Equipment>(
+  equipment: T
+): equipment is Extract<T, { armorWeapon: 'weapon' }> {
+  return equipment != null && 'armorWeapon' in equipment && equipment.armorWeapon === 'weapon';
+}
+
+/**
+ * Type guard to check if equipment is an accessory
+ * Works with both list items and detail items
+ */
+export function isAccessory<T extends Equipment>(
+  equipment: T
+): equipment is Extract<T, { slot: unknown }> {
+  return equipment != null && 'slot' in equipment;
 }

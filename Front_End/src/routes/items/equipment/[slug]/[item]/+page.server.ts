@@ -34,13 +34,15 @@ export const load = (async ({ params }) => {
         dropArea[]->{name, slug, areaType},
         notes,
         armorWeapon == 'armor' => {armorAttributes},
-        armorWeapon == 'weapon' => weaponAttributes{
-          damage,
-          weaponType->{
-            name,
-            range,
-            attributeScaling,
-            skill
+        armorWeapon == 'weapon' => {
+          weaponAttributes{
+            damage,
+            weaponType->{
+              name,
+              range,
+              attributeScaling,
+              skill
+            }
           }
         }
       }`,
