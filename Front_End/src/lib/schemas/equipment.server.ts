@@ -8,7 +8,7 @@ import { linkedAreaSchema } from './links.server';
 // Weapon Types Schema
 const AttributeScalingSchema = z.object({
   attribute: z.enum(['strength', 'dexterity', 'intelligence', 'endurance']),
-  scalingType: z.enum(['primary', 'splash'])
+  scalingType: z.enum(['major', 'minor'])
 });
 
 export const weaponTypeSchema = z.object({
