@@ -20,7 +20,7 @@ const guidePageDataSchema = z.object({
     'New Player': z.array(guideListItemSchema).nullish().default([]),
     'Leveling': z.array(guideListItemSchema).nullish().default([]),
     'Money Making': z.array(guideListItemSchema).nullish().default([]),
-    'Crafting': z.array(guideListItemSchema).nullish().default([]),
+    'Enchanting and Crafting': z.array(guideListItemSchema).nullish().default([]),
     'Other': z.array(guideListItemSchema).nullish().default([]),
   })
 });
@@ -38,7 +38,7 @@ export const load = (async () => {
       'New Player': *[_type == 'guide' && category == 'new player'] | order(_createdAt) ${guideProjection},
       'Leveling': *[_type == 'guide' && category == 'leveling'] | order(_createdAt) ${guideProjection},
       'Money Making': *[_type == 'guide' && category == 'money making'] | order(_createdAt) ${guideProjection},
-      'Crafting': *[_type == 'guide' && category == 'crafting'] | order(_createdAt) ${guideProjection},
+      'Enchanting and Crafting': *[_type == 'guide' && category == 'enchanting and crafting'] | order(_createdAt) ${guideProjection},
       'Other': *[_type == 'guide' && category == 'other'] | order(_createdAt) ${guideProjection},
     }
   }`

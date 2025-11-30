@@ -6,7 +6,7 @@
   let { data }: { data: PageData } = $props();
 
   // Reorder `GUIDE_SECTION_ORDER` to update the order guides are displayed on the page
-  const GUIDE_SECTION_ORDER = ['New Player', 'Leveling', 'Money Making', 'Enchanting & Crafting', 'Other'];
+  const GUIDE_SECTION_ORDER = ['New Player', 'Leveling', 'Money Making', 'Enchanting and Crafting', 'Other'];
   const sortedGuides = Object.entries(data.guides).sort(([a], [b]) => {
     const indexA = GUIDE_SECTION_ORDER.indexOf(a);
     const indexB = GUIDE_SECTION_ORDER.indexOf(b);
@@ -21,7 +21,7 @@
         return 'scroll';
       case 'money making':
         return 'coins';
-      case 'crafting':
+      case 'enchanting and crafting':
         return 'anvil';
       default:
         return 'scroll';

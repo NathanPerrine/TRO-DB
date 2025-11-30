@@ -34,7 +34,7 @@ export const guideDetailSchema = sanityDocumentSchema.extend({
   slug: slugSchema,
   author: z.string(),
   summary: z.string(),
-  category: z.enum(['leveling', 'money making', 'new player', 'crafting', 'other']),
+  category: z.enum(['leveling', 'money making', 'new player', 'enchanting and crafting', 'other']),
   sections: z.array(sectionSchema),
   relatedGuides: z.array(relatedGuideRefSchema.nullable())
     .nullable()
