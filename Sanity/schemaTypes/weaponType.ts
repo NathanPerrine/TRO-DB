@@ -62,8 +62,8 @@ export const weaponType = defineType({
               type: 'string',
               options: {
                 list: [
-                  { title: 'Primary', value: 'primary' },
-                  { title: 'Splash', value: 'splash' },
+                  { title: 'Major', value: 'major' },
+                  { title: 'Minor', value: 'minor' },
                 ],
               },
             }),
