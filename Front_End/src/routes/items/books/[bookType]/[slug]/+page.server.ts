@@ -8,6 +8,7 @@ export const load = (async ({ params }) => {
     const rawData = await client.fetch(
       `*[_type == 'book' && slug.current == $slug]{
       ...,
+      dropArea[]->{name, slug, areaType},
       linkedSpell->{
         title,
         spellSchool,
@@ -28,6 +29,7 @@ export const load = (async ({ params }) => {
     const rawData = await client.fetch(
       `*[_type == 'book' && slug.current == $slug]{
       ...,
+      dropArea[]->{name, slug, areaType},
     }`,
       { slug: params.slug }
     );

@@ -68,6 +68,16 @@
           {/if}
         </li>
       </ul>
+      {#if data.book?.dropArea.length > 0}
+        <h2>Drop Areas</h2>
+        <ul class="ul-diamond">
+          {#each data.book.dropArea as area}
+            <li>
+              <a href="/areas/{area.areaType}/{area.slug.current}">{area.name}</a>
+            </li>
+          {/each}
+        </ul>
+      {/if}
     </section>
   {/if}
 </main>

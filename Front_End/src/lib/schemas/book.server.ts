@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { skillLevelSchema, slugSchema } from './common.server';
-import { linkedSpellSchema } from './links.server';
+import { linkedAreaSchema, linkedSpellSchema } from './links.server';
 
 export const bookSchema = z.object({
   name: z.string(),
@@ -14,7 +14,11 @@ export const bookSchema = z.object({
   buyPrice: z.number().nullish(),
   sellPrice: z.number().nullish(),
   linkedSpell: linkedSpellSchema.nullish(),
-  buildPoints: z.number().nullish()
+  buildPoints: z.number().nullish(),
+  dropArea: z
+    .array(linkedAreaSchema.nullable())
+    .nullish()
+    .transform((val) => val?.filter((item) => item !== null) ?? [])
 });
 
 export type Book = z.infer<typeof bookSchema>;
