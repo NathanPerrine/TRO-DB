@@ -5,6 +5,7 @@ import { itemTemplate } from './itemTemplate'
 import { areaTemplate } from './areaTemplate'
 import { accessoryTemplate } from './accessoryTemplate'
 import { equipmentTemplate } from './equipmentTemplate'
+import { galleryTemplate } from './galleryTemplate'
 
 export const templates: Template[] = [
   bookTemplate,
@@ -13,4 +14,5 @@ export const templates: Template[] = [
   areaTemplate,
   accessoryTemplate,
   equipmentTemplate,
+  galleryTemplate,
 ]

@@ -42,6 +42,7 @@ export const items = defineType({
           { title: 'Wand', value: 'wand' },
           { title: 'Orb', value: 'orb' },
           { title: 'Dungeon', value: 'dungeon' },
+          { title: 'Dye', value: 'dye' },
         ],
       },
       validation: (Rule) => Rule.required(),

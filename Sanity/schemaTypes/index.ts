@@ -8,6 +8,9 @@ import { accessories } from './accessory'
 import { equipment } from './equipment'
 import { weaponType } from './weaponType'
 import { guides } from './guide'
+import { gallery } from './gallery'
+import { shop } from './shop'
+import { npc } from './npc'
 
 export const schemaTypes = [
   spells,
@@ -20,4 +23,7 @@ export const schemaTypes = [
   equipment,
   weaponType,
   guides,
+  gallery,
+  shop,
+  npc,
 ]

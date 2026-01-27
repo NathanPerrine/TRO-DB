@@ -1,5 +1,5 @@
 import type { StructureResolver } from 'sanity/structure'
-import { FaBook } from 'react-icons/fa'
+import { FaBook, FaImages, FaStore, FaUserTie } from 'react-icons/fa'
 import {
   GiLightningTrio,
   GiNinjaArmor,
@@ -13,6 +13,7 @@ import { itemList } from './itemList'
 import { areaList } from './areaList'
 import { accessoryList } from './accessoryList'
 import { equipmentList } from './equipmentList'
+import { galleryList } from './galleryList'
 
 const excludeFromDefault = [
   'item',
@@ -22,6 +23,9 @@ const excludeFromDefault = [
   'accessory',
   'equipment',
   'weaponType',
+  'gallery',
+  'shop',
+  'npc',
 ]
 
 export const structure: StructureResolver = (S) =>
@@ -59,4 +63,15 @@ export const structure: StructureResolver = (S) =>
         .title('Areas')
         .icon(FaRegMap)
         .child(areaList(S)),
+      S.documentTypeListItem('npc')
+        .title('NPCs')
+        .icon(FaUserTie),
+      S.documentTypeListItem('shop')
+        .title('Shops')
+        .icon(FaStore),
+      S.divider(),
+      S.documentTypeListItem('gallery')
+        .title('Gallery')
+        .icon(FaImages)
+        .child(galleryList(S)),
     ])

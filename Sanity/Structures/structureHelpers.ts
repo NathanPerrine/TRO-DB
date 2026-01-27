@@ -14,7 +14,7 @@ import {
   GiDoorRingHandle,
   GiBackpack,
 } from 'react-icons/gi'
-import { FaHome, FaSlash } from 'react-icons/fa'
+import { FaHome, FaPaintBrush, FaSlash } from 'react-icons/fa'
 
 export const skills = [
   { title: 'Light Piercing', value: 'Light Piercing' },
@@ -68,6 +68,7 @@ export const itemTypes = [
   { title: 'Wands', icon: GiCrystalWand, value: 'wand' },
   { title: 'Orbs', icon: GiCrystalBall, value: 'orb' },
   { title: 'Dungeon', icon: GiBossKey, value: 'dungeon' },
+  { title: 'Dyes', icon: FaPaintBrush, value: 'dye' },
 ]
 
 export const areaTypes = [
@@ -143,4 +144,29 @@ export const armorTypes = [
   { title: 'Legs', value: 'legs' },
   { title: 'Feet', value: 'feet' },
   { title: 'Shield', value: 'shield' },
+]
+
+export const galleryCategories = [
+  // Dyes
+  { title: 'Dyes', value: 'dyes', group: 'dyes' },
+  // Equipment
+  { title: 'Weapons', value: 'weapons', group: 'equipment' },
+  { title: 'Helm', value: 'helm', group: 'equipment' },
+  { title: 'Cowl', value: 'cowl', group: 'equipment' },
+  { title: 'Chest', value: 'chest', group: 'equipment' },
+  { title: 'Robe', value: 'robe', group: 'equipment' },
+  { title: 'Skirt', value: 'skirt', group: 'equipment' },
+  { title: 'Wrists', value: 'wrists', group: 'equipment' },
+  { title: 'Legs', value: 'legs', group: 'equipment' },
+  { title: 'Feet', value: 'feet', group: 'equipment' },
+  { title: 'Shield', value: 'shield', group: 'equipment' },
+  // Accessories
+  { title: 'Amulet', value: 'amulet', group: 'accessory' },
+  { title: 'Backpack', value: 'backpack', group: 'accessory' },
+  { title: 'Baldric', value: 'baldric', group: 'accessory' },
+  { title: 'Belt', value: 'belt', group: 'accessory' },
+  { title: 'Ring', value: 'ring', group: 'accessory' },
+  // Other
+  { title: 'Screenshots', value: 'screenshots', group: 'misc' },
+  { title: 'Other', value: 'other', group: 'misc' },
 ]

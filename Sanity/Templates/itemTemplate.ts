@@ -42,6 +42,11 @@ export const itemTemplate: Template = {
         weight: 1.5,
         condition: 500,
       },
+      dye: {
+        description: 'You see a bottle of dye.',
+        weight: 0.5,
+        condition: 120,
+      },
     }
 
     const defaultItem = {
