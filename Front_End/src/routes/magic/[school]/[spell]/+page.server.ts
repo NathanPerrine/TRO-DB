@@ -28,10 +28,8 @@ export const load = (async ({ params }) => {
     {slug: params.spell}
   );
 
-    if (!rawData){
-      error(404, {
-        message: "Sorry, that spell has not been found. Please try again later."
-      })
+    if (!rawData) {
+      throw error(404, 'Spell not found');
     }
 
     const data = spellDetailSchema.parse(rawData);

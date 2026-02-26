@@ -41,7 +41,7 @@ const spellProjection = `{
 
 export const load = (async ({ params }) => {
   if (!isValidSlug(params.school)) {
-    throw error(404, 'Page not Found.');
+    throw error(404, 'Page not found');
   }
 
   const rawData = await client.fetch(

@@ -23,9 +23,7 @@ export const load = (async ({ params }) => {
   );
 
   if (!rawData) {
-    error(404, {
-      message: 'Sorry, that page has not been found. Please try again later.'
-    });
+    throw error(404, 'Item not found');
   }
 
   const data = itemDetailSchema.parse(rawData);

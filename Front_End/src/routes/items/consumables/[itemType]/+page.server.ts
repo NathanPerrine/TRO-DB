@@ -22,10 +22,10 @@ function isValidSlug(slug: string): slug is ValidSlug {
   return VALID_SLUGS.includes(slug as ValidSlug);
 }
 
-const itemPageDataSchema = {
+const itemPageDataSchema = z.object({
   description: descriptionSchema,
-  items: z.array(itemListItemSchema),
-};
+  items: z.array(itemListItemSchema)
+});
 
 export const load = (async ({ params }) => {
   if (!isValidSlug(params.itemType)) {
@@ -49,7 +49,7 @@ export const load = (async ({ params }) => {
     { itemType: params.itemType }
   );
 
-  const data = z.object(itemPageDataSchema).parse(rawData);
+  const data = itemPageDataSchema.parse(rawData);
 
   return {
     description: data.description,

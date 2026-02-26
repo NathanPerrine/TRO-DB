@@ -1,10 +1,10 @@
 <script lang="ts">
   import { PortableText } from '@portabletext/svelte';
   import type { Description } from '$lib/types';
-  import UnorderedList from '$lib/utils/sanity/UnorderedList.svelte';
+  import UnorderedList from '$lib/components/PortableText/components/UnorderedList.svelte';
   import PortableTextRenderer, { portableTextComponents } from '$lib/components/PortableText';
 
-  export let description: Description;
+  let { description } = $props<{ description: Description }>();
   const bulletContext = 'diamond';
 </script>
 

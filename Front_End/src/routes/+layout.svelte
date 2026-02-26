@@ -1,15 +1,24 @@
 <script lang="ts">
   import '$lib/scss/app.scss';
-  import Sidebar from '../lib/components/Navbar/Sidebar.svelte';
+  import Sidebar from '$lib/components/Navbar/Sidebar.svelte';
   import SEO from '$lib/components/SEO.svelte';
   import Breadcrumbs from '$lib/components/Breadcrumbs/Breadcrumbs.svelte';
   import { page } from '$app/stores';
+  import { afterNavigate } from '$app/navigation';
   import { getDefaultTitleFromPath, getDefaultDescriptionFromPath } from '$lib/utils/seoDefaults';
   import { injectAnalytics } from '@vercel/analytics/sveltekit';
 
   injectAnalytics();
 
   const { children } = $props();
+
+  let contentWrapper: HTMLDivElement;
+
+  afterNavigate(({ to }) => {
+    if (!to?.url.hash) {
+      contentWrapper?.scrollTo(0, 0);
+    }
+  });
 
   // Check if page provides custom SEO via load function
   const pageSEO = $derived($page.data.seo as { title: string; description: string } | undefined);
@@ -29,7 +38,7 @@
 
 <div class="main-div">
   <Sidebar />
-  <div class="content-wrapper">
+  <div class="content-wrapper" bind:this={contentWrapper}>
     {#if $page.url.pathname !== '/'}
       <Breadcrumbs />
     {/if}

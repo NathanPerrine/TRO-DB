@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { PortableText } from '@portabletext/svelte';
-	import UnorderedList from '$lib/utils/sanity/UnorderedList.svelte';
-	import { portableTextComponents } from '$lib/components/PortableText';
-  export let notes: any[] | undefined | null;
+  import { PortableText } from '@portabletext/svelte';
+  import UnorderedList from '$lib/components/PortableText/components/UnorderedList.svelte';
+  import { portableTextComponents } from '$lib/components/PortableText';
 
-  const bulletContext = 'note'
+  let { notes } = $props<{ notes: any[] | undefined | null }>();
+  const bulletContext = 'note';
 </script>
 
 <h2>Notes</h2>

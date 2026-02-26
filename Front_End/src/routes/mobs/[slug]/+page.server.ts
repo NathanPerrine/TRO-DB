@@ -1,11 +1,12 @@
 import { client } from '$lib/utils/sanity/client';
+import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { mobDetailSchema } from '$lib/schemas/mob.server';
 import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection';
 
 export const load = (async ({ params }) => {
-  const rawData = await client.fetch(`
-    *[_type == 'mob' && slug.current == '${params.slug}'][0] {
+  const rawData = await client.fetch(
+    `*[_type == 'mob' && slug.current == $slug][0] {
       name,
       slug,
       description,
@@ -29,8 +30,13 @@ export const load = (async ({ params }) => {
       },
       emotes,
       notes${portableTextProjection},
-    }
-  `)
+    }`,
+    { slug: params.slug }
+  );
+
+  if (!rawData) {
+    throw error(404, 'Mob not found');
+  }
 
   const mob = mobDetailSchema.parse(rawData);
 

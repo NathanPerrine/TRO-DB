@@ -5,6 +5,7 @@ import InternalLink from './components/InternalLink.svelte';
 import PageLink from './components/PageLink.svelte';
 import ImageComponent from './components/ImageComponent.svelte';
 import TableComponent from './components/TableComponent.svelte';
+import UnorderedList from './components/UnorderedList.svelte';
 
 // Pre-configured components object for use with @portabletext/svelte
 export const portableTextComponents: PortableTextComponents = {
@@ -20,7 +21,7 @@ export const portableTextComponents: PortableTextComponents = {
 };
 
 // Export individual components for custom configurations
-export { ExternalLink, InternalLink, PageLink, ImageComponent, TableComponent };
+export { ExternalLink, InternalLink, PageLink, ImageComponent, TableComponent, UnorderedList };
 
 // Default export: the wrapper component
 export default PortableTextRenderer;

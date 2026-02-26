@@ -33,7 +33,7 @@ export const load = async ({ params }) => {
   );
 
   if (!rawData) {
-    throw error(404, 'Guide not found :(');
+    throw error(404, 'Guide not found');
   }
 
   const guide = guidePageDataSchema.parse(rawData);
