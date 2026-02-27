@@ -1,12 +1,12 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
+  import { buildItemUrl } from '$lib/utils/buildItemUrl';
 
   type ReferenceData = {
     _type: string;
     slug: { current: string };
     title?: string;
-    school?: string; // From top-level links (aliased)
-    spellSchool?: string; // From table cell links (not aliased)
+    spellSchool?: string;
     armorWeapon?: 'armor' | 'weapon';
     type?: string;
     areaType?: 'dungeon' | 'town' | 'zone';
@@ -22,88 +22,12 @@
     children: Snippet;
   }>();
 
-  const reference = portableText.value.reference;
+  const reference = $derived(portableText.value.reference);
 
   // Check if reference is null (unpublished document)
-  const isUnpublished = reference === null;
+  const isUnpublished = $derived(reference === null);
 
-  // Helper to pluralize item types for consumables URLs
-  function pluralizeItemType(type: string): string {
-    const pluralMap: Record<string, string> = {
-      junk: 'junk',
-      potion: 'potions',
-      elixir: 'elixirs',
-      bauble: 'baubles',
-      scroll: 'scrolls',
-      wand: 'wands',
-      orb: 'orbs',
-      dungeon: 'dungeon'
-    };
-    return pluralMap[type] || type;
-  }
-
-  // Build URL based on document type
-  function buildUrl(ref: ReferenceData): string {
-    if (!ref || !ref.slug?.current) {
-      console.warn('InternalLink: Missing reference or slug');
-      return '#';
-    }
-
-    const slug = ref.slug.current;
-
-    switch (ref._type) {
-      case 'guide':
-        return `/guides/${slug}`;
-
-      case 'equipment':
-        if (!ref.armorWeapon) {
-          console.warn('InternalLink: Equipment missing armorWeapon field');
-          return '#';
-        }
-        return `/items/equipment/${ref.armorWeapon}/${slug}`;
-
-      case 'accessory':
-        return `/items/equipment/accessories/${slug}`;
-
-      case 'spell':
-        const school = ref.school || ref.spellSchool;
-        if (!school) {
-          console.warn('InternalLink: Spell missing school field');
-          return '#';
-        }
-        return `/magic/${school}/${slug}`;
-
-      case 'item':
-        if (!ref.type) {
-          console.warn('InternalLink: Item missing type field');
-          return '#';
-        }
-        return `/items/consumables/${pluralizeItemType(ref.type)}/${slug}`;
-
-      case 'book':
-        if (!ref.bookType) {
-          console.warn('InternalLink: Book missing bookType field');
-          return '#';
-        }
-        return `/items/books/${ref.bookType}/${slug}`;
-
-      case 'area':
-        if (!ref.areaType) {
-          console.warn('InternalLink: Area missing areaType field');
-          return '#';
-        }
-        return `/areas/${ref.areaType}/${slug}`;
-
-      case 'mob':
-        return `/mobs/${slug}`;
-
-      default:
-        console.warn(`Unknown reference type: ${ref._type}`);
-        return '#';
-    }
-  }
-
-  const href = $derived(reference ? buildUrl(reference) : '#');
+  const href = $derived(reference ? buildItemUrl(reference) : '#');
 </script>
 
 {#if isUnpublished}

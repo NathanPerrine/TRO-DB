@@ -1,5 +1,23 @@
 <script lang="ts">
   import { BookText, Earth, ScrollText, ShieldHalf } from 'lucide-svelte/icons';
+  import { formatDate } from '$lib/utils/formatDate';
+  import { buildItemUrl } from '$lib/utils/buildItemUrl';
+
+  let { data } = $props();
+
+  function formatTypeName(type: string): string {
+    const names: Record<string, string> = {
+      mob: 'Mob',
+      spell: 'Spell',
+      equipment: 'Equipment',
+      accessory: 'Accessory',
+      area: 'Area',
+      book: 'Book',
+      item: 'Item',
+      guide: 'Guide'
+    };
+    return names[type] || type;
+  }
 
   const featuredSections = [
     {
@@ -90,22 +108,53 @@
       {/each}
     </div>
 
+    <!-- News & Updates -->
+    <div class="news-grid">
+      <div class="news-section">
+        <h2>News</h2>
+        <div class="placeholder">
+          <p>Our scribes are still searching for their ink...</p>
+          <p>Check back soon!</p>
+        </div>
+      </div>
+
+      <div class="whats-new-section">
+        <h2>What's New</h2>
+        <ul class="recent-items">
+          {#each data.recentItems as item}
+            <li>
+              <a href={buildItemUrl(item)} class="recent-item">
+                <span class="item-primary">
+                  <span class="item-type">{formatTypeName(item._type)}</span> - {item.displayName}
+                </span>
+                <span class="item-date">Updated on {formatDate(item._updatedAt)}</span>
+              </a>
+            </li>
+          {/each}
+        </ul>
+      </div>
+    </div>
+
     <!-- About Section -->
     <div class="about-section">
       <h2>About The Realm Online</h2>
       <p>
-        The Realm Online (TRO) is a classic MMORPG first released in 1996 by Sierra On-Line. As one of the earliest graphical online RPGs, it blends medieval fantasy with round-based combat and a strong emphasis on social interaction. With its rich lore, deep role-playing elements, and dedicated community, TRO remains a nostalgic favorite while continuing to attract new adventurers.
+        The Realm Online (TRO) is a classic MMORPG first released in 1996 by Sierra On-Line. As one
+        of the earliest graphical online RPGs, it blends medieval fantasy with round-based combat
+        and a strong emphasis on social interaction. With its rich lore, deep role-playing elements,
+        and dedicated community, TRO remains a nostalgic favorite while continuing to attract new
+        adventurers.
       </p>
       <p>
-        Whether you're a veteran player or just beginning your journey, this wiki serves as your ultimate resource for game information, strategies, and community knowledge. Join our community to share your adventures, contribute knowledge, and keep the legacy of TRO alive!
+        Whether you're a veteran player or just beginning your journey, this wiki serves as your
+        ultimate resource for game information, strategies, and community knowledge. Join our
+        community to share your adventures, contribute knowledge, and keep the legacy of TRO alive!
       </p>
       <p>
         Explore the database, learn from veteran players, and enhance your Realm Online experience
         today!
       </p>
-      <p>
-        Want to contribute? Mail Soa in game via magic mail with any suggestions or requests.
-      </p>
+      <p>Want to contribute? Mail Soa in game via magic mail with any suggestions or requests.</p>
     </div>
 
     <!-- Quick Links -->
@@ -219,6 +268,83 @@
     p {
       color: var(--color-text);
       min-height: 60px;
+    }
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+
+    @include mobile {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .news-section,
+  .whats-new-section {
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    padding: 1.5rem;
+    border-radius: 8px;
+
+    h2 {
+      color: var(--color-header);
+      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      border: none;
+    }
+  }
+
+  .news-section {
+    .placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: calc(100% - 3rem);
+      text-align: center;
+      color: var(--color-inactive);
+      font-style: italic;
+
+      p {
+        margin: 0.25rem 0;
+      }
+    }
+  }
+
+  .whats-new-section {
+    .recent-items {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .recent-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 0.75rem 0.5rem;
+      text-decoration: none;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: var(--color-hover);
+      }
+    }
+
+    .item-primary {
+      color: var(--color-text);
+    }
+
+    .item-type {
+      color: var(--color-text-accent);
+      font-weight: 600;
+    }
+
+    .item-date {
+      font-size: 0.85rem;
+      color: var(--color-inactive);
     }
   }
 

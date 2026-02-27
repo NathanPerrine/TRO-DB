@@ -56,7 +56,7 @@ export const portableTextProjection = `[]{
         _type,
         slug,
         title,
-        _type == "spell" => { "school": spellSchool },
+        _type == "spell" => { spellSchool },
         _type == "equipment" => { "armorWeapon": armorWeapon },
         _type == "item" => { "type": type },
         _type == "area" => { "areaType": areaType },
