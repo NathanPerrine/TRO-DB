@@ -31,7 +31,8 @@ export function getDefaultTitleFromPath(path: string): string {
 		towns: 'Towns',
 		zones: 'Zones',
 		mobs: 'Mobs',
-		guides: 'Guides'
+		guides: 'Guides',
+		news: 'News'
 	};
 
 	// Get the last meaningful segment (handles /items/equipment/weapons -> "Weapons")
@@ -75,6 +76,8 @@ export function getDefaultDescriptionFromPath(path: string): string {
 			'Vast outdoor regions ranging from peaceful woods to deadly battlefields. Perfect for exploration, hunting, and adventure.',
 		guides:
 			'Comprehensive guides covering game mechanics, strategies, and tips for The Realm Online. Learn from veteran players and enhance your experience.',
+		news:
+			'Stay up to date with the latest news, game updates, community events, and announcements for The Realm Online.',
 		thaumaturgy:
 			'The school of light and holy energy. Master healing, protection, and defensive magic to support allies and smite dark creatures.',
 		mysticism:

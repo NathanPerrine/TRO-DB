@@ -112,9 +112,13 @@
     <div class="news-grid">
       <div class="news-section">
         <h2>News</h2>
-        <div class="placeholder">
-          <p>Our scribes are still searching for their ink...</p>
-          <p>Check back soon!</p>
+        <div class="news-items">
+          {#each data.recentNews as news}
+            <a href="/news/{news.slug.current}" class="recent-item">
+              <span class="item-primary">{news.title}</span>
+              <span class="item-secondary">{news.category} - {formatDate(news.publishedAt)} - {news.author}</span>
+            </a>
+          {/each}
         </div>
       </div>
 
@@ -127,7 +131,7 @@
                 <span class="item-primary">
                   <span class="item-type">{formatTypeName(item._type)}</span> - {item.displayName}
                 </span>
-                <span class="item-date">Updated on {formatDate(item._updatedAt)}</span>
+                <span class="item-secondary">Updated on {formatDate(item._updatedAt)}</span>
               </a>
             </li>
           {/each}
@@ -296,25 +300,10 @@
     }
   }
 
-  .news-section {
-    .placeholder {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: calc(100% - 3rem);
-      text-align: center;
-      color: var(--color-inactive);
-      font-style: italic;
-
-      p {
-        margin: 0.25rem 0;
-      }
-    }
-  }
-
+  .news-section,
   .whats-new-section {
-    .recent-items {
+    .recent-items,
+    .news-items {
       list-style: none;
       margin: 0;
       padding: 0;
@@ -342,7 +331,7 @@
       font-weight: 600;
     }
 
-    .item-date {
+    .item-secondary {
       font-size: 0.85rem;
       color: var(--color-inactive);
     }

@@ -64,6 +64,7 @@ export const sidebarItems: SidebarItem[] = [
   },
   { title: 'Character Builder', link: '/characterbuilder', disabled: false },
   { title: 'Guides', link: '/guides', disabled: false },
+  { title: 'News', link: '/news', disabled: false },
   { title: 'Mobs', link: '/mobs', disabled: false },
   { title: 'NPCs', link: '/npcs', disabled: true },
   { title: 'Quests', link: '/quests', disabled: true },

@@ -6,6 +6,7 @@ export const segmentLabels: Record<string, string> = {
 	areas: 'Areas',
 	mobs: 'Mobs',
 	guides: 'Guides',
+	news: 'News',
 	characterbuilder: 'Character Builder',
 
 	// Equipment types

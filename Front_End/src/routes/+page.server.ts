@@ -15,12 +15,23 @@ export const load = (async () => {
         areaType,
         bookType,
         type
-      }
+      },
+    'recentNews': *[_type == "news"] | order(_updatedAt desc) [0..4] {
+      title,
+      slug,
+      author,
+      publishedAt,
+      summary,
+      category
+    }
   }`);
+
+  console.log(rawData);
 
   const data = homePageDataSchema.parse(rawData);
   return {
     recentItems: data.recentItems,
+    recentNews: data.recentNews,
     seo: {
       title: 'TRO-DB',
       description:

@@ -13,6 +13,16 @@ export const recentItemSchema = z.object({
   type: z.string().nullable()
 });
 
+export const recentNewsSchema = z.object({
+  title: z.string(),
+  slug: slugSchema,
+  author: z.string(),
+  publishedAt: z.string(),
+  summary: z.string(),
+  category: z.string()
+});
+
 export const homePageDataSchema = z.object({
-  recentItems: z.array(recentItemSchema)
+  recentItems: z.array(recentItemSchema),
+  recentNews: z.array(recentNewsSchema)
 });

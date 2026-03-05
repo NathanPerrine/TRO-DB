@@ -79,6 +79,9 @@ export function buildItemUrl(ref: ItemReference): string {
     case 'mob':
       return `/mobs/${slug}`;
 
+    case 'news':
+      return `/news/${slug}`;
+
     default:
       console.warn(`Unknown reference type: ${ref._type}`);
       return '#';

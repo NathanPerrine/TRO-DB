@@ -5,6 +5,8 @@
   import { fade, slide } from 'svelte/transition';
   import { quintOut } from 'svelte/easing';
   import ThemeSelector from './ThemeSelector.svelte';
+  // import SidebarSearch from './SidebarSearch.svelte';
+  import kofiBadge from '$lib/images/kofi_symbol.png'
 
   export let isMobileMenuOpen = false;
 
@@ -14,10 +16,15 @@
 </script>
 
 <nav class="sidebar">
+  <!-- <SidebarSearch /> -->
   <SidebarHeader />
   <SidebarList onNavigate={closeMenu} />
   <h2>Theme</h2>
   <ThemeSelector />
+  <a href="https://ko-fi.com/vasril" target="_blank" rel="noopener noreferrer" class="kofi-link">
+    <span>Support me on</span>
+    <img src={kofiBadge} alt="Ko-fi" />
+  </a>
 </nav>
 
 <nav class="mobile-menu">
@@ -46,6 +53,10 @@
       <SidebarList onNavigate={closeMenu} />
       <h2>Theme</h2>
       <ThemeSelector />
+      <a href="https://ko-fi.com/vasril" target="_blank" rel="noopener noreferrer" class="kofi-link">
+        <span>Support me on</span>
+        <img src={kofiBadge} alt="Ko-fi" />
+      </a>
     </div>
   {/if}
 </nav>
@@ -53,7 +64,34 @@
 <style lang="scss">
   @use '$lib/scss/view_mixins' as *;
 
+  .kofi-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin: 20px 10px 0;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    color: var(--color-text-accent);
+    font-size: 0.85rem;
+
+    img {
+      height: 2rem;
+    }
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  .sidebar > .kofi-link {
+    margin-top: auto;
+  }
+
   .sidebar {
+    display: flex;
+    flex-direction: column;
     background: linear-gradient(to left, var(--color-accent) 5%, var(--color-background) 15%);
     padding: 20px;
     width: 225px;
