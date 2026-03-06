@@ -42,7 +42,7 @@
     // Each 10 points after level 100 represents 25 levels
     const additionalLevels = Math.ceil(remainingPoints / 10) * 25;
 
-    return Math.min(100 + additionalLevels, 200);
+    return Math.min(100 + additionalLevels, 300);
   });
 
   function increaseSkill(skillName: SkillName) {

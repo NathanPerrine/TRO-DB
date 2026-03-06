@@ -23,7 +23,8 @@ export const SKILL_LEVELS: SkillLevel[] = [
   'Expert',
   'Master',
   'Grandmaster',
-  'Supreme-Master'
+  'Supreme-Master',
+  'Grand Poobah'
 ];
 
 export const SKILL_COSTS: Record<SkillLevel, number> = {
@@ -33,10 +34,11 @@ export const SKILL_COSTS: Record<SkillLevel, number> = {
   Expert: 4,
   Master: 7,
   Grandmaster: 10,
-  'Supreme-Master': 13
+  'Supreme-Master': 13,
+  'Grand Poobah': 15,
 };
 
-export const MAX_LEVEL = 200;
+export const MAX_LEVEL = 300;
 export const BASE_SKILL_POINTS = 10;
 export const INITIAL_FREE_POINTS = 3;
 

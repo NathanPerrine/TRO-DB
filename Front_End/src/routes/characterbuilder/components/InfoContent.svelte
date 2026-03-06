@@ -94,7 +94,7 @@
       </p>
       <ul class="ul-diamond">
         {#each classStartingSkills[character.background.class].skills as skill}
-          <li>{skill.skill} : {skill.rankValue}</li>
+          <li>{skill.skill} : {skill.rank} ({skill.rankValue})</li>
         {/each}
       </ul>
     </div>
@@ -107,19 +107,19 @@
         </p>
         {#each magicSkills.good as magicSkill}
           <ul class="ul-diamond">
-            <li>{magicSkill.skill} : {magicSkill.rankValue}</li>
+            <li>{magicSkill.skill} : {magicSkill.rank} ({magicSkill.rankValue})</li>
           </ul>
         {/each}
         <span class="text-emphasis">Neutral</span>:
         {#each magicSkills.neutral as magicSkill}
           <ul class="ul-diamond">
-            <li>{magicSkill.skill} : {magicSkill.rankValue}</li>
+            <li>{magicSkill.skill} : {magicSkill.rank} ({magicSkill.rankValue})</li>
           </ul>
         {/each}
         <span class="text-emphasis">Evil</span>:
         {#each magicSkills.evil as magicSkill}
           <ul class="ul-diamond">
-            <li>{magicSkill.skill} : {magicSkill.rankValue}</li>
+            <li>{magicSkill.skill} : {magicSkill.rank} ({magicSkill.rankValue})</li>
           </ul>
         {/each}
       </div>

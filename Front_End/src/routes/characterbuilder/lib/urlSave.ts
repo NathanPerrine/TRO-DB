@@ -35,6 +35,7 @@ import type {
   SkillLevel
 } from './types';
 import { createCharacter } from './factories';
+import { getCumulativeCost } from './utils';
 import {
   SKILL_LEVELS,
   AVAILABLE_SKILLS,
@@ -132,7 +133,10 @@ function validateCharacter(character: Character): void {
   }
 
   // Validate total skill points
-  const totalSkillPoints = skillEntries.reduce((total, [, info]) => total + info.rankValue, 0);
+  const totalSkillPoints = skillEntries.reduce(
+    (total, [, info]) => total + getCumulativeCost(info.rank),
+    0
+  );
   if (totalSkillPoints > MAX_SKILL_POINTS) {
     errors.push(
       `Total skill points (${totalSkillPoints}) exceeds maximum allowed (${MAX_SKILL_POINTS})`
