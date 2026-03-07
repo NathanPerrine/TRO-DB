@@ -66,7 +66,7 @@ export type SkillLevel =
   | 'Master'
   | 'Grandmaster'
   | 'Supreme-Master'
-  | 'Grand Poobah';
+  | 'Sage';
 
 export type SkillName =
   | 'Light Piercing'

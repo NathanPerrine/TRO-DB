@@ -24,7 +24,7 @@ export const SKILL_LEVELS: SkillLevel[] = [
   'Master',
   'Grandmaster',
   'Supreme-Master',
-  'Grand Poobah'
+  'Sage'
 ];
 
 export const SKILL_COSTS: Record<SkillLevel, number> = {
@@ -35,7 +35,7 @@ export const SKILL_COSTS: Record<SkillLevel, number> = {
   Master: 7,
   Grandmaster: 10,
   'Supreme-Master': 13,
-  'Grand Poobah': 15,
+  'Sage': 16,
 };
 
 export const MAX_LEVEL = 300;
