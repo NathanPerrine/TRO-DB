@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Swords, Home, Mountain } from 'lucide-svelte/icons';
+  import { Swords, Home, Mountain, Map, ExternalLink } from 'lucide-svelte/icons';
 
   const areaTypes = [
     {
@@ -44,6 +44,28 @@
         <p>{area.description}</p>
       </a>
     {/each}
+  </div>
+
+  <div class="world-map">
+    <div class="world-map__header">
+      <Map size={24} />
+      <h2>World Map</h2>
+    </div>
+    <p>
+      Navigating The Realm is no small feat. This community-maintained world map charts the
+      connections between zones, dungeons, and towns, providing an invaluable reference for both new
+      adventurers and seasoned explorers.
+    </p>
+    <a
+      href="https://docs.google.com/spreadsheets/d/1S1Uc1UtXt20pjb73edgj6Hz8pNShyzZfvz904l3cobM/edit?gid=0#gid=0"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="world-map__link"
+    >
+      View World Map
+      <ExternalLink size={16} />
+    </a>
+    <p class="world-map__credit">Hosted externally via Google Sheets</p>
   </div>
 </div>
 
@@ -128,6 +150,67 @@
 
     p {
       color: var(--color-text);
+    }
+  }
+
+  .world-map {
+    background-color: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 4px;
+    padding: 1.5rem;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      color: var(--color-text-accent);
+
+      h2 {
+        color: var(--color-header);
+        font-size: 1.25rem;
+        margin: 0;
+        border: none;
+      }
+    }
+
+    p {
+      color: var(--color-text);
+      line-height: 1.6;
+      margin: 0 0 1rem;
+    }
+
+    &__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.5rem 1.25rem;
+      background-color: var(--color-button-bg);
+      color: var(--color-button-text);
+      border-radius: 4px;
+      border-bottom: none;
+      text-decoration: none;
+      font-weight: 600;
+      transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+
+      &:hover {
+        background-color: var(--color-button-hover);
+        transform: translateY(-1px);
+      }
+    }
+
+    &__credit {
+      font-size: 0.8rem;
+      color: var(--color-text-muted, var(--color-text));
+      opacity: 0.7;
+      margin-top: 0.75rem;
+      margin-bottom: 0;
     }
   }
 </style>
