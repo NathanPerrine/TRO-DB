@@ -66,7 +66,7 @@
     'Clubs',
     'Mauls'
   ];
-  let accessoryButtons = ['Amulets', 'Belts', 'Baldrics', 'Rings'];
+  let accessoryButtons = ['Amulets', 'Belts', 'Baldrics', 'Backpacks', 'Rings'];
 </script>
 
 <section>
