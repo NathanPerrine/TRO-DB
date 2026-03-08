@@ -223,9 +223,9 @@
       />
     {/if}
 
-    <!-- {#if accessories.backpack.length > 0}
+    {#if accessories.backpack.length > 0}
       <EquipmentTableComponent equipmentList={accessories.backpack} header="Backpacks" {playerClass} />
-    {/if} -->
+    {/if}
 
     {#if accessories.ring.length > 0}
       <EquipmentTableComponent equipmentList={accessories.ring} header="Rings" {playerClass} />
