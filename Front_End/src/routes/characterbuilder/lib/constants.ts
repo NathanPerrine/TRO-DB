@@ -6,7 +6,8 @@ import type {
   RaceClassStats,
   SkillLevel,
   SkillName,
-  StatInfo
+  StatInfo,
+  SkillTips
 } from './types';
 
 // Basic Game Constants
@@ -230,3 +231,37 @@ export const pvpInfo: PvPInfo = {
   off: 'With player vs. player combat turned off - other players are not permitted to attack you. This is a good choice for players new to The Realm. You can always decide to participate in player vs. player combat at a later time.',
   on: 'With player vs. player combat turned on you may be attacked by other players who choose to participate in player vs. player combat.'
 };
+
+export const skillTips: SkillTips = {
+  'Light Piercing': 'Ability to use light piercing weapons',
+  'Light One-Handed': 'Ability to use light one-handed weapons',
+  'Light Two-Handed': 'Ability to use light two-handed weapons',
+  'Heavy Two-Handed': 'Ability to use heavy two-handed weapons',
+  Armorsmith: 'Ability to craft metal armors',
+  Weaponsmith: 'Ability to create weapons',
+  Leatherworker: 'Ability to create leather armor',
+  Seamster: 'Ability to create cloth armor',
+  Healing: 'Increases healing points restored while regenerating',
+  Acrobatics: 'Increases character chance to dodge attacks',
+  Sorcery: 'Increases character sorcery spell damage and durations',
+  Elementalism: 'Increases character elementalism spell damage and durations',
+  Mysticism: 'Increases character mysticism spell damage and durations',
+  Thaumaturgy: 'Increases character thaumaturgy spell damage and durations',
+  Necromancy: 'Increases character necromancy spell damage and durations',
+  Theurgism: 'Increases the affectiveness of consumables',
+  Alchemy: 'Ability to create consumables',
+  Pickpocketing: 'Increases the chance to successfully steal from players and NPCs',
+  'Disarm Traps': 'Increases the chance to disarm traps',
+  Lockpicking: 'Increases the chance to pick locks',
+  Meditation: 'Increases spell damage / durations for all spells and increases mana points restored while regenerating',
+  'Critical Strikes': 'Increases the chacne to cause critical damage with melee weapons',
+  'Shield Usage': 'Increases the chance to negate attacks with a shield'
+}
+
+  export const skillAdditionalInfo: Partial<Record<SkillName,
+  string>> = {
+    'Light Piercing': 'Applies when using Daggers and Throwing Daggers.',
+    'Light One-Handed': 'Applies when using Long Sword, Short Sword, and Claw/Fist weapons.',
+    'Light Two-Handed': 'Applies when using Axes, Two-Handed Swords, and Maces.',
+    'Heavy Two-Handed': 'Applies when using Clubs and Mauls.',
+  };

@@ -1,6 +1,13 @@
 <script lang="ts">
   import type { Character, SkillLevel, SkillName } from '../lib/types';
-  import { SKILL_LEVELS, SKILL_COSTS } from '../lib/constants';
+  import {
+    SKILL_LEVELS,
+    SKILL_COSTS,
+    BASE_SKILL_POINTS,
+    INITIAL_FREE_POINTS,
+    skillTips,
+    skillAdditionalInfo
+  } from '../lib/constants';
   import {
     getCumulativeCost,
     getNextLevel,
@@ -10,6 +17,17 @@
   } from '../lib/utils';
 
   let { character = $bindable() }: { character: Character } = $props();
+
+  let expandedSkills = $state<Set<SkillName>>(new Set());
+
+  function toggleSkillInfo(skillName: SkillName) {
+    if (expandedSkills.has(skillName)) {
+      expandedSkills.delete(skillName);
+    } else {
+      expandedSkills.add(skillName);
+    }
+    expandedSkills = new Set(expandedSkills);
+  }
 
   // Calculate total points used
   let totalPoints = $derived(
@@ -27,7 +45,7 @@
 
   let minimumLevel = $derived.by(() => {
     // Remove starting points (10) and initial free points (3)
-    const pointsToAccount = Math.max(0, totalPoints - 13);
+    const pointsToAccount = Math.max(0, totalPoints - (BASE_SKILL_POINTS + INITIAL_FREE_POINTS));
 
     if (pointsToAccount <= 0) return 1;
 
@@ -138,11 +156,30 @@
             character.background.alignment
           )}
           {@const isActive = currentLevel !== 'Untrained'}
+          {@const isExpanded = expandedSkills.has(skillName)}
+          {@const pointsSpent = getCumulativeCost(currentLevel)}
           <div class="skill-item" class:starting-skill={starting} class:active-skill={isActive}>
             <div class="skill-header">
               <span>{skillName}</span>
-              <span class="skill-level">{currentLevel}</span>
+              <div class="skill-header-right">
+                <span class="skill-level">{currentLevel}</span>
+                <button
+                  class="info-toggle"
+                  class:expanded={isExpanded}
+                  onclick={() => toggleSkillInfo(skillName)}
+                  title="Skill info"
+                >i</button>
+              </div>
             </div>
+            {#if isExpanded}
+              <div class="skill-info">
+                <p class="skill-tip">{skillTips[skillName]}</p>
+                {#if skillAdditionalInfo[skillName]}
+                  <p class="skill-additional">{skillAdditionalInfo[skillName]}</p>
+                {/if}
+                <p class="skill-points-spent">Build Points spent: {pointsSpent}</p>
+              </div>
+            {/if}
             <div class="skill-progress">
               {#each SKILL_LEVELS.slice(1) as level, i}
                 {@const isActive = SKILL_LEVELS.indexOf(currentLevel) > i}
@@ -310,12 +347,70 @@
       .skill-header {
         display: flex;
         justify-content: space-between;
+        align-items: center;
         margin-bottom: 10px;
+      }
+
+      .skill-header-right {
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
 
       .skill-level {
         font-style: italic;
         color: var(--color-text-accent);
+      }
+
+      .info-toggle {
+        width: 20px;
+        height: 20px;
+        padding: 0;
+        border-radius: 50%;
+        border: 1px solid var(--color-border);
+        background-color: var(--color-button-bg);
+        color: var(--color-text-accent);
+        font-size: 12px;
+        font-style: italic;
+        font-family: serif;
+        cursor: pointer;
+        line-height: 1;
+
+        &.expanded {
+          background-color: var(--color-text-accent);
+          color: var(--color-background);
+        }
+
+        &:hover {
+          background-color: var(--color-button-hover);
+        }
+      }
+
+      .skill-info {
+        margin-bottom: 10px;
+        padding: 8px;
+        border-radius: 4px;
+        background-color: color-mix(in srgb, var(--color-background) 80%, black);
+        border-left: 2px solid var(--color-text-accent);
+        font-size: 0.85em;
+        line-height: 1.4;
+
+        .skill-tip {
+          color: var(--color-text);
+          margin: 0;
+        }
+
+        .skill-additional {
+          color: var(--color-text-accent);
+          margin: 4px 0 0;
+          font-style: italic;
+        }
+
+        .skill-points-spent {
+          color: var(--color-inactive);
+          margin: 6px 0 0;
+          font-size: 0.9em;
+        }
       }
 
       .skill-progress {

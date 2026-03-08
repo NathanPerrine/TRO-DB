@@ -138,3 +138,7 @@ export type ClassStats = {
 export type RaceClassStats = {
   [key in Races]: ClassStats;
 };
+
+export type SkillTips = {
+  [key in SkillName]: string;
+}
