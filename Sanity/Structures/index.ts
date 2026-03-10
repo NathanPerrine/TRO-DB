@@ -4,6 +4,7 @@ import {
   FaImages,
   FaNewspaper,
   FaStore,
+  FaUser,
   FaUserTie,
 } from 'react-icons/fa'
 import {
@@ -11,6 +12,7 @@ import {
   GiLightningTrio,
   GiNinjaArmor,
   GiRing,
+  GiScrollQuill,
   GiSwapBag,
 } from 'react-icons/gi'
 import { FaRegMap } from 'react-icons/fa'
@@ -37,6 +39,8 @@ const excludeFromDefault = [
   'npc',
   'guide',
   'news',
+  'quest',
+  'author',
 ]
 
 export const structure: StructureResolver = (S) =>
@@ -89,6 +93,12 @@ export const structure: StructureResolver = (S) =>
         .title('News')
         .icon(FaNewspaper)
         .child(newsList(S)),
+      S.documentTypeListItem('quest')
+        .title('Quest Guides')
+        .icon(GiScrollQuill),
+      S.documentTypeListItem('author')
+        .title('Authors')
+        .icon(FaUser),
       S.divider(),
       S.documentTypeListItem('gallery')
         .title('Gallery')

@@ -1,10 +1,14 @@
 import { defineField, defineType } from 'sanity'
 import { CharacterCountInput } from './GuideHelperComponent'
-import { portableTextBlock, imageConfig, tableConfig } from './portableTextConfig'
+import {
+  portableTextBlock,
+  imageConfig,
+  tableConfig,
+} from './portableTextConfig'
 
-export const guides = defineType({
-  name: 'guide',
-  title: 'Guide',
+export const quest = defineType({
+  name: 'quest',
+  title: 'Quest Guide',
   type: 'document',
   fields: [
     defineField({
@@ -23,10 +27,10 @@ export const guides = defineType({
         slugify: (input) =>
           input
             .toLowerCase()
-            .replace(/[^\w\s-]/g, '') // Remove all non-word chars except spaces and hyphens
-            .replace(/\s+/g, '-') // Replace spaces with hyphens
-            .replace(/-+/g, '-') // Collapse multiple hyphens to single hyphen
-            .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .replace(/^-+|-+$/g, '')
             .slice(0, 200),
       },
       validation: (Rule) =>
@@ -45,7 +49,7 @@ export const guides = defineType({
       name: 'summary',
       title: 'Summary',
       type: 'string',
-      description: 'A short, one sentence summary of this guide',
+      description: 'A short, one sentence summary of this quest guide',
       components: {
         input: CharacterCountInput,
       },
@@ -56,25 +60,59 @@ export const guides = defineType({
     }),
 
     defineField({
-      name: 'category',
-      title: 'Category',
-      type: 'string',
+      name: 'questGiver',
+      title: 'Quest Giver',
+      description: 'The NPC that starts this quest',
+      type: 'reference',
+      to: [{ type: 'npc' }],
+      weak: true,
+    }),
+
+    defineField({
+      name: 'startingArea',
+      title: 'Starting Area',
+      description: 'The area where this quest begins',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [
+            {type: 'area'},
+            {type: 'shop'},
+          ],
+          weak: true,
+        }
+      ]
+    }),
+
+    defineField({
+      name: 'recommendedLevel',
+      title: 'Recommended Level',
+      description: 'Recommended level range for this quest',
+      type: 'object',
       options: {
-        list: [
-          { title: 'Leveling', value: 'leveling' },
-          { title: 'Money Making', value: 'money making' },
-          { title: 'New Player', value: 'new player' },
-          { title: 'Enchanting and Crafting', value: 'enchanting and crafting' },
-          { title: 'Other', value: 'other' },
-        ],
+        columns: 2,
+        collapsible: true,
       },
-      validation: (Rule) => Rule.required(),
+      fields: [
+        defineField({
+          name: 'min',
+          title: 'Min',
+          type: 'number',
+        }),
+        defineField({
+          name: 'max',
+          title: 'Max',
+          type: 'number',
+        }),
+      ],
     }),
 
     defineField({
       name: 'sections',
       title: 'Sections',
-      description: 'Add chapters/sections to organize your guide content',
+      description:
+        'Add chapters/sections to organize your quest guide content',
       type: 'array',
       options: {
         modal: {
@@ -101,7 +139,8 @@ export const guides = defineType({
               description:
                 'Used for anchor links and navigation within the guide',
               options: {
-                source: (doc, context) => (context.parent as any)?.sectionTitle,
+                source: (doc, context) =>
+                  (context.parent as any)?.sectionTitle,
                 slugify: (input) =>
                   input
                     .toLowerCase()
@@ -210,14 +249,36 @@ export const guides = defineType({
     }),
 
     defineField({
-      name: 'relatedGuides',
-      title: 'Related Guides',
-      description: 'Related guides that might be helpful to the reader.',
+      name: 'rewards',
+      title: 'Rewards',
+      description: 'Describe the rewards for completing this quest',
+      type: 'array',
+      of: [portableTextBlock, imageConfig],
+    }),
+
+    defineField({
+      name: 'relatedAreas',
+      title: 'Related Areas',
+      description: 'Areas involved in this quest',
       type: 'array',
       of: [
         {
           type: 'reference',
-          to: [{ type: 'guide' }],
+          to: [{ type: 'area' }],
+          weak: true,
+        },
+      ],
+    }),
+
+    defineField({
+      name: 'relatedQuests',
+      title: 'Related Quests',
+      description: 'Prerequisites or follow-up quests',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{ type: 'quest' }],
           weak: true,
           options: {
             filter: ({ document }) => {
@@ -231,4 +292,26 @@ export const guides = defineType({
       ],
     }),
   ],
+
+  orderings: [
+    {
+      title: 'Title',
+      name: 'titleAsc',
+      by: [{ field: 'title', direction: 'asc' }],
+    },
+  ],
+
+  preview: {
+    select: {
+      title: 'title',
+      author: 'author.displayName',
+      authorName: 'author.name',
+    },
+    prepare({ title, author, authorName }) {
+      return {
+        title: title || 'Untitled Quest',
+        subtitle: author || authorName || 'Unknown author',
+      }
+    },
+  },
 })

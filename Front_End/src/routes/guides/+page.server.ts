@@ -8,7 +8,7 @@ import { portableTextProjection } from '$lib/utils/sanity/portableTextProjection
 const guideProjection = `{
   title,
   slug,
-  author,
+  "author": coalesce(author->displayName, author->name),
   summary,
   _createdAt,
   _updatedAt,

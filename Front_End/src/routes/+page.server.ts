@@ -19,7 +19,7 @@ export const load = (async () => {
     'recentNews': *[_type == "news"] | order(_updatedAt desc) [0..4] {
       title,
       slug,
-      author,
+      "author": coalesce(author->displayName, author->name),
       publishedAt,
       summary,
       category

@@ -7,7 +7,7 @@ export const load = async ({ params }) => {
   const rawData = await client.fetch(
     `*[_type == "news" && slug.current == $slug][0]{
       title,
-      author,
+      "author": coalesce(author->displayName, author->name),
       publishedAt,
       summary,
       category,

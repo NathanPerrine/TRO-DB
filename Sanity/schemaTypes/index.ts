@@ -12,6 +12,8 @@ import { gallery } from './gallery'
 import { shop } from './shop'
 import { npc } from './npc'
 import { news } from './news'
+import { quest } from './quest'
+import { author } from './author'
 
 export const schemaTypes = [
   spells,
@@ -28,4 +30,6 @@ export const schemaTypes = [
   shop,
   npc,
   news,
+  quest,
+  author,
 ]

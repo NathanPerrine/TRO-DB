@@ -40,8 +40,9 @@ export const news = defineType({
     defineField({
       name: 'author',
       title: 'Author',
-      type: 'string',
-      validation: (Rule) => Rule.required().max(30),
+      type: 'reference',
+      to: [{ type: 'author' }],
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
@@ -249,17 +250,18 @@ export const news = defineType({
   preview: {
     select: {
       title: 'title',
-      author: 'author',
+      author: 'author.displayName',
+      authorName: 'author.name',
       publishedAt: 'publishedAt',
       media: 'featuredImage',
     },
-    prepare({ title, author, publishedAt, media }) {
+    prepare({ title, author, authorName, publishedAt, media }) {
       const date = publishedAt
         ? new Date(publishedAt).toLocaleDateString()
         : 'No date'
       return {
         title: title || 'Untitled Post',
-        subtitle: `${author || 'Unknown author'} — ${date}`,
+        subtitle: `${author || authorName || 'Unknown author'} — ${date}`,
         media,
       }
     },

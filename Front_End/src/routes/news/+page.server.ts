@@ -6,7 +6,7 @@ import { z } from 'zod';
 const newsProjection = `{
   title,
   slug,
-  author,
+  "author": coalesce(author->displayName, author->name),
   publishedAt,
   summary,
   category,
