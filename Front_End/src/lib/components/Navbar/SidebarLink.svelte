@@ -11,6 +11,8 @@
   <a
     class:active={isActive}
     href={item.link}
+    target={item.external ? '_blank' : undefined}
+    rel={item.external ? 'noopener noreferrer' : undefined}
     on:click={() => {
       onNavigate();
     }}>{item.title}</a

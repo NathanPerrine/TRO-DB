@@ -2,6 +2,7 @@ export interface SidebarItem {
   title: string;
   link?: string;
   disabled?: boolean;
+  external?: boolean;
   subItems?: SidebarItem[];
 }
 
@@ -10,14 +11,17 @@ export const sidebarItems: SidebarItem[] = [
   {
     title: 'Areas',
     subItems: [
+      { title: 'Overview', link: '/areas', disabled: false },
       { title: 'Dungeons', link: '/areas/dungeons', disabled: false },
       { title: 'Towns', link: '/areas/towns', disabled: false },
-      { title: 'Zones', link: '/areas/zones', disabled: false }
+      { title: 'Zones', link: '/areas/zones', disabled: false },
+      { title: 'World Map', link: 'https://docs.google.com/spreadsheets/d/1S1Uc1UtXt20pjb73edgj6Hz8pNShyzZfvz904l3cobM/edit?gid=0#gid=0', disabled: false, external: true }
     ]
   },
   {
     title: 'Items',
     subItems: [
+      { title: 'Overview', link: '/items', disabled: false },
       {
         title: 'Books',
         subItems: [
@@ -55,6 +59,7 @@ export const sidebarItems: SidebarItem[] = [
   {
     title: 'Magic',
     subItems: [
+      { title: 'Overview', link: '/magic', disabled: false },
       { title: 'Thaumaturgy', link: '/magic/thaumaturgy', disabled: false },
       { title: 'Mysticism', link: '/magic/mysticism', disabled: false },
       { title: 'Elementalism', link: '/magic/elementalism', disabled: false },
