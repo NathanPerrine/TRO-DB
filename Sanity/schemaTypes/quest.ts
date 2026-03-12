@@ -109,10 +109,58 @@ export const quest = defineType({
     }),
 
     defineField({
-      name: 'sections',
-      title: 'Sections',
+      name: 'requirements',
+      title: 'Requirements',
+      description: 'Prerequisites needed before starting this quest',
+      type: 'object',
+      options: { collapsible: true, collapsed: false },
+      fields: [
+        defineField({
+          name: 'requiredQuests',
+          title: 'Required Quests',
+          description: 'Quests that must be completed first',
+          type: 'array',
+          of: [
+            {
+              type: 'reference',
+              to: [{ type: 'quest' }],
+              weak: true,
+            },
+          ],
+        }),
+        defineField({
+          name: 'requiredItems',
+          title: 'Required Items',
+          description: 'Items needed to start or complete this quest',
+          type: 'array',
+          of: [{ type: 'string' }],
+        }),
+        defineField({
+          name: 'other',
+          title: 'Other Requirements',
+          description:
+            'Any other requirements (skills, level, etc.)',
+          type: 'text',
+          rows: 2,
+        }),
+      ],
+    }),
+
+    defineField({
+      name: 'introduction',
+      title: 'Introduction',
       description:
-        'Add chapters/sections to organize your quest guide content',
+        'Quest background, lore, and overview of what this quest involves',
+      type: 'array',
+      of: [portableTextBlock, imageConfig],
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
+      name: 'walkthrough',
+      title: 'Walkthrough',
+      description:
+        'Step-by-step guide to completing the quest. Add steps as subsections for longer quests.',
       type: 'array',
       options: {
         modal: {
@@ -121,26 +169,28 @@ export const quest = defineType({
         },
       },
       of: [
+        portableTextBlock,
+        imageConfig,
+        tableConfig,
         {
           type: 'object',
-          name: 'section',
-          title: 'Section',
+          name: 'walkthroughStep',
+          title: 'Step',
           fields: [
             {
-              name: 'sectionTitle',
-              title: 'Section Title',
+              name: 'stepTitle',
+              title: 'Step Title',
               type: 'string',
               validation: (Rule) => Rule.required(),
             },
             {
-              name: 'sectionSlug',
-              title: 'Section Slug',
+              name: 'stepSlug',
+              title: 'Step Slug',
               type: 'slug',
-              description:
-                'Used for anchor links and navigation within the guide',
+              description: 'Used for anchor links within the walkthrough',
               options: {
                 source: (doc, context) =>
-                  (context.parent as any)?.sectionTitle,
+                  (context.parent as any)?.stepTitle,
                 slugify: (input) =>
                   input
                     .toLowerCase()
@@ -156,102 +206,41 @@ export const quest = defineType({
             {
               name: 'content',
               title: 'Content',
-              description:
-                'Main content for this section. Add subsections below for deeper organization.',
               type: 'array',
               of: [portableTextBlock, imageConfig, tableConfig],
-            },
-            {
-              name: 'subsections',
-              title: 'Subsections',
-              description:
-                'Optional subsections for deeper content organization',
-              type: 'array',
-              options: {
-                modal: { type: 'dialog', width: 'auto' },
-              },
-              of: [
-                {
-                  type: 'object',
-                  name: 'subsection',
-                  title: 'Subsection',
-                  fields: [
-                    {
-                      name: 'subsectionTitle',
-                      title: 'Subsection Title',
-                      type: 'string',
-                      validation: (Rule) => Rule.required(),
-                    },
-                    {
-                      name: 'subsectionSlug',
-                      title: 'Subsection Slug',
-                      type: 'slug',
-                      description:
-                        'Used for anchor links within this subsection',
-                      options: {
-                        source: (doc, context) =>
-                          (context.parent as any)?.subsectionTitle,
-                        slugify: (input) =>
-                          input
-                            .toLowerCase()
-                            .replace(/[^\w\s-]/g, '')
-                            .replace(/\s+/g, '-')
-                            .replace(/-+/g, '-')
-                            .replace(/^-+|-+$/g, '')
-                            .slice(0, 200),
-                        disableArrayWarning: true,
-                      },
-                      validation: (Rule) => Rule.required(),
-                    },
-                    {
-                      name: 'content',
-                      title: 'Content',
-                      type: 'array',
-                      of: [portableTextBlock, imageConfig, tableConfig],
-                      validation: (Rule) => Rule.required(),
-                    },
-                  ],
-                  preview: {
-                    select: {
-                      title: 'subsectionTitle',
-                    },
-                    prepare({ title }) {
-                      return {
-                        title: title || 'Untitled Subsection',
-                        subtitle: 'Subsection',
-                      }
-                    },
-                  },
-                },
-              ],
+              validation: (Rule) => Rule.required(),
             },
           ],
           preview: {
             select: {
-              title: 'sectionTitle',
-              subsectionCount: 'subsections',
+              title: 'stepTitle',
             },
-            prepare({ title, subsectionCount }) {
-              const count = subsectionCount?.length || 0
+            prepare({ title }) {
               return {
-                title: title || 'Untitled Section',
-                subtitle:
-                  count > 0
-                    ? `${count} subsection${count !== 1 ? 's' : ''}`
-                    : '',
+                title: title || 'Untitled Step',
+                subtitle: 'Walkthrough Step',
               }
             },
           },
         },
       ],
-      validation: (Rule) =>
-        Rule.required().min(1).error('At least one section is required.'),
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
       name: 'rewards',
       title: 'Rewards',
-      description: 'Describe the rewards for completing this quest',
+      description:
+        'XP, gold, items, and other rewards for completing this quest',
+      type: 'array',
+      of: [portableTextBlock, imageConfig, tableConfig],
+    }),
+
+    defineField({
+      name: 'tipsAndNotes',
+      title: 'Tips & Notes',
+      description:
+        'Helpful tips, warnings, alternative strategies, or other notes',
       type: 'array',
       of: [portableTextBlock, imageConfig],
     }),
