@@ -41,7 +41,7 @@ export function buildItemUrl(ref: ItemReference): string {
         console.warn('InternalLink: Equipment missing armorWeapon field');
         return '#';
       }
-      return `/items/equipment/${ref.armorWeapon}/${slug}`;
+      return `/items/equipment/${ref.armorWeapon === 'weapon' ? 'weapons' : ref.armorWeapon}/${slug}`;
 
     case 'accessory':
       return `/items/equipment/accessories/${slug}`;
