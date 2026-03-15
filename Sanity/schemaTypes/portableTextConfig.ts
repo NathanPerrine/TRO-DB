@@ -49,6 +49,8 @@ export const internalLinkAnnotation = {
         { type: 'area', title: 'Areas' },
         { type: 'mob', title: 'Mobs' },
         { type: 'quest', title: 'Quest Guides' },
+        { type: 'npc', title: 'NPCs' },
+        { type: 'shop', title: 'Shops' }
       ],
     },
   ],

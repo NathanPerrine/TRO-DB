@@ -4,7 +4,7 @@ import type { PageServerLoad } from './$types';
 
 export const load = (async () => {
   const rawData = await client.fetch(`{
-    'recentItems': *[_type in ["mob", "spell", "equipment", "accessory", "area", "book", "item", "guide"]]
+    'recentItems': *[_type in ["mob", "spell", "equipment", "accessory", "area", "book", "item", "guide", "npc", "shop", "quest"]]
       | order(_updatedAt desc) [0..4] {
         _type,
         _updatedAt,
@@ -26,7 +26,6 @@ export const load = (async () => {
     }
   }`);
 
-  console.log(rawData);
 
   const data = homePageDataSchema.parse(rawData);
   return {

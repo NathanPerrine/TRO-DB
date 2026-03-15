@@ -55,7 +55,8 @@ export const load = (async ({ params }) => {
         expert: [],
         master: [],
         grandmaster: [],
-        'supreme-master': []
+        'supreme-master': [],
+        sage: [],
       };
     }
 

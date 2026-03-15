@@ -32,6 +32,7 @@ export function getDefaultTitleFromPath(path: string): string {
 		zones: 'Zones',
 		mobs: 'Mobs',
 		guides: 'Guides',
+		quests: 'Quests',
 		news: 'News'
 	};
 
@@ -76,6 +77,8 @@ export function getDefaultDescriptionFromPath(path: string): string {
 			'Vast outdoor regions ranging from peaceful woods to deadly battlefields. Perfect for exploration, hunting, and adventure.',
 		guides:
 			'Comprehensive guides covering game mechanics, strategies, and tips for The Realm Online. Learn from veteran players and enhance your experience.',
+		quests:
+			'Step-by-step quest walkthroughs for The Realm Online. Find quest givers, requirements, rewards, and detailed guides to complete every quest.',
 		news:
 			'Stay up to date with the latest news, game updates, community events, and announcements for The Realm Online.',
 		thaumaturgy:

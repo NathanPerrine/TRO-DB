@@ -88,24 +88,8 @@ export const quest = defineType({
     defineField({
       name: 'recommendedLevel',
       title: 'Recommended Level',
-      description: 'Recommended level range for this quest',
-      type: 'object',
-      options: {
-        columns: 2,
-        collapsible: true,
-      },
-      fields: [
-        defineField({
-          name: 'min',
-          title: 'Min',
-          type: 'number',
-        }),
-        defineField({
-          name: 'max',
-          title: 'Max',
-          type: 'number',
-        }),
-      ],
+      description: 'Recommended level for this quest',
+      type: 'number',
     }),
 
     defineField({
@@ -133,7 +117,18 @@ export const quest = defineType({
           title: 'Required Items',
           description: 'Items needed to start or complete this quest',
           type: 'array',
-          of: [{ type: 'string' }],
+          of: [
+            {
+              type: 'reference',
+              to: [
+                { type: 'item' },
+                { type: 'equipment' },
+                { type: 'accessory' },
+                { type: 'book' },
+              ],
+              weak: true,
+            },
+          ],
         }),
         defineField({
           name: 'other',
@@ -208,17 +203,85 @@ export const quest = defineType({
               title: 'Content',
               type: 'array',
               of: [portableTextBlock, imageConfig, tableConfig],
-              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'substeps',
+              title: 'Substeps',
+              description:
+                'Optional substeps for deeper content organization',
+              type: 'array',
+              options: {
+                modal: { type: 'dialog', width: 'auto' },
+              },
+              of: [
+                {
+                  type: 'object',
+                  name: 'walkthroughSubstep',
+                  title: 'Substep',
+                  fields: [
+                    {
+                      name: 'substepTitle',
+                      title: 'Substep Title',
+                      type: 'string',
+                      validation: (Rule) => Rule.required(),
+                    },
+                    {
+                      name: 'substepSlug',
+                      title: 'Substep Slug',
+                      type: 'slug',
+                      description:
+                        'Used for anchor links within this substep',
+                      options: {
+                        source: (doc, context) =>
+                          (context.parent as any)?.substepTitle,
+                        slugify: (input) =>
+                          input
+                            .toLowerCase()
+                            .replace(/[^\w\s-]/g, '')
+                            .replace(/\s+/g, '-')
+                            .replace(/-+/g, '-')
+                            .replace(/^-+|-+$/g, '')
+                            .slice(0, 200),
+                        disableArrayWarning: true,
+                      },
+                      validation: (Rule) => Rule.required(),
+                    },
+                    {
+                      name: 'content',
+                      title: 'Content',
+                      type: 'array',
+                      of: [portableTextBlock, imageConfig, tableConfig],
+                      validation: (Rule) => Rule.required(),
+                    },
+                  ],
+                  preview: {
+                    select: {
+                      title: 'substepTitle',
+                    },
+                    prepare({ title }) {
+                      return {
+                        title: title || 'Untitled Substep',
+                        subtitle: 'Substep',
+                      }
+                    },
+                  },
+                },
+              ],
             },
           ],
           preview: {
             select: {
               title: 'stepTitle',
+              substepCount: 'substeps',
             },
-            prepare({ title }) {
+            prepare({ title, substepCount }) {
+              const count = substepCount?.length || 0
               return {
                 title: title || 'Untitled Step',
-                subtitle: 'Walkthrough Step',
+                subtitle:
+                  count > 0
+                    ? `${count} substep${count !== 1 ? 's' : ''}`
+                    : 'Walkthrough Step',
               }
             },
           },

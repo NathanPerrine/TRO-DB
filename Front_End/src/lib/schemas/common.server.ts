@@ -37,7 +37,8 @@ export const skillLevelSchema = z.enum([
   'expert',
   'master',
   'grandmaster',
-  'supreme-master'
+  'supreme-master',
+  'sage'
 ]);
 
 export type SkillLevel = z.infer<typeof skillLevelSchema>;
@@ -58,3 +59,19 @@ export const sanityDocumentSchema = z.object({
   _createdAt: z.string(),
   _updatedAt: z.string()
 });
+
+// Direction entry schema (single direction from a town teleporter)
+// Inlined town shape to avoid circular dependency with links.server.ts
+export const directionEntrySchema = z.object({
+  town: z.object({
+    name: z.string(),
+    slug: slugSchema,
+    areaType: areaTypeSchema.nullish(),
+  }).nullable(),
+  directions: z.string(),
+});
+
+// Directions array schema (filters out entries with null towns)
+export const directionsSchema = z.array(directionEntrySchema)
+  .nullable()
+  .transform(val => val?.filter(d => d.town !== null) ?? []);

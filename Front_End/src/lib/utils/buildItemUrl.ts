@@ -79,6 +79,15 @@ export function buildItemUrl(ref: ItemReference): string {
     case 'mob':
       return `/mobs/${slug}`;
 
+    case 'quest':
+      return `/quests/${slug}`;
+
+    case 'shop':
+      return `/shops/${slug}`;
+
+    case 'npc':
+      return `/npcs/${slug}`;
+
     case 'news':
       return `/news/${slug}`;
 

@@ -21,17 +21,21 @@
 
   let { portableText }: { portableText: PortableTextImage } = $props();
 
+  const hasAsset = !!portableText.value.asset;
   const alignment = portableText.value.alignment || 'center';
   const width = portableText.value.width || 400;
 
   let imageUrl = $state(
-    urlFor(portableText.value).sharpen(100).width(width).fit('scale').auto('format').url()
+    hasAsset
+      ? urlFor(portableText.value).sharpen(100).width(width).fit('scale').auto('format').url()
+      : ''
   );
 
   let isModalOpen = $state(false);
   const toggleModal = () => (isModalOpen = !isModalOpen);
 </script>
 
+{#if hasAsset}
 <figure
   class="image-wrapper"
   class:left={alignment === 'left'}
@@ -56,6 +60,18 @@
 {/if}
 
 </figure>
+{:else}
+<figure
+  class="image-wrapper"
+  class:left={alignment === 'left'}
+  class:right={alignment === 'right'}
+  class:center={alignment === 'center'}
+>
+  <div class="missing-image" style="max-width: {width}px;">
+    <span>Missing Image</span>
+  </div>
+</figure>
+{/if}
 
 <style lang="scss">
   .image-wrapper {
@@ -107,5 +123,18 @@
     font-size: 0.9rem;
     color: var(--color-inactive);
     text-align: center;
+  }
+
+  .missing-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    border: 2px dashed var(--color-border);
+    background-color: var(--color-card-background);
+    color: var(--color-inactive);
+    font-size: 0.9rem;
   }
 </style>

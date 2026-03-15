@@ -23,6 +23,19 @@ export const linkedAreaSchema = z.object({
   areaType: areaTypeSchema.nullish()
 });
 
+// Shop Link
+export const linkedShopSchema = z.object({
+  name: z.string(),
+  slug: slugSchema,
+});
+
+// NPC Link
+export const linkedNpcSchema = z.object({
+  name: z.string(),
+  slug: slugSchema,
+  npcType: z.enum(['shopkeeper', 'gatekeeper']),
+});
+
 // Known spell link - used when referencing spells from mobs
 export const knownSpellSchema = z.object({
   title: z.string(),
@@ -33,4 +46,5 @@ export const knownSpellSchema = z.object({
 export type BookLink = z.infer<typeof bookLinkSchema>;
 export type LinkedSpell = z.infer<typeof linkedSpellSchema>;
 export type LinkedArea = z.infer<typeof linkedAreaSchema>;
+export type LinkedShop = z.infer<typeof linkedShopSchema>;
 export type KnownSpell = z.infer<typeof knownSpellSchema>;

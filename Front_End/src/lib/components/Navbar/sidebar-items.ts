@@ -71,7 +71,7 @@ export const sidebarItems: SidebarItem[] = [
   { title: 'Guides', link: '/guides', disabled: false },
   { title: 'News', link: '/news', disabled: false },
   { title: 'Mobs', link: '/mobs', disabled: false },
-  { title: 'NPCs', link: '/npcs', disabled: true },
-  { title: 'Quests', link: '/quests', disabled: true },
-  { title: 'Shops', link: '/shops', disabled: true }
+  { title: 'NPCs', link: '/npcs', disabled: false },
+  { title: 'Quests', link: '/quests', disabled: false },
+  { title: 'Shops', link: '/shops', disabled: false }
 ];
