@@ -43,7 +43,7 @@
   .modal-content {
     max-width: 90%;
     max-height: 90%;
-    overflow: hidden;
+    overflow: scroll;
     border-radius: 8px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   }
