@@ -1,5 +1,5 @@
 import { defineField, defineType } from 'sanity'
-import { portableTextBlock } from './portableTextConfig'
+import { imageConfig, portableTextBlock, tableConfig } from './portableTextConfig'
 
 export const areas = defineType({
   name: 'area',
@@ -76,9 +76,8 @@ export const areas = defineType({
       name: 'map',
       title: 'Map',
       description: 'Map of the area',
-      type: 'text',
-      initialValue:
-        'Coming soon? Maybe. In the meantime check out the wiki for a rather detailed world map.',
+      type: 'array',
+      of: [portableTextBlock, imageConfig, tableConfig]
     }),
 
     defineField({

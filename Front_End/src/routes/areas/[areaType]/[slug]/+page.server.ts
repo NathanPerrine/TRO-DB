@@ -61,7 +61,7 @@ export const load = (async ({ params }) => {
       slug,
       areaType,
       description,
-      map,
+      map${portableTextProjection},
       directions[]{
         town->{name, slug},
         directions,

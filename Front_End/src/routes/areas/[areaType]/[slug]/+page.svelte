@@ -14,8 +14,10 @@
   </header>
 
   <section>
-    <h2>Map</h2>
-    <p>{data.area.map}</p>
+    {#if data.area.map.length > 0}
+      <h2>Map</h2>
+      <PortableTextRenderer value={data.area.map} />
+    {/if}
 
     <h2>Directions</h2>
     <ul class="ul-diamond">

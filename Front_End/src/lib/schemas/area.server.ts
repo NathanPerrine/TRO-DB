@@ -49,7 +49,7 @@ export const areaDetailSchema = z.object({
   slug: slugSchema,
   areaType: areaTypeSchema,
   description: z.string().nullish(),
-  map: z.string().nullish(),
+  map: z.array(z.any()).nullable().transform(val => val ?? []),
   directions: z.array(directionSchema)
     .nullable()
     .transform(val => val?.filter(d => d.town !== null) ?? []),
