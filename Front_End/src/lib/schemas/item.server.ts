@@ -4,7 +4,7 @@ import { slugSchema } from './common.server';
 export const itemDetailSchema = z.object({
   name: z.string(),
   slug: slugSchema,
-  type: z.enum(['junk', 'potion', 'elixir', 'bauble', 'scroll', 'wand', 'orb', 'spellbook', 'ability book', 'dungeon']),
+  type: z.enum(['junk', 'potion', 'elixir', 'bauble', 'scroll', 'wand', 'orb', 'spellbook', 'ability book', 'dungeon', 'dye',]),
   description: z.string().nullish(),
   descriptionIdentified: z.string().nullish(),
   weight: z.number().nullish(),

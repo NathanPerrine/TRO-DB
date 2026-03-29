@@ -73,6 +73,7 @@ export const books = defineType({
           { title: 'Shield Usage', value: 'Shield Usage' },
         ],
       },
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({
@@ -90,6 +91,7 @@ export const books = defineType({
           { title: 'Supreme-Master', value: 'supreme-master' },
         ],
       },
+      validation: (Rule) => Rule.required(),
     }),
 
     defineField({

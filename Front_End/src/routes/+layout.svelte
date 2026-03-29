@@ -53,7 +53,7 @@
     flex: 1;
     max-height: 100vh;
     overflow-y: auto;
-    background: linear-gradient(to right, var(--color-accent) 0%, var(--color-background) 3%);
+    background: linear-gradient(to right, var(--color-accent) 0%, var(--color-background) 2%);
   }
 
   .main-div {

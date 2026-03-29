@@ -8,7 +8,8 @@ function pluralizeItemType(type: string): string {
     scroll: 'scrolls',
     wand: 'wands',
     orb: 'orbs',
-    dungeon: 'dungeon'
+    dungeon: 'dungeon',
+    dye: 'dyes',
   };
   return pluralMap[type] || type;
 }

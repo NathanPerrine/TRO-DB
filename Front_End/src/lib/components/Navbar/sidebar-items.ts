@@ -45,6 +45,7 @@ export const sidebarItems: SidebarItem[] = [
       {
         title: 'Consumables',
         subItems: [
+          { title: 'Dyes', link: '/items/consumables/dyes', disabled: false },
           { title: 'Baubles', link: '/items/consumables/baubles', disabled: false },
           { title: 'Orbs', link: '/items/consumables/orbs', disabled: false },
           { title: 'Potions', link: '/items/consumables/potions', disabled: false },

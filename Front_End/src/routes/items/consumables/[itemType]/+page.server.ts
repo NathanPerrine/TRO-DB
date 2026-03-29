@@ -14,7 +14,8 @@ const VALID_SLUGS = [
   'scrolls',
   'wands',
   'orbs',
-  'dungeon'
+  'dungeon',
+  'dyes',
 ];
 type ValidSlug = (typeof VALID_SLUGS)[number];
 

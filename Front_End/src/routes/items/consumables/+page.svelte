@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Gem, Globe, FlaskConical, ScrollText, Wand } from 'lucide-svelte/icons';
+  import { Gem, Globe, FlaskConical, ScrollText, Wand, Paintbrush } from 'lucide-svelte/icons';
 
   const consumableTypes = [
     {
@@ -8,6 +8,12 @@
         'Small mystical trinkets that provide temporary benefits when consumed. Often enchanted with various magical effects.',
       href: '/items/consumables/baubles',
       icon: Gem
+    },
+    {
+      title: 'Dyes',
+      description: 'Colorful dyes used to customize the appearance of your equipment. Apply them to your armor to stand out within The Realm.',
+      href: '/items/consumables/dyes',
+      icon: Paintbrush,
     },
     {
       title: 'Orbs',

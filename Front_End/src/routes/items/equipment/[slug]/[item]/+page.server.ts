@@ -1,18 +1,7 @@
 import type { PageServerLoad } from './$types';
 import { error } from '@sveltejs/kit';
 import { client } from '$lib/utils/sanity/client';
-import {
-  armorDetailSchema,
-  weaponDetailSchema,
-  accessoryDetailSchema
-} from '$lib/schemas/equipment.server';
-import { z } from 'zod';
-
-// Discriminated union for armor/weapon
-const equipmentSchema = z.discriminatedUnion('armorWeapon', [
-  armorDetailSchema,
-  weaponDetailSchema
-]);
+import { equipmentSchema, accessoryDetailSchema } from '$lib/schemas/equipment.server';
 
 export const load = (async ({ params }) => {
   if (params.slug === 'weapons' || params.slug === 'armor') {

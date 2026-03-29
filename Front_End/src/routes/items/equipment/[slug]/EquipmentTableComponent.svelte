@@ -8,15 +8,8 @@
   import { flip } from 'svelte/animate';
   import { fade } from 'svelte/transition';
   import './equipment.scss';
-  import {
-    normalizeAttributes,
-    extractAttributeTags,
-    sortEquipment,
-    filterByClass,
-    isWeapon,
-    isArmor,
-    isAccessory
-  } from './utils';
+  import { normalizeAttributes, extractAttributeTags, sortEquipment, filterByClass } from './utils';
+  import { isWeapon, isArmor, isAccessory } from '$lib/utils/equipment';
 
   let {
     equipmentList,
@@ -33,7 +26,9 @@
   // State
   let expanded = $state(true);
   let selectedAttributes = $state<string[]>([]);
-  let currentSortField = $state<'rarity' | 'identifiedName' | 'levelRequirement'>('levelRequirement');
+  let currentSortField = $state<'rarity' | 'identifiedName' | 'levelRequirement'>(
+    'levelRequirement'
+  );
   let sortDirection = $state<'asc' | 'desc'>('asc');
 
   // Derived: Apply class filter first, then attribute filter
@@ -122,8 +117,7 @@
               <span
                 class="arrow"
                 class:arrow-asc={currentSortField === 'rarity' && sortDirection === 'asc'}
-                class:arrow-desc={currentSortField === 'rarity' && sortDirection === 'desc'}
-                >▶</span
+                class:arrow-desc={currentSortField === 'rarity' && sortDirection === 'desc'}>▶</span
               >
             </button>
           </th>
@@ -180,7 +174,8 @@
             {#if isWeapon(equipmentPiece)}
               <td>
                 {#if equipmentPiece.weaponAttributes?.damage}
-                  {equipmentPiece.weaponAttributes.damage.min} - {equipmentPiece.weaponAttributes.damage.max}
+                  {equipmentPiece.weaponAttributes.damage.min} - {equipmentPiece.weaponAttributes
+                    .damage.max}
                 {:else}
                   ? - ?
                 {/if}

@@ -1,17 +1,43 @@
 import { defineType, defineField, defineArrayMember } from 'sanity'
+import { portableTextBlock } from './portableTextConfig'
 import { ShopItemReference } from '../components/ShopItemReference'
 
 const shopCategories = [
-  { title: 'Accessories', value: 'accessories' },
-  { title: 'Armor', value: 'armor' },
-  { title: 'Dyes', value: 'dyes' },
-  { title: 'Potions', value: 'potions' },
-  { title: 'Elixirs', value: 'elixirs' },
-  { title: 'Scrolls', value: 'scrolls' },
-  { title: 'Wands', value: 'wands' },
-  { title: 'Orbs', value: 'orbs' },
-  { title: 'Weapons', value: 'weapons' },
-  { title: 'Miscellaneous', value: 'misc' },
+  { title: 'Accessories',     value: 'accessories' },
+  { title: 'Armor',           value: 'armor' },
+  { title: 'Weapons',         value: 'weapons' },
+
+  { title: 'Dyes',            value: 'dyes' },
+  { title: 'Potions',         value: 'potions' },
+  { title: 'Elixirs',         value: 'elixirs' },
+  { title: 'Scrolls',         value: 'scrolls' },
+  { title: 'Wands',           value: 'wands' },
+  { title: 'Orbs',            value: 'orbs' },
+
+  { title: 'Skills - Crafter',value: 'skillsCrafter'},
+  { title: 'Skills - Thief',  value: 'skillsThief'},
+  { title: 'Skills - Warrior',value: 'skillsWarrior'},
+  { title: 'Skills - Wizard', value: 'skillsWizard'},
+
+  { title: 'Spells - Sorc',   value: 'spellsSorc' },
+  { title: 'Spells - Ele',    value: 'spellsEle' },
+  { title: 'Spells - Myst',   value: 'spellsMyst' },
+  { title: 'Spells - Thaum',  value: 'spellsThaum' },
+  { title: 'Spells - Necro',  value: 'spellsNecro' },
+
+  { title: 'Miscellaneous',   value: 'misc' },
+]
+
+const inventoryTypes = [
+  { title: 'General',                   value: 'general' },
+  { title: 'Clothing',                  value: 'clothing' },
+  { title: 'Armor & Weapons',           value: 'armorWeapons' },
+  { title: 'Magic (Potions & Scrolls)', value: 'magicItems' },
+  { title: 'Magic (Spell Books)',       value: 'magicSpellBooks' },
+  { title: 'Trainer - Crafting',        value: 'trainerCrafting' },
+  { title: 'Trainer - Thief',           value: 'trainerThief' },
+  { title: 'Trainer - Warrior',         value: 'trainerWarrior' },
+  { title: 'Trainer - Wizard',          value: 'trainerWizard' },
 ]
 
 export const shop = defineType({
@@ -92,11 +118,45 @@ export const shop = defineType({
     }),
 
     defineField({
+      name: 'locations',
+      title: 'Locations',
+      description: 'Where is this shop located?',
+      type: 'array',
+      of: [{
+        type: 'reference',
+        to: [{ type: 'area' }],
+        weak: true,
+        options: {
+          sort: [{ field: 'name', direction: 'asc' }],
+        }
+      }],
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
       name: 'description',
       title: 'Description',
       description: 'Optional notes about this shop.',
       type: 'text',
       rows: 3,
+    }),
+
+    defineField({
+      name: 'inventoryType',
+      title: 'Inventory Type',
+      description: 'What type of items are sold here:',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        list: inventoryTypes
+      }
+    }),
+
+    defineField({
+      name: 'notes',
+      title: 'Notes',
+      type: 'array',
+      of: [portableTextBlock],
     }),
 
     defineField({
@@ -128,6 +188,7 @@ export const shop = defineType({
                   type: 'reference',
                   to: [
                     { type: 'item' },
+                    { type: 'book' },
                     { type: 'equipment' },
                     { type: 'accessory' },
                   ],
@@ -161,12 +222,12 @@ export const shop = defineType({
   preview: {
     select: {
       name: 'name',
-      town: 'directions.0.town.name',
+      location: 'locations.0.name',
     },
-    prepare({ name, town }) {
+    prepare({ name, location }) {
       return {
         title: name,
-        subtitle: town ? `in ${town}` : 'No location set',
+        subtitle: location ? `in ${location}` : 'No location set',
       }
     },
   },
@@ -175,11 +236,6 @@ export const shop = defineType({
       title: 'Name',
       name: 'nameAsc',
       by: [{ field: 'name', direction: 'asc' }],
-    },
-    {
-      title: 'Town',
-      name: 'townAsc',
-      by: [{ field: 'town.name', direction: 'asc' }],
     },
   ],
 })

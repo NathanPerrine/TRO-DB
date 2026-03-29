@@ -27,6 +27,7 @@ export const segmentLabels: Record<string, string> = {
 	wands: 'Wands',
 	orbs: 'Orbs',
 	baubles: 'Baubles',
+  dyes: 'Dyes',
 
 	// Area types
 	dungeons: 'Dungeons',

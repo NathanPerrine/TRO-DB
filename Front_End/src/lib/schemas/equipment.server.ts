@@ -164,6 +164,12 @@ export const groupedAccessoriesSchema = z.object({
   ring: z.array(accessoryListItemSchema)
 });
 
+// Discriminated union for armor/weapon
+export const equipmentSchema = z.discriminatedUnion('armorWeapon', [
+  armorDetailSchema,
+  weaponDetailSchema
+]);
+
 // ====================
 // Type Inference
 // ====================
@@ -172,6 +178,7 @@ export const groupedAccessoriesSchema = z.object({
 export type ArmorDetail = z.infer<typeof armorDetailSchema>;
 export type WeaponDetail = z.infer<typeof weaponDetailSchema>;
 export type AccessoryDetail = z.infer<typeof accessoryDetailSchema>;
+export type EquipmentDetail = z.infer<typeof equipmentSchema>;
 
 // List item types (subset of data)
 export type ArmorListItem = z.infer<typeof armorListItemSchema>;

@@ -68,7 +68,7 @@ export function getDefaultDescriptionFromPath(path: string): string {
 		books:
 			'Learn new skills and spells through various tomes and scrolls. Find skillbooks for combat and crafting, as well as magical spellbooks.',
 		consumables:
-			'Single-use items including potions, scrolls, wands, orbs, and baubles. Restore health, mana, cast spells, or gain temporary effects.',
+			'Single-use items including dyes, potions, scrolls, wands, orbs, and baubles. Restore health, mana, cast spells, or gain temporary effects.',
 		dungeons:
 			"Dangerous lairs filled with monsters and treasures. From beginner-friendly areas to legendary challenges like Fuloran's Abode.",
 		towns:

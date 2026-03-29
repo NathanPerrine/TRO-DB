@@ -11,6 +11,15 @@ const categoryFilters: Record<string, string> = {
   scrolls: `_type == 'item' && type == 'scroll'`,
   wands: `_type == 'item' && type == 'wand'`,
   orbs: `_type == 'item' && type == 'orb'`,
+  spellsSorc: `_type == 'book' && bookType == 'spellbook' && skill == 'Sorcery'`,
+  spellsEle: `_type == 'book' && bookType == 'spellbook' && skill == 'Elementalism'`,
+  spellsMyst: `_type == 'book' && bookType == 'spellbook' && skill == 'Mysticism'`,
+  spellsThaum: `_type == 'book' && bookType == 'spellbook' && skill == 'Thaumaturgy'`,
+  spellsNecro: `_type == 'book' && bookType == 'spellbook' && skill == 'Necromancy'`,
+  skillsWarrior: `_type == 'book' && bookType == 'skillbook' && (skill == 'Light One-Handed' || skill == 'Light Two-Handed' || skill == 'Heavy Two-Handed' || skill == 'Shield Usage' || skill == 'Healing')`,
+  skillsThief: `_type == 'book' && bookType == 'skillbook' && (skill == 'Pickpocketing' || skill == 'Disarm Traps' || skill == 'Lockpicking' || skill == 'Acrobatics' || skill == 'Critical Strikes' || skill == 'Light Piercing' || skill == 'Light One-Handed' || skill == 'Shield Usage')`,
+  skillsWizard: `_type == 'book' && bookType == 'skillbook' && (skill == 'Sorcery' || skill == 'Elementalism' || skill == 'Thaumaturgy' || skill == 'Necromancy' || skill == 'Mysticism' || skill == 'Meditation' || skill == 'Theurgism' || skill == 'Light Piercing')`,
+  skillsCrafter: `_type == 'book' && bookType == 'skillbook' && (skill == 'Armorsmith' || skill == 'Weaponsmith' || skill == 'Leatherworker' || skill == 'Seamster')`,
 }
 
 export function ShopItemReference(props: ReferenceInputProps) {
@@ -18,7 +27,7 @@ export function ShopItemReference(props: ReferenceInputProps) {
   // category is at: ['inventory', {_key}, 'category']
   const categoryPath = useMemo(
     () => [...props.path.slice(0, -2), 'category'],
-    [props.path]
+    [props.path],
   )
   const category = useFormValue(categoryPath) as string | undefined
 
@@ -32,7 +41,7 @@ export function ShopItemReference(props: ReferenceInputProps) {
         filter,
       },
     }),
-    [props.schemaType, filter]
+    [props.schemaType, filter],
   )
 
   return props.renderDefault({ ...props, schemaType })
