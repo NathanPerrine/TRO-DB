@@ -151,6 +151,18 @@ h4 {
   }
 }
 
+.image-button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:hover,
+  &:active {
+    transform: none;
+  }
+}
+
 /* Lists */
 ul {
   margin: 5px 0;
@@ -215,7 +227,7 @@ a {
   }
 
   &:active {
-    color: var(--color-accent)-hover;
+    color: var(--color-accent-hover);
     border-bottom-color: var(--color-accent-hover);
   }
 }

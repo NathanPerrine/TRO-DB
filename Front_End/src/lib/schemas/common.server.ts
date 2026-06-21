@@ -75,3 +75,23 @@ export const directionEntrySchema = z.object({
 export const directionsSchema = z.array(directionEntrySchema)
   .nullable()
   .transform(val => val?.filter(d => d.town !== null) ?? []);
+
+// Image Schema
+export const sanityImageSchema = z.object({
+  asset: z.object({
+    _ref: z.string(),
+    _type: z.literal('reference')
+  }),
+  hotspot: z.object({
+    x: z.number(),
+    y: z.number(),
+    height: z.number(),
+    width: z.number()
+  }).nullish(),
+  crop: z.object({
+    top: z.number(),
+    bottom: z.number(),
+    left: z.number(),
+    right: z.number()
+  }).nullish()
+});

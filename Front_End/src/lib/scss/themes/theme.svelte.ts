@@ -41,7 +41,7 @@ function createThemeState() {
   }
 
   return {
-    theme,
+    get theme() { return theme; },
     setTheme,
     themes: themesData.themes
   };

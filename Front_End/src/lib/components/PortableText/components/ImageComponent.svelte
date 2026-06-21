@@ -21,11 +21,11 @@
 
   let { portableText }: { portableText: PortableTextImage } = $props();
 
-  const hasAsset = !!portableText.value.asset;
-  const alignment = portableText.value.alignment || 'center';
-  const width = portableText.value.width || 400;
+  const hasAsset = $derived(!!portableText.value.asset);
+  const alignment = $derived(portableText.value.alignment || 'center');
+  const width = $derived(portableText.value.width || 400);
 
-  let imageUrl = $state(
+  const imageUrl = $derived(
     hasAsset
       ? urlFor(portableText.value).sharpen(100).width(width).fit('scale').auto('format').url()
       : ''
@@ -36,41 +36,40 @@
 </script>
 
 {#if hasAsset}
-<figure
-  class="image-wrapper"
-  class:left={alignment === 'left'}
-  class:right={alignment === 'right'}
-  class:center={alignment === 'center'}
->
-  <button class="image-button" onclick={toggleModal}>
-    <img src={imageUrl} alt={portableText.value.alt} style="max-width: {width}px;" />
-  </button>
-  {#if portableText.value.alt}
-    <figcaption>{portableText.value.alt}</figcaption>
-  {/if}
+  <figure
+    class="image-wrapper"
+    class:left={alignment === 'left'}
+    class:right={alignment === 'right'}
+    class:center={alignment === 'center'}
+  >
+    <button class="image-button" onclick={toggleModal}>
+      <img src={imageUrl} alt={portableText.value.alt} style="max-width: {width}px;" />
+    </button>
+    {#if portableText.value.alt}
+      <figcaption>{portableText.value.alt}</figcaption>
+    {/if}
 
-  <!-- Modal for full-size image -->
-  {#if isModalOpen}
-  <ImageModal
-    isOpen={isModalOpen}
-    imageUrl={urlFor(portableText.value).url()}
-    alt={portableText.value.alt}
-    onClose={toggleModal}
-  />
-{/if}
-
-</figure>
+    <!-- Modal for full-size image -->
+    {#if isModalOpen}
+      <ImageModal
+        isOpen={isModalOpen}
+        imageUrl={urlFor(portableText.value).url()}
+        alt={portableText.value.alt}
+        onClose={toggleModal}
+      />
+    {/if}
+  </figure>
 {:else}
-<figure
-  class="image-wrapper"
-  class:left={alignment === 'left'}
-  class:right={alignment === 'right'}
-  class:center={alignment === 'center'}
->
-  <div class="missing-image" style="max-width: {width}px;">
-    <span>Missing Image</span>
-  </div>
-</figure>
+  <figure
+    class="image-wrapper"
+    class:left={alignment === 'left'}
+    class:right={alignment === 'right'}
+    class:center={alignment === 'center'}
+  >
+    <div class="missing-image" style="max-width: {width}px;">
+      <span>Missing Image</span>
+    </div>
+  </figure>
 {/if}
 
 <style lang="scss">
@@ -97,16 +96,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  .image-button {
-    background: none;
-    border: none;
-    padding: 0;
-
-    &:hover {
-      transform: none;
-    }
   }
 
   img {

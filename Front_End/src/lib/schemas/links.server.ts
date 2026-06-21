@@ -44,9 +44,32 @@ export const knownSpellSchema = z.object({
   spellSchool: spellSchoolSchema.nullish(),
 });
 
+// Equipment Link
+export const linkedEquipmentSchema = z.object({
+  identifiedName: z.string(),
+  slug: slugSchema,
+  armorWeapon: z.enum(['armor', 'weapon']),
+})
+
+// Accessory Link
+export const linkedAccessorySchema = z.object({
+  identifiedName: z.string(),
+  slug: slugSchema,
+})
+
+// Item link
+export const linkedItemSchema = z.object({
+  name: z.string(),
+  slug: slugSchema,
+});
+
+
 export type BookLink = z.infer<typeof bookLinkSchema>;
 export type LinkedSpell = z.infer<typeof linkedSpellSchema>;
 export type LinkedArea = z.infer<typeof linkedAreaSchema>;
 export type LinkedShop = z.infer<typeof linkedShopSchema>;
 export type KnownSpell = z.infer<typeof knownSpellSchema>;
 export type LinkedNpc = z.infer<typeof linkedNpcSchema>;
+export type LinkedEquipment = z.infer<typeof linkedEquipmentSchema>;
+export type LinkedAccessory = z.infer<typeof linkedAccessorySchema>;
+export type LinkedItem = z.infer<typeof linkedItemSchema>;

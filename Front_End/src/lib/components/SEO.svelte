@@ -33,13 +33,13 @@
 	}: SEOProps = $props();
 
 	// Generate full page title with site suffix
-	const fullTitle = title === 'TRO-DB' ? title : `${title} | TRO-DB`;
+	const fullTitle = $derived(title === 'TRO-DB' ? title : `${title} | TRO-DB`);
 
 	// Truncate description to fit meta description limits
-	const metaDescription = truncateDescription(description, 160);
+	const metaDescription = $derived(truncateDescription(description, 160));
 
 	// Generate canonical URL
-	const canonicalUrl = generateCanonicalUrl(canonicalPath);
+	const canonicalUrl = $derived(generateCanonicalUrl(canonicalPath));
 </script>
 
 <svelte:head>
