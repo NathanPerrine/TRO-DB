@@ -1,19 +1,60 @@
 <script lang="ts">
   import Notes from '$lib/components/Notes/Notes.svelte';
   import type { PageData } from './$types';
+  import ImageModal from '$lib/components/common/ImageModal.svelte';
+  import { urlFor } from '$lib/utils/sanity/sanityImage';
+
   let { data }: { data: PageData } = $props();
+
+  let activeView = $state<'overworld' | 'infoPanel'>(
+    data.images?.overworld ? 'overworld' : 'infoPanel'
+  );
+  let modalOpen = $state(false);
+  const activeImage = $derived(
+    activeView === 'overworld' ? data.images?.overworld : data.images?.infoPanel
+  );
 </script>
 
 <main>
   <header>
-    <h1>{data.name}</h1>
-    <p>
-      {#if data.description}
-        {data.description}
-      {:else}
-        Coming soon...
+    <div class="header-info">
+      <h1>{data.name}</h1>
+      <div class="quote-container">
+        <blockquote class="quote">{data.description ?? 'Coming soon...'}</blockquote>
+      </div>
+    </div>
+
+    {#if activeImage}
+      <div class="mob-images">
+        {#if data.images?.overworld && data.images?.infoPanel}
+          <div class="image-tabs">
+            <button
+              class:active={activeView === 'overworld'}
+              onclick={() => (activeView = 'overworld')}>Overworld</button
+            >
+            <button
+              class:active={activeView === 'infoPanel'}
+              onclick={() => (activeView = 'infoPanel')}>Details</button
+            >
+          </div>
+        {/if}
+        <button class="image-button" onclick={() => (modalOpen = true)}>
+          <img
+            src={urlFor(activeImage).width(300).url()}
+            alt="{data.name} {activeView}"
+          />
+        </button>
+      </div>
+
+      {#if modalOpen}
+        <ImageModal
+          isOpen={modalOpen}
+          imageUrl={urlFor(activeImage).url()}
+          alt={data.name}
+          onClose={() => (modalOpen = false)}
+        />
       {/if}
-    </p>
+    {/if}
   </header>
 
   <section>
@@ -102,3 +143,74 @@
     <Notes notes={data.notes} />
   </section>
 </main>
+
+<style lang="scss">
+  @use '$lib/scss/view_mixins' as *;
+
+  header {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+
+    @include tablet-and-up {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .header-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .quote-container {
+    display: flex;
+    justify-content: center;
+
+    blockquote {
+      width: 90%;
+    }
+  }
+
+  .mob-images {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .image-button {
+    width: 260px;
+    max-width: 100%;
+
+    img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: contain;
+      image-rendering: pixelated;
+      border-radius: 8px;
+    }
+  }
+
+  .image-tabs {
+    display: flex;
+    gap: 6px;
+
+    button {
+      padding: 4px 12px;
+      font-size: 0.8125rem;
+      border: 1px solid var(--color-border);
+      border-radius: 4px;
+      background: var(--color-button-bg);
+      color: var(--color-text);
+      cursor: pointer;
+
+      &.active {
+        border-color: var(--color-text-accent);
+        color: var(--color-text-accent);
+      }
+    }
+  }
+</style>

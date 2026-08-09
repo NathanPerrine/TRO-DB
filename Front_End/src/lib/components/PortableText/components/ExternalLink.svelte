@@ -11,8 +11,8 @@
     children: Snippet;
   }>();
 
-  const href = portableText.value.href;
-  const blank = portableText.value.blank ?? true;
+  const href = $derived(portableText.value.href);
+  const blank = $derived(portableText.value.blank ?? true);
 </script>
 
 <a

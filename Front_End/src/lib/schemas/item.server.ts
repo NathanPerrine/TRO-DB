@@ -1,9 +1,10 @@
 import { z } from 'zod';
-import { slugSchema } from './common.server';
+import { sanityImageSchema, slugSchema } from './common.server';
 
 export const itemDetailSchema = z.object({
   name: z.string(),
   slug: slugSchema,
+  image: sanityImageSchema.nullish(),
   type: z.enum(['junk', 'potion', 'elixir', 'bauble', 'scroll', 'wand', 'orb', 'spellbook', 'ability book', 'dungeon', 'dye',]),
   description: z.string().nullish(),
   descriptionIdentified: z.string().nullish(),

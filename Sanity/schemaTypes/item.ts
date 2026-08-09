@@ -28,6 +28,13 @@ export const items = defineType({
     }),
 
     defineField({
+      name: 'image',
+      title: 'Image',
+      description: 'Screenshot of the item in-game',
+      type: 'image',
+    }),
+
+    defineField({
       name: 'type',
       title: 'Type',
       type: 'string',

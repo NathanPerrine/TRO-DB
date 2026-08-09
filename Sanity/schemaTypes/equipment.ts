@@ -35,6 +35,13 @@ export const equipment = defineType({
     }),
 
     defineField({
+      name: 'image',
+      title: 'Image',
+      description: 'Screenshot of the item in-game',
+      type: 'image',
+    }),
+
+    defineField({
       name: 'armorWeapon',
       title: 'Armor or Weapon',
       description: 'Is this equipment a piece of armor or a weapon?',
@@ -98,9 +105,9 @@ export const equipment = defineType({
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const parent = context.parent as { armorWeapon?: string }
-            return parent?.armorWeapon === 'weapon' && !value?.weaponType
-              ? 'Weapon Type is required.'
-              : true;
+          return parent?.armorWeapon === 'weapon' && !value?.weaponType
+            ? 'Weapon Type is required.'
+            : true
         }),
       options: {
         collapsible: true,
@@ -148,9 +155,9 @@ export const equipment = defineType({
       validation: (Rule) =>
         Rule.custom((value, context) => {
           const parent = context.parent as { armorWeapon?: string }
-            return parent?.armorWeapon === 'armor' && !value?.armorType
-              ? 'Armor Type is required.'
-              : true;
+          return parent?.armorWeapon === 'armor' && !value?.armorType
+            ? 'Armor Type is required.'
+            : true
         }),
       options: {
         collapsible: true,

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { slugSchema, raritySchema, rangeSchema } from './common.server';
+import { slugSchema, raritySchema, rangeSchema, sanityImageSchema } from './common.server';
 import { linkedAreaSchema } from './links.server';
 
 // ====================
@@ -28,6 +28,7 @@ const baseEquipmentDetailSchema = z.object({
   name: z.string(),
   identifiedName: z.string(),
   slug: slugSchema,
+  image: sanityImageSchema.nullish(),
   armorWeapon: z.enum(['armor', 'weapon']),
   rarity: raritySchema.nullish(),
   description: z.string().nullish(),
@@ -74,6 +75,7 @@ export const accessoryDetailSchema = z.object({
   name: z.string(),
   identifiedName: z.string(),
   slug: slugSchema,
+  image: sanityImageSchema.nullish(),
   slot: z.enum(['amulet', 'belt', 'baldric', 'backpack', 'ring']),
   rarity: raritySchema.nullish(),
   description: z.string().nullish(),

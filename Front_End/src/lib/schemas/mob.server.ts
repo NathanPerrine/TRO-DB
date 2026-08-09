@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { rangeSchema, slugSchema, spellSchoolValueSchema } from './common.server';
+import { rangeSchema, sanityImageSchema, slugSchema, spellSchoolValueSchema } from './common.server';
 import { linkedAreaSchema, knownSpellSchema } from './links.server';
 
 const meleeAttributesSchema = z.object({
@@ -9,9 +9,15 @@ const meleeAttributesSchema = z.object({
   meleePhase: z.number().nullish()
 });
 
+const imagesSchema = z.object({
+  overworld: sanityImageSchema.nullish(),
+  infoPanel: sanityImageSchema.nullish(),
+})
+
 export const mobDetailSchema = z.object({
   name: z.string(),
   slug: slugSchema,
+  images: imagesSchema.nullish(),
   description: z.string().nullish(),
   levelRange: rangeSchema.nullish(),
   hpRange: rangeSchema.nullish(),

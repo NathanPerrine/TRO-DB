@@ -17,7 +17,7 @@
     };
   }>();
 
-  const table = portableText.value;
+  const table = $derived(portableText.value);
 
   // Helper to check if content is portable text blocks
   function isPortableText(content: PortableTextBlock[] | string): content is PortableTextBlock[] {

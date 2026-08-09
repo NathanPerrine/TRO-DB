@@ -9,6 +9,7 @@ export const load = (async ({ params }) => {
     `*[_type == "item" && slug.current == $slug][0] {
     name,
     slug,
+    image,
     type,
     description,
     descriptionIdentified,

@@ -40,6 +40,13 @@ export const accessories = defineType({
     }),
 
     defineField({
+      name: 'image',
+      title: 'Image',
+      description: 'Screenshot of the item in-game',
+      type: 'image',
+    }),
+
+    defineField({
       name: 'slot',
       title: 'Slot',
       description: 'Where the accessory is equipped.',

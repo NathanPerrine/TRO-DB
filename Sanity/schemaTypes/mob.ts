@@ -28,6 +28,34 @@ export const mobs = defineType({
     }),
 
     defineField({
+      name: 'images',
+      title: 'Images',
+      description: 'Screenshots of the mob.',
+      type: 'object',
+      options: {
+        collapsible: true,
+        collapsed: false,
+        columns: 2,
+      },
+      fields: [
+        defineField({
+          name: 'overworld',
+          title: 'Overworld',
+          description: 'The mob as it appears in the game world.',
+          type: 'image',
+          options: { hotspot: true },
+        }),
+        defineField({
+          name: 'infoPanel',
+          title: 'Info Panel',
+          description: "Screenshot of the mob's in-game info window.",
+          type: 'image',
+          options: { hotspot: true },
+        }),
+      ],
+    }),
+
+    defineField({
       name: 'description',
       title: 'Description',
       description: 'A description of the mob.',

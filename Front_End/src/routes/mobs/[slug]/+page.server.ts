@@ -9,6 +9,7 @@ export const load = (async ({ params }) => {
     `*[_type == 'mob' && slug.current == $slug][0] {
       name,
       slug,
+      images,
       description,
       levelRange,
       hpRange,

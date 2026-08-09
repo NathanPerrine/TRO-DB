@@ -1,54 +1,44 @@
 <script lang="ts">
-  import { isArmor, isWeapon, isAccessory } from '$lib/utils/equipment';
+  import { isArmor, isWeapon, isAccessory, type EquipmentDetailItem } from '$lib/utils/equipment';
+  import { urlFor } from '$lib/utils/sanity/sanityImage';
+  import ImageModal from '../common/ImageModal.svelte';
 
-  interface EquipmentProps {
-    name: string;
-    identifiedName: string;
-    armorWeapon?: 'armor' | 'weapon';
-    slot?: string;
-    description?: string | null;
-    identifiedDescription?: string | null;
-    rarity?: string | null;
-    attributes?: string[];
-    weight?: number | null;
-    condition?: number | null;
-    sellPrice?: number | null;
-    buyPrice?: number | null;
-    excludes?: string | null;
-    levelRequirement?: number | null;
-    armorAttributes?: {
-      armorType?: string | null;
-      material?: string | null;
-      armorRating?: number | null;
-    } | null;
-    weaponAttributes?: {
-      damage?: { min: number; max: number } | null;
-      weaponType?: {
-        name?: string;
-        skill?: string | null;
-        range?: number | null;
-        attributeScaling?: { attribute: string; scalingType: string }[] | null;
-      } | null;
-    } | null;
-    dropArea?: { name: string; slug: { current: string }; areaType?: string | null }[];
-  }
+  let isModalOpen = $state(false);
+  const toggleModal = () => (isModalOpen = !isModalOpen);
 
-  let { equipment }: { equipment: EquipmentProps } = $props();
+  let { equipment }: { equipment: EquipmentDetailItem } = $props();
 </script>
 
 <header>
-  <h1>{equipment?.name} | {equipment?.identifiedName}</h1>
-  <h3>Description:</h3>
-  {#if equipment.description}
-    <p>{equipment.description}</p>
-  {/if}
-  <h3>Description (Identified):</h3>
-  {#if equipment.identifiedDescription}
-    <div class="quote-container">
-      <blockquote class="quote">
-        {equipment?.identifiedDescription}
-      </blockquote>
-    </div>
+  <div class="header-info">
+    <h1>{equipment?.name} | {equipment?.identifiedName}</h1>
+    <h3>Description:</h3>
+    {#if equipment.description}
+      <p>{equipment.description}</p>
+    {/if}
+    <h3>Description (Identified):</h3>
+    {#if equipment.identifiedDescription}
+      <div class="quote-container">
+        <blockquote class="quote">
+          {equipment?.identifiedDescription}
+        </blockquote>
+      </div>
+    {/if}
+  </div>
+
+  {#if equipment.image}
+    <button class="image-button" onclick={toggleModal}>
+      <img src={urlFor(equipment.image).width(300).url()} alt={equipment.identifiedName} />
+    </button>
+
+    {#if isModalOpen}
+      <ImageModal
+        isOpen={isModalOpen}
+        imageUrl={urlFor(equipment.image).url()}
+        alt={equipment.identifiedName}
+        onClose={toggleModal}
+      />
+    {/if}
   {/if}
 </header>
 
@@ -64,21 +54,21 @@
     {/if}
   </ul>
 
-  {#if equipment.armorWeapon && equipment.armorAttributes}
+  {#if isArmor(equipment)}
     <h2>Armor Information</h2>
     <ul class="ul-diamond">
-      <li>Slot: {equipment.armorAttributes.armorType ?? 'Unknown'}</li>
-      <li>Material: {equipment.armorAttributes.material ?? 'Unknown'}</li>
-      <li>Armor Rating: {equipment.armorAttributes.armorRating ?? 'Unknown'}</li>
+      <li>Slot: {equipment.armorAttributes?.armorType ?? 'Unknown'}</li>
+      <li>Material: {equipment.armorAttributes?.material ?? 'Unknown'}</li>
+      <li>Armor Rating: {equipment.armorAttributes?.armorRating ?? 'Unknown'}</li>
     </ul>
   {/if}
 
-  {#if equipment.armorWeapon && equipment.weaponAttributes}
+  {#if isWeapon(equipment)}
     <h2>Weapon Information</h2>
     <ul class="ul-sword">
       <li>
         Damage:
-        {#if equipment.weaponAttributes.damage}
+        {#if equipment.weaponAttributes?.damage}
           {equipment.weaponAttributes.damage.min ?? '?'}
           -
           {equipment.weaponAttributes.damage.max ?? '?'}
@@ -86,12 +76,12 @@
           Unknown
         {/if}
       </li>
-      <li>Weapon Type: {equipment.weaponAttributes.weaponType?.name ?? 'Unknown'}</li>
-      <li>Governing Skill: {equipment.weaponAttributes.weaponType?.skill ?? 'Unknown'}</li>
-      <li>Range: {equipment.weaponAttributes.weaponType?.range ?? 'Unknown'}</li>
+      <li>Weapon Type: {equipment.weaponAttributes?.weaponType?.name ?? 'Unknown'}</li>
+      <li>Governing Skill: {equipment.weaponAttributes?.weaponType?.skill ?? 'Unknown'}</li>
+      <li>Range: {equipment.weaponAttributes?.weaponType?.range ?? 'Unknown'}</li>
       <li>
         Scaling Attributes:
-        {#if equipment.weaponAttributes.weaponType?.attributeScaling}
+        {#if equipment.weaponAttributes?.weaponType?.attributeScaling}
           <ul class="ul-sword">
             {#each equipment.weaponAttributes.weaponType.attributeScaling as attribute}
               <li>
@@ -108,7 +98,7 @@
 
   <h2>General Information</h2>
   <ul class="ul-diamond">
-    {#if equipment.slot}
+    {#if isAccessory(equipment)}
       <li>Slot: <span class="capitalize">{equipment.slot}</span></li>
     {/if}
     <li>
@@ -151,13 +141,11 @@
         TBD
       {/if}
     </li>
-    {#if equipment.armorWeapon}
-      {#if equipment?.excludes}
-        <li>
-          Excludes:
-          {equipment.excludes}
-        </li>
-      {/if}
+    {#if !isAccessory(equipment) && equipment?.excludes}
+      <li>
+        Excludes:
+        {equipment.excludes}
+      </li>
     {/if}
   </ul>
 
@@ -174,6 +162,41 @@
 </section>
 
 <style lang="scss">
+  @use '$lib/scss/view_mixins' as *;
+
+  header {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+
+    @include tablet-and-up {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .header-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .image-button {
+    flex-shrink: 0;
+    width: 300px;
+    max-width: 100%;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    @include tablet-and-up {
+      width: 360px;
+    }
+  }
+
   .quote-container {
     display: flex;
     justify-content: center;

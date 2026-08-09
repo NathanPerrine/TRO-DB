@@ -10,7 +10,7 @@
     children: Snippet;
   }>();
 
-  const href = portableText.value.page;
+  const href = $derived(portableText.value.page);
 </script>
 
 <a {href} class="page-link" data-sveltekit-preload-data>
