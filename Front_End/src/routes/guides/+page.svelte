@@ -7,11 +7,11 @@
 
   // Reorder `GUIDE_SECTION_ORDER` to update the order guides are displayed on the page
   const GUIDE_SECTION_ORDER = ['New Player', 'Leveling', 'Money Making', 'Enchanting and Crafting', 'Other'];
-  const sortedGuides = Object.entries(data.guides).sort(([a], [b]) => {
+  const sortedGuides = $derived(Object.entries(data.guides).sort(([a], [b]) => {
     const indexA = GUIDE_SECTION_ORDER.indexOf(a);
     const indexB = GUIDE_SECTION_ORDER.indexOf(b);
     return indexA - indexB;
-  });
+  }));
 
   function getTypeIcon(type: string) {
     switch (type.toLowerCase()) {
@@ -28,7 +28,7 @@
     }
   }
 
-  let expandedSections = $state(
+  let expandedSections = $derived(
     Object.keys(data.guides).reduce(
       (acc, type) => {
         // Start with all sections expanded

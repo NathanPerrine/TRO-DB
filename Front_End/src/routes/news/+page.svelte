@@ -5,13 +5,13 @@
   let { data }: { data: PageData } = $props();
 
   const NEWS_SECTION_ORDER = ['Announcement', 'Game Update', 'Site Update', 'Community'];
-  const sortedNews = Object.entries(data.news).sort(([a], [b]) => {
+  const sortedNews = $derived(Object.entries(data.news).sort(([a], [b]) => {
     const indexA = NEWS_SECTION_ORDER.indexOf(a);
     const indexB = NEWS_SECTION_ORDER.indexOf(b);
     return indexA - indexB;
-  });
+  }));
 
-  let expandedSections = $state(
+  let expandedSections = $derived(
     Object.keys(data.news).reduce(
       (acc, type) => {
         acc[type] = true;
