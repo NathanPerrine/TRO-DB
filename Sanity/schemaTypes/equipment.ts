@@ -276,10 +276,12 @@ export const equipment = defineType({
   preview: {
     select: {
       name: 'identifiedName',
+      media: 'image',
     },
-    prepare({ name }) {
+    prepare({ name, media }) {
       return {
         title: name,
+        media,
       }
     },
   },
