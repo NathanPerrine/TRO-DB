@@ -1,19 +1,4 @@
-// Helper to pluralize item types for consumables URLs
-function pluralizeItemType(type: string): string {
-  const pluralMap: Record<string, string> = {
-    junk: 'junk',
-    potion: 'potions',
-    elixir: 'elixirs',
-    bauble: 'baubles',
-    scroll: 'scrolls',
-    wand: 'wands',
-    orb: 'orbs',
-    dungeon: 'dungeon',
-    dye: 'dyes',
-    'crafting-material': 'crafting-materials'
-  };
-  return pluralMap[type] || type;
-}
+import { getByType } from './itemTypes';
 
 export type ItemReference = {
   _type: string;
@@ -57,12 +42,18 @@ export function buildItemUrl(ref: ItemReference): string {
       return `/magic/${school}/${slug}`;
     }
 
-    case 'item':
+    case 'item': {
       if (!ref.type) {
         console.warn('InternalLink: Item missing type field');
         return '#';
       }
-      return `/items/consumables/${pluralizeItemType(ref.type)}/${slug}`;
+      const entry = getByType(ref.type);
+      if (!entry) {
+        console.warn(`InternalLink: Unknown item type: ${ref.type}`);
+        return '#';
+      }
+      return `/items/consumables/${entry.slug}/${slug}`;
+    }
 
     case 'book':
       if (!ref.bookType) {

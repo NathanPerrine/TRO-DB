@@ -1,27 +1,40 @@
 <script lang="ts">
-  interface ItemProps {
-    name: string;
-    description?: string | null;
-    descriptionIdentified?: string | null;
-    weight?: number | null;
-    condition?: number | null;
-    buyPrice?: number | null;
-    sellPrice?: number | null;
-    charges?: number | null;
-  }
+  import type { ItemDetail } from '$lib/schemas/item.server';
+  import { urlFor } from '$lib/utils/sanity/sanityImage';
+  import ImageModal from '../common/ImageModal.svelte';
 
-  let { item }: { item: ItemProps } = $props();
+  let isModalOpen = $state(false);
+  const toggleModal = () => (isModalOpen = !isModalOpen);
+
+  let { item }: { item: Omit<ItemDetail, 'type' | 'slug' | 'notes'> } = $props();
 </script>
 
 <header>
-  <h1>{item.name}</h1>
-  <h3>Description:</h3>
-  {#if item.description}
-    <p>{item.description}</p>
-  {/if}
-  <h3>Description (Identified):</h3>
-  {#if item.descriptionIdentified}
-    {item.descriptionIdentified}
+  <div class="header-info">
+    <h1>{item.name}</h1>
+    <h3>Description:</h3>
+    {#if item.description}
+      <p>{item.description}</p>
+    {/if}
+    <h3>Description (Identified):</h3>
+    {#if item.descriptionIdentified}
+      {item.descriptionIdentified}
+    {/if}
+  </div>
+
+  {#if item.image}
+    <button class="image-button" onclick={toggleModal}>
+      <img src={urlFor(item.image).width(300).url()} alt={item.name} />
+    </button>
+
+    {#if isModalOpen}
+      <ImageModal
+        isOpen={isModalOpen}
+        imageUrl={urlFor(item.image).url()}
+        alt={item.name}
+        onClose={toggleModal}
+      />
+    {/if}
   {/if}
 </header>
 
@@ -60,3 +73,40 @@
     {/if}
   </ul>
 </section>
+
+<style lang="scss">
+  @use '$lib/scss/view_mixins' as *;
+
+  header {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+
+    @include tablet-and-up {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+
+  .header-info {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .image-button {
+    flex-shrink: 0;
+    width: 300px;
+    max-width: 100%;
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    @include tablet-and-up {
+      width: 360px;
+    }
+  }
+</style>

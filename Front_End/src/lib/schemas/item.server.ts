@@ -1,24 +1,12 @@
 import { z } from 'zod';
 import { sanityImageSchema, slugSchema } from './common.server';
+import { ITEM_TYPE_VALUES } from '$lib/utils/itemTypes';
 
 export const itemDetailSchema = z.object({
   name: z.string(),
   slug: slugSchema,
   image: sanityImageSchema.nullish(),
-  type: z.enum([
-    'junk',
-    'potion',
-    'elixir',
-    'bauble',
-    'scroll',
-    'wand',
-    'orb',
-    'spellbook',
-    'ability book',
-    'dungeon',
-    'dye',
-    'crafting-material'
-  ]),
+  type: z.enum(ITEM_TYPE_VALUES),
   description: z.string().nullish(),
   descriptionIdentified: z.string().nullish(),
   weight: z.number().nullish(),

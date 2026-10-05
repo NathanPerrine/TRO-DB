@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { directionsSchema, slugSchema, raritySchema } from './common.server';
 import { linkedAreaSchema, linkedNpcSchema } from './links.server';
+import { ITEM_TYPE_VALUES } from '$lib/utils/itemTypes';
 
 // ====================
 // Shop Inventory Item Schemas
@@ -12,21 +13,7 @@ import { linkedAreaSchema, linkedNpcSchema } from './links.server';
 const shopItemSchema = z.object({
   _type: z.literal('item'),
   name: z.string(),
-  type: z
-    .enum([
-      'junk',
-      'dye',
-      'potion',
-      'elixir',
-      'bauble',
-      'scroll',
-      'wand',
-      'orb',
-      'spellbook',
-      'ability book',
-      'dungeon'
-    ])
-    .nullish(),
+  type: z.enum(ITEM_TYPE_VALUES).nullish(),
   slug: slugSchema,
   description: z.string().nullish(),
   descriptionIdentified: z.string().nullish(),
@@ -44,11 +31,13 @@ const shopBookSchema = z.object({
   bookType: z.enum(['skillbook', 'spellbook']),
   skill: z.string(),
   skillLevel: z.string(),
-  linkedSpell: z.object({
-    title: z.string(),
-    slug: slugSchema,
-    spellSchool: z.string().nullish(),
-  }).nullish(),
+  linkedSpell: z
+    .object({
+      title: z.string(),
+      slug: slugSchema,
+      spellSchool: z.string().nullish()
+    })
+    .nullish(),
   buildPoints: z.number().nullish(),
   buyPrice: z.number().nullish(),
   sellPrice: z.number().nullish()
@@ -63,33 +52,47 @@ const shopEquipmentSchema = z.object({
   identifiedName: z.string(),
   rarity: raritySchema.nullish(),
   armorWeapon: z.enum(['armor', 'weapon']),
-  attributes: z.array(z.string()).nullable().transform(val => val ?? []),
+  attributes: z
+    .array(z.string())
+    .nullable()
+    .transform((val) => val ?? []),
   weight: z.number().nullish(),
   condition: z.number().nullish(),
   buyPrice: z.number().nullish(),
   sellPrice: z.number().nullish(),
   levelRequirement: z.number().nullish(),
   excludes: z.enum(['Males', 'Females']).nullish(),
-  armorAttributes: z.object({
-    armorType: z.string().nullish(),
-    material: z.string().nullish(),
-    armorRating: z.number().nullish(),
-  }).nullish(),
-  weaponAttributes: z.object({
-    damage: z.object({ min: z.number(), max: z.number() }).nullish(),
-    weaponType: z.object({
-      name: z.string(),
-      range: z.number().nullish(),
-      skill: z.string().nullish(),
-      attributeScaling: z.array(z.object({
-        attribute: z.string(),
-        scalingType: z.string(),
-      })).nullish(),
-    }).nullish(),
-  }).nullish(),
-  dropArea: z.array(linkedAreaSchema.nullable())
+  armorAttributes: z
+    .object({
+      armorType: z.string().nullish(),
+      material: z.string().nullish(),
+      armorRating: z.number().nullish()
+    })
+    .nullish(),
+  weaponAttributes: z
+    .object({
+      damage: z.object({ min: z.number(), max: z.number() }).nullish(),
+      weaponType: z
+        .object({
+          name: z.string(),
+          range: z.number().nullish(),
+          skill: z.string().nullish(),
+          attributeScaling: z
+            .array(
+              z.object({
+                attribute: z.string(),
+                scalingType: z.string()
+              })
+            )
+            .nullish()
+        })
+        .nullish()
+    })
+    .nullish(),
+  dropArea: z
+    .array(linkedAreaSchema.nullable())
     .nullable()
-    .transform(val => val?.filter(item => item !== null) ?? []),
+    .transform((val) => val?.filter((item) => item !== null) ?? [])
 });
 
 const shopAccessorySchema = z.object({
@@ -101,15 +104,19 @@ const shopAccessorySchema = z.object({
   slot: z.enum(['amulet', 'belt', 'baldric', 'backpack', 'ring']),
   description: z.string().nullish(),
   identifiedDescription: z.string().nullish(),
-  attributes: z.array(z.string()).nullable().transform(val => val ?? []),
+  attributes: z
+    .array(z.string())
+    .nullable()
+    .transform((val) => val ?? []),
   weight: z.number().nullish(),
   condition: z.number().nullish(),
   buyPrice: z.number().nullish(),
   sellPrice: z.number().nullish(),
   levelRequirement: z.number().nullish(),
-  dropArea: z.array(linkedAreaSchema.nullable())
+  dropArea: z
+    .array(linkedAreaSchema.nullable())
     .nullable()
-    .transform(val => val?.filter(item => item !== null) ?? []),
+    .transform((val) => val?.filter((item) => item !== null) ?? [])
 });
 
 export const shopInventoryItemSchema = z.discriminatedUnion('_type', [

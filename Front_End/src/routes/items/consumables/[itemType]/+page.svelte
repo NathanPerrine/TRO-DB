@@ -19,10 +19,10 @@
           </tr>
         </thead>
         <tbody>
-          {#each data.items as scroll}
+          {#each data.items as item}
             <tr>
-              <td><a href="{data.description.name.toLowerCase()}/{scroll.slug.current}">{scroll.name}</a></td>
-              <td>{scroll.descriptionIdentified}</td>
+              <td><a href="/items/consumables/{data.slug}/{item.slug.current}">{item.name}</a></td>
+              <td>{item.descriptionIdentified}</td>
             </tr>
           {/each}
         </tbody>
