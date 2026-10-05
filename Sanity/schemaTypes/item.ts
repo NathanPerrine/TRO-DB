@@ -50,6 +50,7 @@ export const items = defineType({
           { title: 'Orb', value: 'orb' },
           { title: 'Dungeon', value: 'dungeon' },
           { title: 'Dye', value: 'dye' },
+          { title: 'Crafting Material', value: 'crafting-material' },
         ],
       },
       validation: (Rule) => Rule.required(),

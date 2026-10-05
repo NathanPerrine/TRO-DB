@@ -10,6 +10,7 @@ function pluralizeItemType(type: string): string {
     orb: 'orbs',
     dungeon: 'dungeon',
     dye: 'dyes',
+    'crafting-material': 'crafting-materials'
   };
   return pluralMap[type] || type;
 }

@@ -15,7 +15,12 @@ export const sidebarItems: SidebarItem[] = [
       { title: 'Dungeons', link: '/areas/dungeons', disabled: false },
       { title: 'Towns', link: '/areas/towns', disabled: false },
       { title: 'Zones', link: '/areas/zones', disabled: false },
-      { title: 'World Map', link: 'https://docs.google.com/spreadsheets/d/1S1Uc1UtXt20pjb73edgj6Hz8pNShyzZfvz904l3cobM/edit?gid=0#gid=0', disabled: false, external: true }
+      {
+        title: 'World Map',
+        link: 'https://docs.google.com/spreadsheets/d/1S1Uc1UtXt20pjb73edgj6Hz8pNShyzZfvz904l3cobM/edit?gid=0#gid=0',
+        disabled: false,
+        external: true
+      }
     ]
   },
   {
@@ -50,7 +55,12 @@ export const sidebarItems: SidebarItem[] = [
           { title: 'Orbs', link: '/items/consumables/orbs', disabled: false },
           { title: 'Potions', link: '/items/consumables/potions', disabled: false },
           { title: 'Scrolls', link: '/items/consumables/scrolls', disabled: false },
-          { title: 'Wands', link: '/items/consumables/wands', disabled: false }
+          { title: 'Wands', link: '/items/consumables/wands', disabled: false },
+          {
+            title: 'Crafting Materials',
+            link: '/items/consumables/crafting-materials',
+            disabled: false
+          }
         ]
       },
       { title: 'Junk', link: '/items/junk', disabled: true },

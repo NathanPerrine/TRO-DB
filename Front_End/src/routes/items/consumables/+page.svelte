@@ -1,5 +1,13 @@
 <script lang="ts">
-  import { Gem, Globe, FlaskConical, ScrollText, Wand, Paintbrush } from 'lucide-svelte/icons';
+  import {
+    Gem,
+    Globe,
+    FlaskConical,
+    ScrollText,
+    Wand,
+    Paintbrush,
+    Spool
+  } from 'lucide-svelte/icons';
 
   const consumableTypes = [
     {
@@ -11,9 +19,10 @@
     },
     {
       title: 'Dyes',
-      description: 'Colorful dyes used to customize the appearance of your equipment. Apply them to your armor to stand out within The Realm.',
+      description:
+        'Colorful dyes used to customize the appearance of your equipment. Apply them to your armor to stand out within The Realm.',
       href: '/items/consumables/dyes',
-      icon: Paintbrush,
+      icon: Paintbrush
     },
     {
       title: 'Orbs',
@@ -42,6 +51,12 @@
         'Magical implements that store a specific spell, allowing multiple casts before breaking.',
       href: '/items/consumables/wands',
       icon: Wand
+    },
+    {
+      title: 'Crafting Materials',
+      description: 'Bits and bobs to craft your own equipment.',
+      href: '/items/consumables/crafting-materials',
+      icon: Spool
     }
   ];
 </script>

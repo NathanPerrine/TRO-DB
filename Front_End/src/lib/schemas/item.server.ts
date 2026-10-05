@@ -5,7 +5,20 @@ export const itemDetailSchema = z.object({
   name: z.string(),
   slug: slugSchema,
   image: sanityImageSchema.nullish(),
-  type: z.enum(['junk', 'potion', 'elixir', 'bauble', 'scroll', 'wand', 'orb', 'spellbook', 'ability book', 'dungeon', 'dye',]),
+  type: z.enum([
+    'junk',
+    'potion',
+    'elixir',
+    'bauble',
+    'scroll',
+    'wand',
+    'orb',
+    'spellbook',
+    'ability book',
+    'dungeon',
+    'dye',
+    'crafting-material'
+  ]),
   description: z.string().nullish(),
   descriptionIdentified: z.string().nullish(),
   weight: z.number().nullish(),
@@ -19,7 +32,7 @@ export const itemDetailSchema = z.object({
 export const itemListItemSchema = itemDetailSchema.pick({
   name: true,
   slug: true,
-  descriptionIdentified: true,
+  descriptionIdentified: true
 });
 
 export type ItemDetail = z.infer<typeof itemDetailSchema>;

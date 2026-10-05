@@ -3,33 +3,38 @@
 
   const itemCategories = [
     {
-      title: "Books",
-      description: "Learn new skills and spells through various tomes and scrolls. Includes skillbooks for combat and crafting, as well as magical spellbooks.",
-      href: "/items/books",
+      title: 'Books',
+      description:
+        'Learn new skills and spells through various tomes and scrolls. Includes skillbooks for combat and crafting, as well as magical spellbooks.',
+      href: '/items/books',
       icon: BookOpen
     },
     {
-      title: "Equipment",
-      description: "Find weapons, armor, and accessories to outfit your character. Browse a wide range of combat and defensive gear.",
-      href: "/items/equipment",
+      title: 'Equipment',
+      description:
+        'Find weapons, armor, and accessories to outfit your character. Browse a wide range of combat and defensive gear.',
+      href: '/items/equipment',
       icon: Sword
     },
     {
-      title: "Consumables",
-      description: "Single-use items including potions, scrolls, wands, orbs, and baubles. Restore health, cast spells, or gain temporary effects.",
-      href: "/items/consumables",
+      title: 'Consumables',
+      description:
+        'Single-use items including potions, scrolls, wands, orbs, and baubles. Restore health, cast spells, or gain temporary effects.',
+      href: '/items/consumables',
       icon: FlaskConical
     },
     {
-      title: "Junk",
-      description: "Miscellaneous items that can be sold to vendors. Some may be more valuable than they appear.",
-      href: "/items/junk",
+      title: 'Junk',
+      description:
+        'Miscellaneous items that can be sold to vendors. Some may be more valuable than they appear.',
+      href: '/items/junk',
       icon: Trash2
     },
     {
-      title: "Dungeon Items",
-      description: "Special items found in dungeons including keys, quest items, and unique treasures.",
-      href: "/items/dungeon-items",
+      title: 'Dungeon Items',
+      description:
+        'Special items found in dungeons including keys, quest items, and unique treasures.',
+      href: '/items/dungeon-items',
       icon: Key
     }
   ];
@@ -103,7 +108,9 @@
     border: 1px solid var(--color-border);
     padding: 1.5rem;
     border-radius: 4px;
-    transition: transform 0.2s ease, background-color 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      background-color 0.2s ease;
     text-decoration: none;
     width: 100%;
     box-sizing: border-box;

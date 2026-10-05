@@ -13,6 +13,7 @@ import {
   GiBeltArmor,
   GiDoorRingHandle,
   GiBackpack,
+  GiRolledCloth,
 } from 'react-icons/gi'
 import { FaHome, FaPaintBrush, FaSlash } from 'react-icons/fa'
 
@@ -69,6 +70,11 @@ export const itemTypes = [
   { title: 'Orbs', icon: GiCrystalBall, value: 'orb' },
   { title: 'Dungeon', icon: GiBossKey, value: 'dungeon' },
   { title: 'Dyes', icon: FaPaintBrush, value: 'dye' },
+  {
+    title: 'Crafting Materials',
+    icon: GiRolledCloth,
+    value: 'crafting-material',
+  },
 ]
 
 export const areaTypes = [
