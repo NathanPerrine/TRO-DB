@@ -184,11 +184,13 @@ export const accessories = defineType({
       title: 'identifiedName',
       slot: 'slot',
       rarity: 'rarity',
+      media: 'image',
     },
-    prepare({ title, slot, rarity }) {
+    prepare({ title, slot, rarity, media }) {
       return {
         title: title,
         subtitle: `${slot} | ${rarity}`,
+        media,
       }
     },
   },
