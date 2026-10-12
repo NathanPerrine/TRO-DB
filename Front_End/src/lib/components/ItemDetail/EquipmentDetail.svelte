@@ -1,10 +1,6 @@
 <script lang="ts">
   import { isArmor, isWeapon, isAccessory, type EquipmentDetailItem } from '$lib/utils/equipment';
-  import { urlFor } from '$lib/utils/sanity/sanityImage';
-  import ImageModal from '../common/ImageModal.svelte';
-
-  let isModalOpen = $state(false);
-  const toggleModal = () => (isModalOpen = !isModalOpen);
+  import ItemImage from '../common/ItemImage.svelte';
 
   let { equipment }: { equipment: EquipmentDetailItem } = $props();
 </script>
@@ -27,18 +23,7 @@
   </div>
 
   {#if equipment.image}
-    <button class="image-button" onclick={toggleModal}>
-      <img src={urlFor(equipment.image).width(300).url()} alt={equipment.identifiedName} />
-    </button>
-
-    {#if isModalOpen}
-      <ImageModal
-        isOpen={isModalOpen}
-        imageUrl={urlFor(equipment.image).url()}
-        alt={equipment.identifiedName}
-        onClose={toggleModal}
-      />
-    {/if}
+    <ItemImage image={equipment.image} alt={equipment.identifiedName} />
   {/if}
 </header>
 
@@ -178,23 +163,6 @@
   .header-info {
     flex: 1;
     min-width: 0;
-  }
-
-  .image-button {
-    flex-shrink: 0;
-    width: 300px;
-    max-width: 100%;
-
-    img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
-
-    @include tablet-and-up {
-      width: 360px;
-    }
   }
 
   .quote-container {

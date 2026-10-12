@@ -1,10 +1,6 @@
 <script lang="ts">
   import type { ItemDetail } from '$lib/schemas/item.server';
-  import { urlFor } from '$lib/utils/sanity/sanityImage';
-  import ImageModal from '../common/ImageModal.svelte';
-
-  let isModalOpen = $state(false);
-  const toggleModal = () => (isModalOpen = !isModalOpen);
+  import ItemImage from '../common/ItemImage.svelte';
 
   let { item }: { item: Omit<ItemDetail, 'type' | 'slug' | 'notes'> } = $props();
 </script>
@@ -23,18 +19,7 @@
   </div>
 
   {#if item.image}
-    <button class="image-button" onclick={toggleModal}>
-      <img src={urlFor(item.image).width(300).url()} alt={item.name} />
-    </button>
-
-    {#if isModalOpen}
-      <ImageModal
-        isOpen={isModalOpen}
-        imageUrl={urlFor(item.image).url()}
-        alt={item.name}
-        onClose={toggleModal}
-      />
-    {/if}
+    <ItemImage image={item.image} alt={item.name} />
   {/if}
 </header>
 
@@ -91,22 +76,5 @@
   .header-info {
     flex: 1;
     min-width: 0;
-  }
-
-  .image-button {
-    flex-shrink: 0;
-    width: 300px;
-    max-width: 100%;
-
-    img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
-
-    @include tablet-and-up {
-      width: 360px;
-    }
   }
 </style>
